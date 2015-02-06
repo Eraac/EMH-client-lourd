@@ -1,12 +1,12 @@
 #include <QApplication>
-#include "GUI/loginwindow.hpp"
+#include "Utilty/UserHandle.hpp"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    LoginWindow window;
-    window.show();
+    UserHandle userHandle;
+    userHandle.run();
 
     return app.exec();
 }
