@@ -1,28 +1,27 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-/*
-#include "LoginWidget.hpp"
-#include "Dashboard.hpp"
+#include <QPointer>
+#include "../GUI/loginwindow.hpp"
 
 class UserHandle : public QWidget
 {
     Q_OBJECT
 
     public:
-    UserHandle();                           // Default constructor
-    ~UserHandle();                          // Destructor
-    void run();                             // Call for run the application
+    UserHandle();                           // Constructeur
+
+    void run();                             // Point de démarrage de l'application
 
     public slots:
-    void connect(Entity::User const& user); // Change window (from loginWidget to dashboard)
-    void disconnect();                      // Change window (form dashboard to loginWidget)
+    void connect(Entity::User const& user); // Change la fenêtre (passe du login au tableau de bord)
+    void disconnect();                      // Change la fenêtre (passe du tableau de bord au login)
 
     private:
-    GUI::LoginWidget    *m_loginWidget;     // Login window
-    GUI::Dashboard      *m_dashboard;       // Dashboard window
+    QPointer<LoginWindow>    m_loginWidget;     // Fenêtre de login
+    //GUI::Dashboard      *m_dashboard;     // Tableau de bord
 
 };
-*/
+
 
 #endif // MAINWINDOW_HPP
