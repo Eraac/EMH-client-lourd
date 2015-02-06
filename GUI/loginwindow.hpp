@@ -3,20 +3,22 @@
 
 #include <QMainWindow>
 
+#include "../Model/Entity/User.hpp"
+
 namespace Ui {
-class LoginWindow;
+    class LoginWindow;
 }
 
 class LoginWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    explicit LoginWindow(QWidget *parent = 0);
-    ~LoginWindow();
+    public:
+        explicit LoginWindow(QWidget *parent = 0);
+        ~LoginWindow();
 
-private:
-    Ui::LoginWindow *ui;
+    private:
+        Ui::LoginWindow *ui;
 };
 
 #endif // LOGINWINDOW_HPP
