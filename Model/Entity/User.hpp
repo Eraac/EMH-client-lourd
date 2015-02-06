@@ -23,6 +23,8 @@ namespace Entity
         Entity::ErrorType load(unsigned int id);                    // Charge l'entité depuis la base de données
 
         QString getName() const;            // Retourne le nom de l'utilisateur
+        QString getFirstName() const;       // Retourne le prénom de l'utilisateur
+        QString getEmail() const;           // Retourne l'email de l'utilisateur
         QString getPassword() const;        // Retourne le mot de passe de l'utilisateur
         bool isAdmin() const;               // Retourne si l'utilisateur est admin
         bool hasEncryptedPassword() const;  // Retourne si le mot de passe est crypté
@@ -30,6 +32,8 @@ namespace Entity
         QStringList getGroupsName() const;  // Retourne la liste des groupes de l'utilisateur
 
         void setName(QString const& name);                              // Change le nom de l'utilisateur
+        void setFirstName(QString const& firstName);                    // Change le prénom de l'utilisateur
+        void setEmail(QString const& email);                            // Change l'email de l'utilisateur
         void setClearPassword(QString const& clearPassword);            // Change le mot de passe (en clair)
         void setEncryptedPassword(QString const& encryptedPassword);    // Change le mot de passe de l'utilisateur (crypté)
         void setIsAdmin(bool isAdmin);                                  // Mets l'user administrateur ou non
@@ -45,6 +49,8 @@ namespace Entity
 
         private:
         QString m_name;
+        QString m_firstName;
+        QString m_email;
         QString m_password;
         bool m_isAdmin;
         bool m_hasEncryptedPassword;

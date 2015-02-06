@@ -2,13 +2,13 @@
 
 const int Entity::User::weight = 1;
 
-Entity::User::User() : Entity(), m_name(""), m_password(""), m_hasEncryptedPassword(false), m_isAdmin(false)
+Entity::User::User() : Entity(), m_name(""), m_email(""), m_firstName(""), m_password(""),
+                       m_hasEncryptedPassword(false), m_isAdmin(false)
 {
 }
 
 Entity::User::~User()
 {
-
 }
 
 bool Entity::User::emailExist(QString const& email)
@@ -22,7 +22,9 @@ Entity::Entity::ErrorType Entity::User::loadUserByLogin(QString const& email, QS
 {
     // TODO Requete SQL here pour charger user
     m_id = 2;
-    m_name = email;
+    m_email = email;
+    m_name = "Labesse";
+    m_firstName = "Kévin";
     m_password = password;
     m_isAdmin = true;
 
@@ -33,7 +35,9 @@ Entity::Entity::ErrorType Entity::User::loadUserByEmail(const QString &email)
 {
     // TODO SQL
     m_id = 2;
-    m_name = email;
+    m_email = email;
+    m_name = "Labesse";
+    m_firstName = "Kévin";
     m_password = "kevin";
     m_isAdmin = true;
 
@@ -43,7 +47,9 @@ Entity::Entity::ErrorType Entity::User::loadUserByEmail(const QString &email)
 Entity::Entity::ErrorType Entity::User::load(unsigned int id)
 {
     m_id = id;
-    m_name = "kevin@labesse.me";
+    m_name = "Labesse";
+    m_firstName = "Kévin";
+    m_email = "kevin@labesse.me";
     m_password = "kevin";
     m_isAdmin = true;
 
@@ -53,6 +59,16 @@ Entity::Entity::ErrorType Entity::User::load(unsigned int id)
 QString Entity::User::getName() const
 {
     return m_name;
+}
+
+QString Entity::User::getFirstName() const
+{
+    return m_firstName;
+}
+
+QString Entity::User::getEmail() const
+{
+    return m_email;
 }
 
 QString Entity::User::getPassword() const
@@ -84,8 +100,20 @@ QStringList Entity::User::getGroupsName() const
 
 void Entity::User::setName(const QString &name)
 {
-    if (!name.isEmpty()) // If name is empty do not replace m_name
+    if (!name.isEmpty()) // Si le nom n'est pas vide on le remplace
         m_name = name;
+}
+
+void Entity::User::setFirstName(const QString &firstName)
+{
+    if (!firstName.isEmpty()) // Si le prénom n'est pas vide on le remplace
+        m_firstName = firstName;
+}
+
+void Entity::User::setEmail(const QString &email)
+{
+    if (!email.isEmpty()) // Si l'email n'est pas vide on le change
+        m_email = email;
 }
 
 void Entity::User::setClearPassword(const QString &clearPassword)
@@ -146,5 +174,5 @@ void Entity::User::prePersist()
 
 bool Entity::User::isValid() const
 {
-    return !m_name.isEmpty() && !m_password.isEmpty();
+    return !m_email.isEmpty() && !m_password.isEmpty();
 }
