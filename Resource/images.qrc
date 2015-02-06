@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>logoHIA.png</file>
+    </qresource>
+</RCC>
