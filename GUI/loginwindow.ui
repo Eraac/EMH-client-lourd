@@ -45,44 +45,75 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
          <property name="formAlignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="emailLabel">
            <property name="text">
             <string>Email</string>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="emailLineEdit"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="passwordLabel">
-           <property name="text">
-            <string>Mot de passe</string>
+           <property name="buddy">
+            <cstring>emailLineEdit</cstring>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
+          <widget class="QLineEdit" name="emailLineEdit"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="passwordLabel">
+           <property name="text">
+            <string>Mot de passe</string>
+           </property>
+           <property name="buddy">
+            <cstring>passwordLineEdit</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
           <widget class="QLineEdit" name="passwordLineEdit">
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="5" column="1">
           <widget class="QPushButton" name="connectButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Se connecter</string>
            </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="6" column="1">
           <widget class="QPushButton" name="quitButton">
            <property name="text">
             <string>Quitter</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="errorLogin">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 0, 0)</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -103,7 +134,7 @@
      <item>
       <widget class="QLabel" name="footer">
        <property name="text">
-        <string>EMH - Projet AFORP 2015 de Kévin Labesse - MyDev's</string>
+        <string>EMH v1.0 - Projet AFORP 2015 de Kévin Labesse - MyDev's</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -167,8 +198,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>219</y>
+     <x>258</x>
+     <y>246</y>
     </hint>
     <hint type="destinationlabel">
      <x>186</x>
@@ -176,5 +207,74 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>LoginWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>emailLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>LoginWindow</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>139</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>118</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>passwordLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>LoginWindow</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>232</x>
+     <y>89</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>connectButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LoginWindow</receiver>
+   <slot>connectSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>37</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>formChange()</slot>
+  <slot>connectSlot()</slot>
+  <slot>aboutQt()</slot>
+ </slots>
 </ui>

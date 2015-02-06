@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include <QPointer>
 #include "../GUI/loginwindow.hpp"
 
 class UserHandle : public QWidget
@@ -18,7 +17,7 @@ class UserHandle : public QWidget
     void disconnect();                      // Change la fenêtre (passe du tableau de bord au login)
 
     private:
-    QPointer<LoginWindow>    m_loginWidget;     // Fenêtre de login
+    LoginWindow *m_loginWidget;
     //GUI::Dashboard      *m_dashboard;     // Tableau de bord
 
 };

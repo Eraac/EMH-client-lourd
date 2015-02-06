@@ -17,6 +17,13 @@ class LoginWindow : public QMainWindow
         explicit LoginWindow(QWidget *parent = 0);
         ~LoginWindow();
 
+    signals:
+        void connectUser(Entity::User const& user);
+
+    public slots:
+        void connectSlot();
+        void formChange();
+
     private:
         Ui::LoginWindow *ui;
 };

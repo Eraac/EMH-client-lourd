@@ -1,6 +1,6 @@
 #include "UserHandle.hpp"
 
-UserHandle::UserHandle() : QWidget(), m_loginWidget()
+UserHandle::UserHandle() : QWidget(), m_loginWidget(nullptr)
 {
 
 }
@@ -13,16 +13,16 @@ void UserHandle::run()
         m_loginWidget->show();
 
     // === On créer une liaison entre le bouton connect et la méthode connect ===
-    //QObject::connect(m_loginWidget, SIGNAL(connect(Entity::User)), this, SLOT(connect(Entity::User)));
+    QObject::connect(m_loginWidget, SIGNAL(connectUser(Entity::User)), this, SLOT(connect(Entity::User)));
 }
 
 void UserHandle::connect(Entity::User const& user)
 {
     // La fenêtre va-t-être supprimée il faut retirer la liaison
-    //QObject::disconnect(m_loginWidget, SIGNAL(connect(Entity::User)), this, SLOT(connect(Entity::User)));
+    QObject::disconnect(m_loginWidget, SIGNAL(connectUser(Entity::User)), this, SLOT(connect(Entity::User)));
 
     // On supprime la fenêtre
-    //m_loginWidget.reset();
+    delete m_loginWidget;
 
     // Initialisation du tableau de bord
     //m_dashboard = new GUI::Dashboard(user);
@@ -41,11 +41,11 @@ void UserHandle::disconnect()
     // On supprime la fenêtre
     //delete m_dashboard;
 
-    // Initialisation de la fenêtre de login
-    //m_loginWidget = new GUI::LoginWidget{};
-        // On affiche la fenêtre de login
-        //m_loginWidget->show();
+    // On initialise la fenêtre de connexion
+    m_loginWidget = new LoginWindow;
+        // On affiche la fenêtre
+        m_loginWidget->show();
 
     // === On créer une liaison entre le bouton connect et la méthode connect ===
-    //QObject::connect(m_loginWidget, SIGNAL(connect(Entity::User)), this, SLOT(connect(Entity::User)));
+    QObject::connect(m_loginWidget, SIGNAL(connectUser(Entity::User)), this, SLOT(connect(Entity::User)));
 }
