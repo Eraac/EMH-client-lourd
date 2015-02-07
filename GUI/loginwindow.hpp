@@ -5,6 +5,7 @@
 
 #include "../Model/Entity/User.hpp"
 #include "../GUI/aboutmydevs.hpp"
+#include "../GUI/databasesetting.hpp"
 
 namespace Ui {
     class LoginWindow;

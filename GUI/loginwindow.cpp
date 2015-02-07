@@ -64,3 +64,9 @@ void LoginWindow::aboutMyDevs()
     AboutMyDevs about;
     about.exec();
 }
+
+void LoginWindow::changeSettings()
+{
+    DatabaseSetting settings;
+    settings.exec();
+}
