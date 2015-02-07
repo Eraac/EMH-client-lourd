@@ -10,6 +10,18 @@
     <height>344</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>454</width>
+    <height>344</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>454</width>
+    <height>344</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>EMH - Connexion</string>
   </property>
