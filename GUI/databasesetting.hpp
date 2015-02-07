@@ -4,19 +4,22 @@
 #include <QDialog>
 
 namespace Ui {
-class DatabaseSetting;
+    class DatabaseSetting;
 }
 
 class DatabaseSetting : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit DatabaseSetting(QWidget *parent = 0);
-    ~DatabaseSetting();
+    public:
+        explicit DatabaseSetting(QWidget *parent = 0);
+        ~DatabaseSetting();
 
-private:
-    Ui::DatabaseSetting *ui;
+    public slots:
+        void formChange();
+
+    private:
+        Ui::DatabaseSetting *ui;
 };
 
 #endif // DATABASESETTING_HPP

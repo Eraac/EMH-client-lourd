@@ -12,3 +12,8 @@ DatabaseSetting::~DatabaseSetting()
 {
     delete ui;
 }
+
+void DatabaseSetting::formChange()
+{
+    ui->validButton->setEnabled(true);
+}

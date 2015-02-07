@@ -137,5 +137,72 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addressLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>DatabaseSetting</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>98</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>61</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>identifiantLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>DatabaseSetting</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>42</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>passwordLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>DatabaseSetting</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>56</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>portSpinBox</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>DatabaseSetting</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>115</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>formChange()</slot>
+ </slots>
 </ui>
