@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>logoHIA.png</file>
+        <file>LogoEMH.png</file>
+        <file>logoMyDevs.png</file>
     </qresource>
 </RCC>

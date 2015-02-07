@@ -3,7 +3,8 @@ QT += sql
 CONFIG += c++11
 
 FORMS += \
-    GUI/loginwindow.ui
+    GUI/loginwindow.ui \
+    GUI/aboutmydevs.ui
 
 HEADERS += \
     Model/Entity/Constraint.hpp \
@@ -25,7 +26,8 @@ HEADERS += \
     Model/Persistable.hpp \
     Utilty/PersisterManager.hpp \
     Utilty/UserHandle.hpp \
-    GUI/loginwindow.hpp
+    GUI/loginwindow.hpp \
+    GUI/aboutmydevs.h
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -47,7 +49,8 @@ SOURCES += \
     Utilty/PersisterManager.cpp \
     Utilty/UserHandle.cpp \
     GUI/loginwindow.cpp \
-    main.cpp
+    main.cpp \
+    GUI/aboutmydevs.cpp
 
 RESOURCES += \
     Resource/images.qrc
