@@ -24,7 +24,7 @@ void LoginWindow::connectSlot()
     Entity::User user = Entity::User();
 
     // On charge l'utilisateur
-    user.loadUserByLogin(
+    error = user.loadUserByLogin(
                 ui->emailLineEdit->text(),
                 ui->passwordLineEdit->text()
             );
