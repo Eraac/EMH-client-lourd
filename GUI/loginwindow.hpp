@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "../Model/Entity/User.hpp"
+#include "../GUI/aboutmydevs.hpp"
 
 namespace Ui {
     class LoginWindow;
@@ -23,6 +24,7 @@ class LoginWindow : public QMainWindow
     public slots:
         void connectSlot();
         void formChange();
+        void aboutMyDevs();
 
     private:
         Ui::LoginWindow *ui;

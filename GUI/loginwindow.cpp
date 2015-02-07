@@ -8,6 +8,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     ui->setupUi(this);
 
     QObject::connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    QObject::connect(ui->actionAboutMyDev_s, SIGNAL(triggered()), this, SLOT(aboutMyDevs()));
 }
 
 LoginWindow::~LoginWindow()
@@ -56,4 +57,10 @@ void LoginWindow::formChange()
                 !ui->passwordLineEdit->text().isEmpty()
     );
 
+}
+
+void LoginWindow::aboutMyDevs()
+{
+    AboutMyDevs about;
+    about.exec();
 }

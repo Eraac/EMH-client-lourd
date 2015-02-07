@@ -27,7 +27,7 @@ HEADERS += \
     Utilty/PersisterManager.hpp \
     Utilty/UserHandle.hpp \
     GUI/loginwindow.hpp \
-    GUI/aboutmydevs.h
+    GUI/aboutmydevs.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
