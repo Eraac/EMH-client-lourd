@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>308</width>
-    <height>158</height>
+    <height>176</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,7 +77,14 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QSpinBox" name="portSpinBox"/>
+        <widget class="QSpinBox" name="portSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>65565</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -128,8 +135,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>253</x>
-     <y>137</y>
+     <x>296</x>
+     <y>164</y>
     </hint>
     <hint type="destinationlabel">
      <x>253</x>
@@ -160,8 +167,8 @@
    <slot>formChange()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>60</y>
+     <x>181</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>42</x>
@@ -176,8 +183,8 @@
    <slot>formChange()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>86</y>
+     <x>184</x>
+     <y>107</y>
     </hint>
     <hint type="destinationlabel">
      <x>56</x>
@@ -192,8 +199,8 @@
    <slot>formChange()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>115</x>
-     <y>109</y>
+     <x>196</x>
+     <y>133</y>
     </hint>
     <hint type="destinationlabel">
      <x>78</x>
@@ -201,8 +208,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>validButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DatabaseSetting</receiver>
+   <slot>valid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>169</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>116</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>formChange()</slot>
+  <slot>valid()</slot>
  </slots>
 </ui>
