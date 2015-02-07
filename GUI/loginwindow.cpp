@@ -7,6 +7,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QObject::connect(ui->actionChangeDatabase, SIGNAL(triggered()), this, SLOT(changeSettings()));
     QObject::connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     QObject::connect(ui->actionAboutMyDev_s, SIGNAL(triggered()), this, SLOT(aboutMyDevs()));
 }

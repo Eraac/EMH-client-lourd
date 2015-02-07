@@ -26,6 +26,7 @@ class LoginWindow : public QMainWindow
         void connectSlot();
         void formChange();
         void aboutMyDevs();
+        void changeSettings();
 
     private:
         Ui::LoginWindow *ui;
