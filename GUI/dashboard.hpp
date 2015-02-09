@@ -2,6 +2,7 @@
 #define DASHBOARD_HPP
 
 #include <QWidget>
+#include "../GUI/createuser.hpp"
 #include "../Model/Entity/User.hpp"
 
 namespace Ui {
@@ -23,6 +24,12 @@ class Dashboard : public QWidget
 
     public slots:
         void clickDisconnect();
+        void addUser();
+        void editUser();
+        void addGroup();
+        void editGroup();
+        void addForm();
+        void editForm();
 
     private:
         Ui::Dashboard *ui;

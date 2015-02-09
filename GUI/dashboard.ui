@@ -55,7 +55,7 @@
            <property name="title">
             <string>Utilisateur</string>
            </property>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="addUserButton">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -68,7 +68,7 @@
              <string>Ajouter un utilisateur</string>
             </property>
            </widget>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="editUserButton">
             <property name="geometry">
              <rect>
               <x>150</x>
@@ -88,7 +88,7 @@
            <property name="title">
             <string>Groupe</string>
            </property>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="editGroupButton">
             <property name="geometry">
              <rect>
               <x>150</x>
@@ -101,7 +101,7 @@
              <string>Modifier un groupe</string>
             </property>
            </widget>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="addGroupButton">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -121,7 +121,7 @@
            <property name="title">
             <string>Formulaire</string>
            </property>
-           <widget class="QPushButton" name="pushButton_6">
+           <widget class="QPushButton" name="editFormButton">
             <property name="geometry">
              <rect>
               <x>150</x>
@@ -134,7 +134,7 @@
              <string>Modifier un formulaire</string>
             </property>
            </widget>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="addFormButton">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -212,8 +212,8 @@
    <slot>clickDisconnect()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>667</x>
-     <y>490</y>
+     <x>519</x>
+     <y>317</y>
     </hint>
     <hint type="destinationlabel">
      <x>370</x>
@@ -221,9 +221,31 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addUserButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>addUser()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>disconnect()</signal>
   <slot>clickDisconnect()</slot>
+  <slot>addUser()</slot>
+  <slot>editUser()</slot>
+  <slot>addGroup()</slot>
+  <slot>editGroup()</slot>
+  <slot>addForm()</slot>
+  <slot>editForm()</slot>
  </slots>
 </ui>

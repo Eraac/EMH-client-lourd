@@ -24,3 +24,34 @@ void Dashboard::clickDisconnect()
 {
     emit disconnect();
 }
+
+void Dashboard::addUser()
+{
+    CreateUser createUser;
+        createUser.exec();
+}
+
+void Dashboard::editUser()
+{
+
+}
+
+void Dashboard::addGroup()
+{
+
+}
+
+void Dashboard::editGroup()
+{
+
+}
+
+void Dashboard::addForm()
+{
+
+}
+
+void Dashboard::editForm()
+{
+
+}
