@@ -85,13 +85,46 @@ void Dashboard::addGroup()
         {
             QMessageBox::warning(this, "Groupe existant", "Le groupe " + groupname + " existe déjà.");
         }
-
     }
 }
 
 void Dashboard::editGroup()
 {
+    bool ok = false;
 
+    QString groupname = QInputDialog::getText(this, "Ajouter un groupe", "Quel est le nom du nouveau groupe ?", QLineEdit::Normal, QString(), &ok);
+
+    if (ok && !groupname.isEmpty())
+    {
+        // Le groupe existe bien
+        if (Entity::Group::groupExist(groupname))
+        {
+            groupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
+
+            if (ok && !groupname.isEmpty())
+            {
+                // Le nouveau nom n'existe pas déjà
+                if (!Entity::Group::groupExist(groupname))
+                {
+                    Entity::Group group;
+                        group.loadByName(groupname);
+
+                    Utility::PersisterManager pm;
+                    pm.persistOne(group);
+
+                    QMessageBox::information(this, "Groupe changé", "Le groupe " + groupname + " à bien été changé.");
+                }
+                else
+                {
+                    QMessageBox::warning(this, "Groupe existant", "Le groupe " + groupname + " existe déjà.");
+                }
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "Groupe inexistant", "Le groupe " + groupname + " n'existe pas.");
+        }
+    }
 }
 
 void Dashboard::addForm()
