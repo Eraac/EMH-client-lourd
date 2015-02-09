@@ -2,7 +2,13 @@
 #define CREATEUSER_HPP
 
 #include <QDialog>
+#include <QList>
+#include <QCheckBox>
+#include <memory>
+#include <QVBoxLayout>
 #include "../Model/Entity/User.hpp"
+#include "../Model/Entity/Group.hpp"
+#include "../Model/Relation/Belong.hpp"
 #include "../Utilty/PersisterManager.hpp"
 
 namespace Ui {
@@ -27,6 +33,8 @@ class CreateUser : public QDialog
         Ui::CreateUser *ui;
 
         Entity::User m_user;
+        QList<QCheckBox*> m_listGroups;
+        QVBoxLayout *m_listGroupsLayout;
 };
 
 #endif // CREATEUSER_HPP

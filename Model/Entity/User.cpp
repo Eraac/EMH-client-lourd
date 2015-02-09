@@ -92,8 +92,8 @@ QStringList Entity::User::getGroupsName() const
 
     // TODO requete SQL
 
-    groupsNameOfUser.append("Suisse");
-    groupsNameOfUser.append("Paris");
+    groupsNameOfUser.append("Patient");
+    groupsNameOfUser.append("Administratif");
 
     return groupsNameOfUser;
 }

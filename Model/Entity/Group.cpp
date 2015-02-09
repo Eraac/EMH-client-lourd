@@ -51,6 +51,9 @@ QStringList Entity::Group::getAll()
     listGroup.append("Medecin");
     listGroup.append("Administratif");
     listGroup.append("Patient");
+    listGroup.append("Militaire");
+    listGroup.append("Chirurgien");
+    listGroup.append("Homme de ménage");
 
     return listGroup;
 }

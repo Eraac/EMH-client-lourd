@@ -7,6 +7,16 @@ CreateUser::CreateUser(QWidget *parent) :
     m_user()
 {
     ui->setupUi(this);
+
+    m_listGroupsLayout = new QVBoxLayout();
+
+    // On charge les groupes
+    for (auto groupname : Entity::Group::getAll())
+    {
+        m_listGroups.append(new QCheckBox(groupname));
+        ui->scrollAreaWidgetContents->setLayout(m_listGroupsLayout);
+        m_listGroupsLayout->addWidget(m_listGroups.last());
+    }
 }
 
 CreateUser::~CreateUser()
@@ -22,6 +32,17 @@ void CreateUser::loadUser(Entity::User user)
     ui->prenomLineEdit->setText(m_user.getFirstName());
     ui->emailLineEdit->setText(m_user.getEmail());
     ui->administrateurCheckBox->setChecked(m_user.isAdmin());
+
+    // On parcourt la liste des groupes de l'utilisateur
+    for (auto groupname : m_user.getGroupsName())
+    {
+        // On parcourt les groupes
+        for (auto it = m_listGroups.begin(); it != m_listGroups.end(); ++it)
+        {
+            if ( (*it)->text() == groupname )
+                (*it)->setChecked(true);
+        }
+    }
 }
 
 void CreateUser::valideUser()
