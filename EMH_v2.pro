@@ -6,7 +6,8 @@ FORMS += \
     GUI/loginwindow.ui \
     GUI/aboutmydevs.ui \
     GUI/databasesetting.ui \
-    GUI/dashboard.ui
+    GUI/dashboard.ui \
+    GUI/createuser.ui
 
 HEADERS += \
     Model/Entity/Constraint.hpp \
@@ -31,7 +32,8 @@ HEADERS += \
     GUI/loginwindow.hpp \
     GUI/aboutmydevs.hpp \
     GUI/databasesetting.hpp \
-    GUI/dashboard.hpp
+    GUI/dashboard.hpp \
+    GUI/createuser.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -56,7 +58,8 @@ SOURCES += \
     main.cpp \
     GUI/aboutmydevs.cpp \
     GUI/databasesetting.cpp \
-    GUI/dashboard.cpp
+    GUI/dashboard.cpp \
+    GUI/createuser.cpp
 
 RESOURCES += \
     Resource/images.qrc
