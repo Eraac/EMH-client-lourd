@@ -1,5 +1,7 @@
 #include "Group.hpp"
 
+#include <QMessageBox>
+
 const int Entity::Group::weight = 1;
 
 Entity::Group::Group() : Entity(), m_name("")

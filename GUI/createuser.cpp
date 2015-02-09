@@ -39,8 +39,10 @@ void CreateUser::loadUser(Entity::User user)
         // On parcourt les groupes
         for (auto it = m_listGroups.begin(); it != m_listGroups.end(); ++it)
         {
-            if ( (*it)->text() == groupname )
+            if ( (*it)->text() == groupname ) {
                 (*it)->setChecked(true);
+                continue;
+            }
         }
     }
 }
@@ -60,6 +62,91 @@ void CreateUser::valideUser()
     Utility::PersisterManager pm;
 
     pm.persistOne(m_user);
+
+    // Déterminer les nouveaux est anciens groupes
+    QList<Entity::Group> newGroups;
+    QList<Entity::Group> oldGroups;
+
+    // Boucle pour connaitre les nouveaux groupes
+    // On parcourt les groupes
+    for (auto it = m_listGroups.begin(); it != m_listGroups.end(); ++it)
+    {
+        // Si le groupe est coché
+        if ( (*it)->isChecked() )
+        {
+            // Indiicateur pour savoir si il aussi dans les groupes de l'utilisateur
+            bool find = false;
+
+            // On parcourt les groupes de l'utilisateur
+            for (auto groupname : m_user.getGroupsName())
+            {
+                // Si on trouve le même nom de groupe dans ceux de l'utilisateur
+                if ( (*it)->text() == groupname ) {
+                    find = true;
+                    break; // On quitte la boucle
+                }
+            }
+
+            // Si on a rien trouvé
+            if (!find)
+            {
+                // On instancie un groupe
+                Entity::Group group;
+                    // On charge le groupe par son nom
+                    group.loadByName((*it)->text());
+
+                // On l'ajoute à la liste des nouveaux groupes
+                newGroups.append(group);
+            }
+        }
+    }
+
+    // Boucle pour connaitre les groupes retirés
+    // On parcourt la liste des groupes de l'utilisateur
+    for (auto groupname : m_user.getGroupsName())
+    {
+        bool find = false;
+
+        // On parcourt la liste des groupes
+        for (auto it = m_listGroups.begin(); it != m_listGroups.end(); ++it)
+        {
+            // Si le groupe est coché est corresponds au groupe de l'utilisateur
+            if ( (*it)->isChecked() && (*it)->text() == groupname)
+            {
+                find = true;
+                break;
+            }
+        }
+
+        // Si on trouve pas de groupe associé
+        if (!find)
+        {
+            Entity::Group group;
+                group.loadByName(groupname);
+
+            oldGroups.append(group);
+        }
+    }
+
+    // On persist un base les nouveaux groupes
+    for (auto it = newGroups.begin(); it != newGroups.end(); ++it)
+    {
+        Relation::Belong belong;
+            belong.setIdUser(m_user.getId());
+            belong.setIdGroup((*it).getId());
+
+        pm.persistOne(belong);
+    }
+
+    // On supprime les anciens groupes à l'utilisateur
+    for (auto it = oldGroups.begin(); it != oldGroups.end(); ++it)
+    {
+        Relation::Belong belong;
+            belong.setIdUser(m_user.getId());
+            belong.setIdGroup((*it).getId());
+
+        belong.remove();
+    }
 
     this->close();
 }
