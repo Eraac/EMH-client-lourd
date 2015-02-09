@@ -25,21 +25,23 @@ void UserHandle::connect(Entity::User const& user)
     delete m_loginWidget;
 
     // Initialisation du tableau de bord
-    //m_dashboard = new GUI::Dashboard(user);
+    m_dashboard = new Dashboard;
+        // On charge l'utilisateur dans le tableau de bord
+        m_dashboard->loadUser(user);
         // On affiche le tableau de bord
-        //m_dashboard->show();
+        m_dashboard->show();
 
     // On créer une liaison entre le bouton deconnexion et la méthode disconnect
-    //QObject::connect(m_dashboard, SIGNAL(disconnect()), this, SLOT(disconnect()));
+    QObject::connect(m_dashboard, SIGNAL(disconnect()), this, SLOT(disconnect()));
 }
 
 void UserHandle::disconnect()
 {
     // La fenêtre va-t-être supprimée il faut retirer la liaison
-    //QObject::disconnect(m_dashboard, SIGNAL(disconnect()), this, SLOT(disconnect()));
+    QObject::disconnect(m_dashboard, SIGNAL(disconnect()), this, SLOT(disconnect()));
 
     // On supprime la fenêtre
-    //delete m_dashboard;
+    delete m_dashboard;
 
     // On initialise la fenêtre de connexion
     m_loginWidget = new LoginWindow;

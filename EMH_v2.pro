@@ -5,7 +5,8 @@ CONFIG += c++11
 FORMS += \
     GUI/loginwindow.ui \
     GUI/aboutmydevs.ui \
-    GUI/databasesetting.ui
+    GUI/databasesetting.ui \
+    GUI/dashboard.ui
 
 HEADERS += \
     Model/Entity/Constraint.hpp \
@@ -29,7 +30,8 @@ HEADERS += \
     Utilty/UserHandle.hpp \
     GUI/loginwindow.hpp \
     GUI/aboutmydevs.hpp \
-    GUI/databasesetting.hpp
+    GUI/databasesetting.hpp \
+    GUI/dashboard.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -53,7 +55,8 @@ SOURCES += \
     GUI/loginwindow.cpp \
     main.cpp \
     GUI/aboutmydevs.cpp \
-    GUI/databasesetting.cpp
+    GUI/databasesetting.cpp \
+    GUI/dashboard.cpp
 
 RESOURCES += \
     Resource/images.qrc

@@ -2,6 +2,7 @@
 #define MAINWINDOW_HPP
 
 #include "../GUI/loginwindow.hpp"
+#include "../GUI/dashboard.hpp"
 
 class UserHandle : public QWidget
 {
@@ -18,7 +19,7 @@ class UserHandle : public QWidget
 
     private:
     LoginWindow *m_loginWidget;
-    //GUI::Dashboard      *m_dashboard;     // Tableau de bord
+    Dashboard   *m_dashboard;
 
 };
 
