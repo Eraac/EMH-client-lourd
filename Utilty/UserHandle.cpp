@@ -1,6 +1,6 @@
 #include "UserHandle.hpp"
 
-UserHandle::UserHandle() : QWidget(), m_loginWidget(nullptr)
+UserHandle::UserHandle() : QWidget(), m_loginWidget(nullptr), m_dashboard(nullptr)
 {
 
 }
