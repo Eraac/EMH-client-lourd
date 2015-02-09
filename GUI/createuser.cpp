@@ -30,7 +30,7 @@ void CreateUser::valideUser()
     m_user.setFirstName(ui->prenomLineEdit->text());
     m_user.setEmail(ui->emailLineEdit->text());
 
-    // Si l'utilisateur est nouveau ou si on rentre un nouveau mot de passe
+    // Si l'utilisateur est nouveau OU si on rentre un nouveau mot de passe
     if (m_user.getId() == 0 || !ui->passwordLineEdit->text().isEmpty())
         m_user.setClearPassword(ui->passwordLineEdit->text());
 
@@ -52,7 +52,7 @@ void CreateUser::formChange()
     if (!ui->nomLineEdit->text().isEmpty() &&
         !ui->prenomLineEdit->text().isEmpty() &&
         !ui->emailLineEdit->text().isEmpty() &&
-        !ui->passwordLineEdit->text().isEmpty() &&
+        (!ui->passwordLineEdit->text().isEmpty() || m_user.getId() != 0) &&
         emailRegEx.exactMatch( ui->emailLineEdit->text() ))
             ui->validButton->setEnabled(true);
     else
