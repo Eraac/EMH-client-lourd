@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include "../GUI/createuser.hpp"
 #include "../Model/Entity/User.hpp"
+#include "../Utilty/PersisterManager.hpp"
 
 namespace Ui {
     class Dashboard;

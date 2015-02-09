@@ -64,7 +64,29 @@ void Dashboard::editUser()
 
 void Dashboard::addGroup()
 {
+    bool ok = false;
 
+    QString groupname = QInputDialog::getText(this, "Ajouter un groupe", "Quel est le nom du nouveau groupe ?", QLineEdit::Normal, QString(), &ok);
+
+    if (ok && !groupname.isEmpty())
+    {
+        if (!Entity::Group::groupExist(groupname))
+        {
+            Entity::Group group;
+                group.setName(groupname);
+
+            Utility::PersisterManager pm;
+
+            pm.persistOne(group);
+
+            QMessageBox::information(this, "Groupe créé", "Le groupe " + groupname + " est bien créé.");
+        }
+        else
+        {
+            QMessageBox::warning(this, "Groupe existant", "Le groupe " + groupname + " existe déjà.");
+        }
+
+    }
 }
 
 void Dashboard::editGroup()

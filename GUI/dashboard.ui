@@ -253,6 +253,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addGroupButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>addGroup()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editGroupButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>editGroup()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addFormButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>addForm()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>257</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editFormButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>editForm()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>257</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>disconnect()</signal>
