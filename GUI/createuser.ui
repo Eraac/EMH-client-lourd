@@ -96,6 +96,9 @@
          </item>
          <item row="5" column="1">
           <widget class="QPushButton" name="validButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Valider</string>
            </property>
@@ -145,5 +148,90 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>validButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CreateUser</receiver>
+   <slot>valideUser()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>107</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>prenomLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>CreateUser</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>56</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nomLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>CreateUser</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>162</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>43</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>emailLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>CreateUser</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>277</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>passwordLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>CreateUser</receiver>
+   <slot>formChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>241</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>265</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>valideUser()</slot>
+  <slot>formChange()</slot>
+ </slots>
 </ui>
