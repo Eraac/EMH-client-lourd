@@ -2,6 +2,8 @@
 #define DASHBOARD_HPP
 
 #include <QWidget>
+#include <QMessageBox>
+#include <QInputDialog>
 #include "../GUI/createuser.hpp"
 #include "../Model/Entity/User.hpp"
 

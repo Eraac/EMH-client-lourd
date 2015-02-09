@@ -237,6 +237,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>editUserButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>editUser()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>disconnect()</signal>
