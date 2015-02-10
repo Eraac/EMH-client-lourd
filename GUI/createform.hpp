@@ -24,6 +24,8 @@ class createForm : public QDialog
 
     public slots:
         void chooseColor();
+        void addField();
+        void valid();
 
     private:
         Ui::createForm *ui;

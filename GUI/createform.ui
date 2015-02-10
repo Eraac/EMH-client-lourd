@@ -161,7 +161,7 @@
               <x>0</x>
               <y>0</y>
               <width>180</width>
-              <height>355</height>
+              <height>271</height>
              </rect>
             </property>
            </widget>
@@ -189,7 +189,7 @@
               <x>0</x>
               <y>0</y>
               <width>180</width>
-              <height>355</height>
+              <height>271</height>
              </rect>
             </property>
            </widget>
@@ -217,7 +217,7 @@
               <x>0</x>
               <y>0</y>
               <width>180</width>
-              <height>355</height>
+              <height>271</height>
              </rect>
             </property>
            </widget>
@@ -229,6 +229,54 @@
      </item>
      <item>
       <layout class="QVBoxLayout" name="fieldsLayout"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addFieldButton">
+         <property name="text">
+          <string>Ajouter un champs</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="validButton">
+         <property name="text">
+          <string>Valider</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -243,8 +291,8 @@
    <slot>chooseColor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>126</x>
-     <y>418</y>
+     <x>187</x>
+     <y>366</y>
     </hint>
     <hint type="destinationlabel">
      <x>69</x>
@@ -252,8 +300,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addFieldButton</sender>
+   <signal>clicked()</signal>
+   <receiver>createForm</receiver>
+   <slot>addField()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>705</x>
+     <y>396</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>632</x>
+     <y>394</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>validButton</sender>
+   <signal>clicked()</signal>
+   <receiver>createForm</receiver>
+   <slot>valid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>771</x>
+     <y>439</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>704</x>
+     <y>435</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>chooseColor()</slot>
+  <slot>valid()</slot>
+  <slot>addField()</slot>
  </slots>
 </ui>
