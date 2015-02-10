@@ -111,11 +111,11 @@ void Dashboard::addGroup()
 
             pm.persistOne(group);
 
-            QMessageBox::information(this, "Groupe créé", "Le groupe " + groupname + " est bien créé.");
+            setSuccessMessage("Le groupe " + groupname + " est bien créé.");
         }
         else
         {
-            QMessageBox::warning(this, "Groupe existant", "Le groupe " + groupname + " existe déjà.");
+            setFailMessage("Le groupe " + groupname + " existe déjà.");
         }
     }
 }
@@ -144,17 +144,17 @@ void Dashboard::editGroup()
                     Utility::PersisterManager pm;
                     pm.persistOne(group);
 
-                    QMessageBox::information(this, "Groupe changé", "Le groupe " + groupname + " à bien été changé.");
+                    setSuccessMessage("Le groupe " + groupname + " à bien été changé.");
                 }
                 else
                 {
-                    QMessageBox::warning(this, "Groupe existant", "Le groupe " + groupname + " existe déjà.");
+                    setFailMessage("Le groupe " + groupname + " existe déjà.");
                 }
             }
         }
         else
         {
-            QMessageBox::warning(this, "Groupe inexistant", "Le groupe " + groupname + " n'existe pas.");
+            setFailMessage("Le groupe " + groupname + " n'existe pas.");
         }
     }
 }
