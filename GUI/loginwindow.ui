@@ -146,7 +146,7 @@
      <item>
       <widget class="QLabel" name="footer">
        <property name="text">
-        <string>EMH v1.0 - Projet AFORP 2015 de Kévin Labesse - MyDev's</string>
+        <string>EMH v1.0 - MyDev's</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -162,7 +162,7 @@
      <x>0</x>
      <y>0</y>
      <width>454</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuParametre">

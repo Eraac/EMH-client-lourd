@@ -10,10 +10,12 @@ createForm::createForm(QWidget *parent) :
     m_listReadersLayout = new QVBoxLayout();
     m_listWritersLayout = new QVBoxLayout();
     m_listTagsLayout = new QVBoxLayout();
+    m_fieldsLayout = new QVBoxLayout();
 
     ui->scrollAreaReaders->setLayout(m_listReadersLayout);
     ui->scrollAreaWriters->setLayout(m_listWritersLayout);
     ui->scrollAreaTags->setLayout(m_listTagsLayout);
+    ui->scrollAreaFields->setLayout(m_fieldsLayout);
 
     // On parcourt les groupes
     for (auto groupname : Entity::Group::getAll())
@@ -34,7 +36,6 @@ createForm::createForm(QWidget *parent) :
     }
 }
 
-
 createForm::~createForm()
 {
     delete ui;
@@ -47,7 +48,15 @@ void createForm::chooseColor()
 
 void createForm::addField()
 {
+    auto hlayout = new QHBoxLayout();
 
+    hlayout->addWidget( new QLabel(ui->typeFieldBox->currentText()) );
+    hlayout->addWidget( new QLabel("Prénom") );
+    hlayout->addWidget( new QLabel("2 contraintes") );
+    hlayout->addWidget( new QPushButton("Modifier") );
+    hlayout->addWidget( new QPushButton("Supprimer") );
+
+    m_fieldsLayout->addLayout(hlayout);
 }
 
 void createForm::valid()

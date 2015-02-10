@@ -5,6 +5,8 @@
 #include <QColor>
 #include <QColorDialog>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QSpacerItem>
 #include <QList>
 #include <QCheckBox>
 #include "../Model/Entity/Group.hpp"
@@ -40,6 +42,7 @@ class createForm : public QDialog
         QList<QCheckBox*> m_listTags;
         QVBoxLayout *m_listTagsLayout;
 
+        QVBoxLayout *m_fieldsLayout;
 };
 
 #endif // CREATEFORM_HPP
