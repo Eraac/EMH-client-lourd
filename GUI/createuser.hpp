@@ -6,6 +6,7 @@
 #include <QCheckBox>
 #include <memory>
 #include <QVBoxLayout>
+#include <QPushButton>
 #include "../Model/Entity/User.hpp"
 #include "../Model/Entity/Group.hpp"
 #include "../Model/Relation/Belong.hpp"
@@ -27,11 +28,13 @@ class CreateUser : public QDialog
 
     public slots:
         void valideUser();
+        void deleteUser();
         void formChange();
 
     signals:
         void userCreateSuccess();
         void userEditSuccess();
+        void userDeleteSuccess();
 
     private:
         Ui::CreateUser *ui;
@@ -40,6 +43,7 @@ class CreateUser : public QDialog
         bool newUser;
         QList<QCheckBox*> m_listGroups;
         QVBoxLayout *m_listGroupsLayout;
+        QPushButton *m_deleteUserButton;
 };
 
 #endif // CREATEUSER_HPP

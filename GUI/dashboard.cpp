@@ -74,11 +74,13 @@ void Dashboard::editUser()
             CreateUser editUser;
 
             QObject::connect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
+            QObject::connect(&editUser, SIGNAL(userDeleteSuccess()), this, SLOT(userDeleteSuccess()));
 
             editUser.loadUser(user);
             editUser.exec();
 
             QObject::disconnect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
+            QObject::disconnect(&editUser, SIGNAL(userDeleteSuccess()), this, SLOT(userDeleteSuccess()));
         }
         else
         {
@@ -92,6 +94,11 @@ void Dashboard::editUser()
 void Dashboard::editUserSuccess()
 {
     setSuccessMessage("Utilisateur modifié avec succès.");
+}
+
+void Dashboard::userDeleteSuccess()
+{
+    setSuccessMessage("Utilisateur supprimé avec succès.");
 }
 
 void Dashboard::addGroup()

@@ -5,7 +5,7 @@
 CreateUser::CreateUser(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CreateUser),
-    m_user(), newUser(true)
+    m_user(), newUser(true), m_deleteUserButton(nullptr)
 {
     ui->setupUi(this);
 
@@ -48,6 +48,12 @@ void CreateUser::loadUser(Entity::User user)
             }
         }
     }
+
+    m_deleteUserButton = new QPushButton("Supprimer");
+
+    ui->formLayout->addWidget(m_deleteUserButton);
+
+    QObject::connect(m_deleteUserButton, SIGNAL(clicked()), this, SLOT(deleteUser()));
 }
 
 void CreateUser::valideUser()
@@ -155,6 +161,15 @@ void CreateUser::valideUser()
         emit userCreateSuccess();
     else
         emit userEditSuccess();
+
+    this->close();
+}
+
+void CreateUser::deleteUser()
+{
+    m_user.remove();
+
+    emit userDeleteSuccess();
 
     this->close();
 }

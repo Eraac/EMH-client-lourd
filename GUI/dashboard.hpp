@@ -29,12 +29,16 @@ class Dashboard : public QWidget
 
     public slots:
         void clickDisconnect();
+
         void addUser();
         void addUserSuccess();
         void editUser();
         void editUserSuccess();
+        void userDeleteSuccess();
+
         void addGroup();
         void editGroup();
+
         void addForm();
         void editForm();
 
