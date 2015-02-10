@@ -16,6 +16,7 @@ createForm::createForm(QWidget *parent) :
     ui->scrollAreaWriters->setLayout(m_listWritersLayout);
     ui->scrollAreaTags->setLayout(m_listTagsLayout);
 
+    // On parcourt les groupes
     for (auto groupname : Entity::Group::getAll())
     {
         m_listReaders.append(new QCheckBox(groupname));
@@ -25,6 +26,7 @@ createForm::createForm(QWidget *parent) :
         m_listWritersLayout->addWidget(m_listWriters.last());
     }
 
+    // On parcourt les tags
     for (auto tagname : Entity::Tag::getAll())
     {
         m_listTags.append(new QCheckBox(tagname));
