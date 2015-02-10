@@ -189,6 +189,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="message">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="disconnectButton">
          <property name="text">
           <string>Déconnexion</string>
