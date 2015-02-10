@@ -52,6 +52,7 @@ void CreateUser::loadUser(Entity::User user)
     m_deleteUserButton = new QPushButton("Supprimer");
 
     ui->formLayout->addWidget(m_deleteUserButton);
+    ui->emailLineEdit->setEnabled(false);
 
     QObject::connect(m_deleteUserButton, SIGNAL(clicked()), this, SLOT(deleteUser()));
 }
@@ -66,7 +67,9 @@ void CreateUser::valideUser()
     {
         m_user.setName(ui->nomLineEdit->text());
         m_user.setFirstName(ui->prenomLineEdit->text());
-        m_user.setEmail(ui->emailLineEdit->text());
+
+        if (!newUser)
+            m_user.setEmail(ui->emailLineEdit->text());
 
         // Si l'utilisateur est nouveau OU si on rentre un nouveau mot de passe
         if (m_user.getId() == 0 || !ui->passwordLineEdit->text().isEmpty())
