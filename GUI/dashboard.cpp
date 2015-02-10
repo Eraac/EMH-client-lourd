@@ -20,6 +20,18 @@ void Dashboard::loadUser(Entity::User const& user)
     ui->footer->setText("EMH v1.0 - " + m_user.getEmail());
 }
 
+void Dashboard::setFailMessage(const QString &message)
+{
+    ui->message->setStyleSheet("color: red");
+    ui->message->setText(message);
+}
+
+void Dashboard::setSuccessMessage(const QString &message)
+{
+    ui->message->setStyleSheet("color: green");
+    ui->message->setText(message);
+}
+
 void Dashboard::clickDisconnect()
 {
     emit disconnect();
@@ -28,7 +40,17 @@ void Dashboard::clickDisconnect()
 void Dashboard::addUser()
 {
     CreateUser createUser;
-        createUser.exec();
+
+    QObject::connect(&createUser, SIGNAL(userCreateSuccess()), this, SLOT(addUserSuccess()));
+
+    createUser.exec();
+
+    QObject::disconnect(&createUser, SIGNAL(userCreateSuccess()), this, SLOT(addUserSuccess()));
+}
+
+void Dashboard::addUserSuccess()
+{
+    setSuccessMessage("Utilisateur créé avec succès.");
 }
 
 void Dashboard::editUser()
@@ -50,8 +72,13 @@ void Dashboard::editUser()
         if (error == Entity::User::ErrorType::NONE)
         {
             CreateUser editUser;
-                editUser.loadUser(user);
-                editUser.exec();
+
+            QObject::connect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
+
+            editUser.loadUser(user);
+            editUser.exec();
+
+            QObject::disconnect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
         }
         else
         {
@@ -60,6 +87,11 @@ void Dashboard::editUser()
 
     }
 
+}
+
+void Dashboard::editUserSuccess()
+{
+    setSuccessMessage("Utilisateur modifié avec succès.");
 }
 
 void Dashboard::addGroup()

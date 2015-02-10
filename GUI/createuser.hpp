@@ -29,10 +29,15 @@ class CreateUser : public QDialog
         void valideUser();
         void formChange();
 
+    signals:
+        void userCreateSuccess();
+        void userEditSuccess();
+
     private:
         Ui::CreateUser *ui;
 
         Entity::User m_user;
+        bool newUser;
         QList<QCheckBox*> m_listGroups;
         QVBoxLayout *m_listGroupsLayout;
 };

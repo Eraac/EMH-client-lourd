@@ -21,6 +21,8 @@ class Dashboard : public QWidget
         ~Dashboard();
 
         void loadUser(Entity::User const& user);
+        void setFailMessage(QString const& message);
+        void setSuccessMessage(QString const& message);
 
     signals:
         void disconnect();
@@ -28,7 +30,9 @@ class Dashboard : public QWidget
     public slots:
         void clickDisconnect();
         void addUser();
+        void addUserSuccess();
         void editUser();
+        void editUserSuccess();
         void addGroup();
         void editGroup();
         void addForm();
@@ -36,8 +40,7 @@ class Dashboard : public QWidget
 
     private:
         Ui::Dashboard *ui;
-
-        Entity::User m_user;
+        Entity::User m_user;                
 };
 
 #endif // DASHBOARD_HPP

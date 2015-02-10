@@ -1,10 +1,11 @@
 #include "createuser.hpp"
 #include "ui_createuser.h"
 
+
 CreateUser::CreateUser(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CreateUser),
-    m_user()
+    m_user(), newUser(true)
 {
     ui->setupUi(this);
 
@@ -26,6 +27,8 @@ CreateUser::~CreateUser()
 
 void CreateUser::loadUser(Entity::User user)
 {
+    newUser = false;
+
     m_user = user;
 
     ui->nomLineEdit->setText(m_user.getName());
@@ -147,6 +150,11 @@ void CreateUser::valideUser()
 
         belong.remove();
     }
+
+    if (newUser)
+        emit userCreateSuccess();
+    else
+        emit userEditSuccess();
 
     this->close();
 }
