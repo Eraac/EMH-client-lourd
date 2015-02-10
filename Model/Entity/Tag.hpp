@@ -9,29 +9,30 @@ namespace Entity
 {
     class Tag : public Entity
     {
-    public:
-    Tag();  // Constructeur par défaut
-    ~Tag(); // Destructeur
 
-    static const int weight;    // Utilisé pour trier
+        public:
+            Tag();  // Constructeur par défaut
+            ~Tag(); // Destructeur
 
-    void setName(QString const& name);          // Change le nom
+            static const int weight;    // Utilisé pour trier
 
-    QString getName() const;                    // Retourne le nom
+            void setName(QString const& name);          // Change le nom
 
-    Entity::ErrorType load(unsigned int id);    // Charge l'entité depuis la base de données
+            QString getName() const;                    // Retourne le nom
 
-    static QStringList getAll();                // Retourne le nom de tous les tags
-    virtual int getWeight() const;              // Retourne le poids
+            Entity::ErrorType load(unsigned int id);    // Charge l'entité depuis la base de données
 
-    virtual void persist() override;            // Persiste l'entité en base de données
-    virtual void remove() override;             // Supprime l'entité de la base de données
-    virtual bool isValid() const;               // Retourne si l'entité est valide pour le persiste
+            static QStringList getAll();                // Retourne le nom de tous les tags
+            virtual int getWeight() const;              // Retourne le poids
 
-    private:
-    QString m_name;
+            virtual void persist() override;            // Persiste l'entité en base de données
+            virtual void remove() override;             // Supprime l'entité de la base de données
+            virtual bool isValid() const;               // Retourne si l'entité est valide pour le persiste
 
-};
+        private:
+            QString m_name;
+
+    };
 }
 
 #endif // TAG_HPP

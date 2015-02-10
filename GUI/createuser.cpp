@@ -10,12 +10,12 @@ CreateUser::CreateUser(QWidget *parent) :
     ui->setupUi(this);
 
     m_listGroupsLayout = new QVBoxLayout();
+    ui->scrollAreaWidgetContents->setLayout(m_listGroupsLayout);
 
     // On charge les groupes
     for (auto groupname : Entity::Group::getAll())
     {
-        m_listGroups.append(new QCheckBox(groupname));
-        ui->scrollAreaWidgetContents->setLayout(m_listGroupsLayout);
+        m_listGroups.append(new QCheckBox(groupname));        
         m_listGroupsLayout->addWidget(m_listGroups.last());
     }
 }

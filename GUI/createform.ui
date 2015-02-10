@@ -151,11 +151,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QScrollArea" name="writerArea">
+          <widget class="QScrollArea" name="writersArea">
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents">
+           <widget class="QWidget" name="scrollAreaWriters">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -179,11 +179,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QScrollArea" name="readerArea">
+          <widget class="QScrollArea" name="readersArea">
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <widget class="QWidget" name="scrollAreaReaders">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -211,7 +211,7 @@
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents_3">
+           <widget class="QWidget" name="scrollAreaTags">
             <property name="geometry">
              <rect>
               <x>0</x>
