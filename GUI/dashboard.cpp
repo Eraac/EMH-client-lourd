@@ -131,7 +131,7 @@ void Dashboard::editGroup()
 {
     bool ok = false;
 
-    QString groupname = QInputDialog::getText(this, "Ajouter un groupe", "Quel est le nom du nouveau groupe ?", QLineEdit::Normal, QString(), &ok);
+    QString groupname = QInputDialog::getText(this, "Modifier un groupe", "Quel est le nom du nouveau groupe ?", QLineEdit::Normal, QString(), &ok);
 
     if (ok && !groupname.isEmpty())
     {
@@ -168,7 +168,8 @@ void Dashboard::editGroup()
 
 void Dashboard::addForm()
 {
-
+    createForm createForm;
+        createForm.exec();
 }
 
 void Dashboard::editForm()
