@@ -38,7 +38,8 @@ HEADERS += \
     GUI/createuser.hpp \
     GUI/createform.hpp \
     GUI/customqpushbutton.hpp \
-    GUI/fieldwindow.hpp
+    GUI/fieldwindow.hpp \
+    Model/Entity/param.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -67,7 +68,8 @@ SOURCES += \
     GUI/createuser.cpp \
     GUI/createform.cpp \
     GUI/customqpushbutton.cpp \
-    GUI/fieldwindow.cpp
+    GUI/fieldwindow.cpp \
+    Model/Entity/param.cpp
 
 RESOURCES += \
     Resource/images.qrc
