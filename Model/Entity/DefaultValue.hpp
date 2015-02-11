@@ -6,7 +6,7 @@
 
 namespace Entity
 {
-    class DefaultValue : Entity
+    class DefaultValue : public Entity
     {
         public:
         DefaultValue();             // Constructeur par défaut

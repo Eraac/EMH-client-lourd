@@ -2,6 +2,7 @@
 #define PARAM_HPP
 
 #include <QString>
+#include "Entity.hpp"
 
 namespace Entity
 {
@@ -9,8 +10,11 @@ namespace Entity
     {
         public:
             Param();
+            virtual ~Param();
 
-            static const int weight();
+            static const int weight;
+
+            Entity::ErrorType load(unsigned int id);
 
             void setValue(QString const& value);// Change la valeur
             void setIdConstraint(int id);       // Change l'id de la contrainte

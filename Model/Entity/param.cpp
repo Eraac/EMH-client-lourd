@@ -1,10 +1,25 @@
 #include "param.hpp"
 
-const int Entity::Param::weight() = 1;
+const int Entity::Param::weight = 1;
 
 Entity::Param::Param() : Entity(), m_value(), m_idConstraint(0)
 {
 
+}
+
+Entity::Param::~Param()
+{
+
+}
+
+Entity::Entity::ErrorType Entity::Param::load(unsigned int id)
+{
+    // TODO
+
+    m_id = id;
+    m_value = "3";
+
+    return Entity::ErrorType::NONE;
 }
 
 void Entity::Param::setValue(const QString &value)
@@ -42,7 +57,7 @@ void Entity::Param::remove()
     // TOOD
 }
 
-void Entity::Param::isValid()
+bool Entity::Param::isValid() const
 {
     return !(m_value.isEmpty() || m_idConstraint == 0);
 }
