@@ -12,6 +12,7 @@
 #include "customqpushbutton.hpp"
 #include "../Model/Entity/Group.hpp"
 #include "../Model/Entity/Tag.hpp"
+#include "../GUI/fieldwindow.hpp"
 
 namespace Ui {
     class createForm;

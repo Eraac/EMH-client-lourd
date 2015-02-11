@@ -16,6 +16,8 @@ fieldWindow::~fieldWindow()
 
 void fieldWindow::persistField(int idForm)
 {
+    // TODO Remplir l'objet m_field avec les infos dans le formulaire
+
     Utility::PersisterManager pm;
 
     pm.persistOne(m_field);

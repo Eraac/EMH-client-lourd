@@ -50,6 +50,9 @@ void createForm::chooseColor()
 
 void createForm::addField()
 {
+    fieldWindow field;
+        field.exec();
+
     auto hlayout = new QHBoxLayout();
 
     CustomQPushButton *edit = new CustomQPushButton("Modifier", 1);
@@ -83,5 +86,9 @@ void createForm::deleteField(int id)
 
 void createForm::valid()
 {
+    // Parcourir les fieldsWindow et générer les fields
+    // Persist les Readers et les Writers
+    // Persist les tags
+
     close();
 }
