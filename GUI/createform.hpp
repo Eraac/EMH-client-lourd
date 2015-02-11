@@ -9,6 +9,7 @@
 #include <QSpacerItem>
 #include <QList>
 #include <QCheckBox>
+#include "customqpushbutton.hpp"
 #include "../Model/Entity/Group.hpp"
 #include "../Model/Entity/Tag.hpp"
 
@@ -27,7 +28,9 @@ class createForm : public QDialog
     public slots:
         void chooseColor();
         void addField();
-        void valid();
+        void valid();        
+        void editField(int id);
+        void deleteField(int id);
 
     private:
         Ui::createForm *ui;

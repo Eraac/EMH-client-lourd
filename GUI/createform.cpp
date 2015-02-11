@@ -1,6 +1,8 @@
 #include "createform.hpp"
 #include "ui_createform.h"
 
+#include <QMessageBox>
+
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::createForm), m_color(Qt::white)
@@ -50,13 +52,33 @@ void createForm::addField()
 {
     auto hlayout = new QHBoxLayout();
 
+    CustomQPushButton *edit = new CustomQPushButton("Modifier", 1);
+    CustomQPushButton *del = new CustomQPushButton("Supprimer", 2);
+
+    QObject::connect(edit, SIGNAL(customClicked(int)), this, SLOT(editField(int)));
+    QObject::connect(del, SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
+
     hlayout->addWidget( new QLabel(ui->typeFieldBox->currentText()) );
     hlayout->addWidget( new QLabel("Prénom") );
     hlayout->addWidget( new QLabel("2 contraintes") );
-    hlayout->addWidget( new QPushButton("Modifier") );
-    hlayout->addWidget( new QPushButton("Supprimer") );
+    hlayout->addWidget( edit );
+    hlayout->addWidget( del );
 
     m_fieldsLayout->addLayout(hlayout);
+}
+
+void createForm::editField(int id)
+{
+    QString message = QString("%1").arg(id);
+
+    QMessageBox::information(this, "Titre", message);
+}
+
+void createForm::deleteField(int id)
+{
+    QString message = QString("%1").arg(id);
+
+    QMessageBox::information(this, "Titre", message);
 }
 
 void createForm::valid()

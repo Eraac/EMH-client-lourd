@@ -35,7 +35,8 @@ HEADERS += \
     GUI/databasesetting.hpp \
     GUI/dashboard.hpp \
     GUI/createuser.hpp \
-    GUI/createform.hpp
+    GUI/createform.hpp \
+    GUI/customqpushbutton.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -62,7 +63,8 @@ SOURCES += \
     GUI/databasesetting.cpp \
     GUI/dashboard.cpp \
     GUI/createuser.cpp \
-    GUI/createform.cpp
+    GUI/createform.cpp \
+    GUI/customqpushbutton.cpp
 
 RESOURCES += \
     Resource/images.qrc
