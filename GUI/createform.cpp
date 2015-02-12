@@ -104,22 +104,18 @@ void createForm::deleteField(int id)
     // Supprime le horizontal layout du vertial layout
     m_fieldsLayout->removeItem( line );
 
-    // On supprime les widgets contenu dans le layout
-    /*auto childrens = line->children();
-
-    for (auto &children : childrens)
-        delete children;*/
-
     QLayoutItem *item;
 
-       while ((item = line->takeAt(0)) != 0) {
-            item->widget()->deleteLater();
-            delete item;
-       }
+    while ((item = line->takeAt(0)) != 0)
+    {
+        item->widget()->deleteLater();
+        delete item;
+    }
 
     delete line;
 
     // TODO Disconnect le signal
+    // TODO Stocker les fields supprimer pour call la méthode remove
 
 }
 
