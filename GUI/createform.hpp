@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QSpacerItem>
 #include <QList>
+#include <QMap>
 #include <QCheckBox>
 #include "customqpushbutton.hpp"
 #include "../Model/Entity/Group.hpp"
@@ -49,10 +50,10 @@ class createForm : public QDialog
         QVBoxLayout *m_fieldsLayout;
 
         int m_nbField;
-        QList<fieldWindow*> m_fieldsWindows;
-        QList<QHBoxLayout*> m_lines;
-        QList<CustomQPushButton*> m_edits;
-        QList<CustomQPushButton*> m_deletes;
+        QMap<int, fieldWindow*> m_fieldsWindows;
+        QMap<int, QHBoxLayout*> m_lines;
+        QMap<int, CustomQPushButton*> m_edits;
+        QMap<int, CustomQPushButton*> m_deletes;
 };
 
 #endif // CREATEFORM_HPP

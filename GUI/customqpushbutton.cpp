@@ -10,6 +10,11 @@ void CustomQPushButton::click()
     emit customClicked(m_id);
 }
 
+int CustomQPushButton::getId() const
+{
+    return m_id;
+}
+
 void CustomQPushButton::reduceId()
 {
     m_id--;

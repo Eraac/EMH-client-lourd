@@ -55,16 +55,16 @@ void createForm::addField()
 {
     m_nbField++;
 
-    m_fieldsWindows.append(new fieldWindow());
+    m_fieldsWindows.insert(m_nbField, new fieldWindow());
 
     //QMessageBox::information(this, "title", QString("%1").arg(m_fieldsWindows.count()));
 
         m_fieldsWindows.last()->exec();
 
-    m_lines.append( new QHBoxLayout() );
+    m_lines.insert( m_nbField, new QHBoxLayout() );
 
-    m_edits.append( new CustomQPushButton("Modifier", m_nbField) );
-    m_deletes.append( new CustomQPushButton("Supprimer", m_nbField) );
+    m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
+    m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
 
     QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editField(int)));
     QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
@@ -80,26 +80,22 @@ void createForm::addField()
 
 void createForm::editField(int id)
 {
-    m_fieldsWindows.value(id - 1)->exec();
+    m_fieldsWindows[id]->exec();
 
     // TODO Edit le layout
 }
 
 void createForm::deleteField(int id)
 {
-    m_nbField--;
-
-    for (int i = id; i < m_edits.count(); i++)
-        m_edits[i]->reduceId();
-
-    for (int i = id; i < m_deletes.count(); i++)
-        m_deletes[i]->reduceId();
+    // On deco les slots
+    QObject::disconnect(m_edits[id], SIGNAL(customClicked(int)), this, SLOT(editField(int)));
+    QObject::disconnect(m_deletes[id], SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
 
     // On supprime la fenêtre
-    m_fieldsWindows.removeAt(id - 1);
+    delete m_fieldsWindows.take(id);
 
     // On récupère le layout horizontal
-    QHBoxLayout* line = m_lines.takeAt(id - 1);
+    QHBoxLayout* line = m_lines.take(id);
 
     // Supprime le horizontal layout du vertial layout
     m_fieldsLayout->removeItem( line );
@@ -114,9 +110,7 @@ void createForm::deleteField(int id)
 
     delete line;
 
-    // TODO Disconnect le signal
-    // TODO Stocker les fields supprimer pour call la méthode remove
-
+    // TODO Stocker les fields supprimer pour call la méthode remove quand il s'agit d'un formulaire existant
 }
 
 void createForm::valid()
