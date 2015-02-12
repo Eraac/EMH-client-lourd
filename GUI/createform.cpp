@@ -89,10 +89,10 @@ void createForm::deleteField(int id)
 {
     m_nbField--;
 
-    for (int i = id - 1; i < m_edits.count(); i++)
+    for (int i = id; i < m_edits.count(); i++)
         m_edits[i]->reduceId();
 
-    for (int i = id - 1; i < m_deletes.count(); i++)
+    for (int i = id; i < m_deletes.count(); i++)
         m_deletes[i]->reduceId();
 
     // On supprime la fenêtre
