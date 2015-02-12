@@ -25,6 +25,12 @@ class fieldWindow : public QDialog
 
         void persistField(int idForm);
 
+        Entity::Field getField() const;
+        int getNbConstraint() const;
+
+    public slots:
+        void valid();
+
     private:
         Ui::fieldWindow *ui;
 

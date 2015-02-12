@@ -25,6 +25,7 @@ namespace Entity
         void setHelpText(QString const& helpText);          // Change le texte d'aide
 
         Field::Type getType() const;    // Retourne le type
+        QString getTypeReadable() const;// Retourne le type lisable par un humain
         QString getLabel() const;       // Retourne le label
         QString getPlaceholder() const; // Retourne le placeholder
         QString getHelpText() const;    // Retourne le texte d'aide

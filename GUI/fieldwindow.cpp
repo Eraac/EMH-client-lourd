@@ -48,3 +48,46 @@ void fieldWindow::persistField(int idForm)
     for (Entity::Param &param : m_params)
         pm.persistOne(param);
 }
+
+void fieldWindow::valid()
+{
+    m_field.setLabel(ui->labelLineEdit->text());
+    m_field.setHelpText(ui->texteDAideLineEdit->text());
+    m_field.setPlaceholder(ui->placeholderLineEdit->text());
+
+    QString typeString = ui->typeComboBox->currentText();
+    auto type = Entity::Field::Type::NONE;
+
+    if (typeString == "Texte")
+        type = Entity::Field::Type::TEXT;
+    else if (typeString == "Nombre")
+        type = Entity::Field::Type::NUMBER;
+    else if (typeString == "Email")
+        type = Entity::Field::Type::EMAIL;
+    else if (typeString == "URL")
+        type = Entity::Field::Type::URL;
+    else if (typeString == "Date")
+         type = Entity::Field::Type::DATE;
+    else if (typeString == "Heure")
+         type = Entity::Field::Type::TIME;
+    else if (typeString == "Date et heure")
+        type = Entity::Field::Type::DATETIME;
+    else if (typeString == "Choix multiple")
+        type = Entity::Field::Type::RADIO;
+    else
+        type = Entity::Field::Type::TEXT;
+
+    m_field.setType(type);
+
+    close();
+}
+
+Entity::Field fieldWindow::getField() const
+{
+    return m_field;
+}
+
+int fieldWindow::getNbConstraint() const
+{
+    return m_constraints.count();
+}

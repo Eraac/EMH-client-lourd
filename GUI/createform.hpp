@@ -47,6 +47,9 @@ class createForm : public QDialog
         QVBoxLayout *m_listTagsLayout;
 
         QVBoxLayout *m_fieldsLayout;
+
+        int m_nbField;
+        QList<fieldWindow*> m_fieldsWindows;
 };
 
 #endif // CREATEFORM_HPP

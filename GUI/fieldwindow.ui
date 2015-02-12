@@ -174,5 +174,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fieldWindow</receiver>
+   <slot>valid()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>263</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>valid()</slot>
+ </slots>
 </ui>

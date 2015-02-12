@@ -278,50 +278,6 @@
         </spacer>
        </item>
        <item>
-        <widget class="QComboBox" name="typeFieldBox">
-         <item>
-          <property name="text">
-           <string>Texte</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Nombre</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Email</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Date</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Heure</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Date et heure</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>URL</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Choix multiple</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="addFieldButton">
          <property name="text">
           <string>Ajouter un champs</string>

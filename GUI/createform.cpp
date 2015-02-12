@@ -5,7 +5,7 @@
 
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::createForm), m_color(Qt::white)
+    ui(new Ui::createForm), m_color(Qt::white), m_nbField(0)
 {
     ui->setupUi(this);
 
@@ -41,6 +41,9 @@ createForm::createForm(QWidget *parent) :
 createForm::~createForm()
 {
     delete ui;
+
+    for (auto it = m_fieldsWindows.begin(); it != m_fieldsWindows.end(); ++it)
+        delete *it;
 }
 
 void createForm::chooseColor()
@@ -50,20 +53,25 @@ void createForm::chooseColor()
 
 void createForm::addField()
 {
-    fieldWindow field;
-        field.exec();
+    m_nbField++;
+
+    m_fieldsWindows.append(new fieldWindow());
+
+    QMessageBox::information(this, "title", QString("%1").arg(m_fieldsWindows.count()));
+
+        m_fieldsWindows.last()->exec();
 
     auto hlayout = new QHBoxLayout();
 
-    CustomQPushButton *edit = new CustomQPushButton("Modifier", 1);
-    CustomQPushButton *del = new CustomQPushButton("Supprimer", 2);
+    CustomQPushButton *edit = new CustomQPushButton("Modifier", m_nbField);
+    CustomQPushButton *del = new CustomQPushButton("Supprimer", m_nbField);
 
     QObject::connect(edit, SIGNAL(customClicked(int)), this, SLOT(editField(int)));
     QObject::connect(del, SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
 
-    hlayout->addWidget( new QLabel(ui->typeFieldBox->currentText()) );
-    hlayout->addWidget( new QLabel("Prénom") );
-    hlayout->addWidget( new QLabel("2 contraintes") );
+    hlayout->addWidget( new QLabel(m_fieldsWindows.last()->getField().getTypeReadable()) );
+    hlayout->addWidget( new QLabel(m_fieldsWindows.last()->getField().getLabel()) );
+    hlayout->addWidget( new QLabel(QString("%1 contrainte(s)").arg(m_fieldsWindows.last()->getNbConstraint()) ) );
     hlayout->addWidget( edit );
     hlayout->addWidget( del );
 
@@ -72,21 +80,23 @@ void createForm::addField()
 
 void createForm::editField(int id)
 {
-    QString message = QString("%1").arg(id);
+    m_fieldsWindows.value(id - 1)->exec();
 
-    QMessageBox::information(this, "Titre", message);
+    // TODO Edit le layout
 }
 
 void createForm::deleteField(int id)
 {
-    QString message = QString("%1").arg(id);
+    m_nbField--;
 
-    QMessageBox::information(this, "Titre", message);
+    m_fieldsWindows.removeAt(id);
+
+    // TODO Disconnect le signal
 }
 
 void createForm::valid()
 {
-    // Parcourir les fieldsWindow et générer les fields
+    // Parcourir les fieldsWindow et générer les fields (vérifier qu'ils sont valides)
     // Persist les Readers et les Writers
     // Persist les tags
 

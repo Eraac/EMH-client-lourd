@@ -38,6 +38,51 @@ Entity::Field::Type Entity::Field::getType() const
     return m_type;
 }
 
+QString Entity::Field::getTypeReadable() const
+{
+    QString type;
+
+    switch(m_type)
+    {
+        case Field::Type::DATE:
+            type = "Date";
+        break;
+
+        case Field::Type::DATETIME:
+            type = "Date et heure";
+        break;
+
+        case Field::Type::EMAIL:
+            type = "Email";
+        break;
+
+        case Field::Type::NUMBER:
+            type = "Nombre";
+        break;
+
+        case Field::Type::RADIO:
+            type = "Choix multiple";
+        break;
+
+        case Field::Type::TEXT:
+            type = "Texte";
+        break;
+
+        case Field::Type::TIME:
+            type = "Heure";
+        break;
+
+        case Field::Type::URL:
+            type = "Url";
+        break;
+
+        default:
+            type = "Texte";
+    }
+
+    return type;
+}
+
 QString Entity::Field::getLabel() const
 {
     return m_label;
