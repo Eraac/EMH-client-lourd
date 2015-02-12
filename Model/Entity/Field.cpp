@@ -3,7 +3,7 @@
 const int Entity::Field::weight = 1;
 
 Entity::Field::Field() : Entity(), m_type(Field::Type::NONE), m_isMultiple(false),
-                         m_label(""), m_placeholder(""), m_helpText("")
+                         m_label(""), m_placeholder(""), m_helpText(""), m_isRequired(true)
 {
 
 }
@@ -31,6 +31,16 @@ void Entity::Field::setPlaceholder(const QString &placeholder)
 void Entity::Field::setHelpText(const QString &helpText)
 {
     m_helpText = helpText;
+}
+
+void Entity::Field::setIsMultiple(bool multiple)
+{
+    m_isMultiple = multiple;
+}
+
+void Entity::Field::setIsRequired(bool required)
+{
+    m_isRequired = required;
 }
 
 Entity::Field::Type Entity::Field::getType() const
@@ -98,6 +108,16 @@ QString Entity::Field::getHelpText() const
     return m_helpText;
 }
 
+bool Entity::Field::getIsMultiple() const
+{
+    return m_isMultiple;
+}
+
+bool Entity::Field::getIsRequired() const
+{
+    return m_isRequired;
+}
+
 Entity::Entity::ErrorType Entity::Field::load(unsigned int id)
 {
     m_id = id;
@@ -117,6 +137,7 @@ int Entity::Field::getWeight() const
 void Entity::Field::persist()
 {
     // TODO
+    // Ne pas oublier le labelField qui est unique et le labelHuman pour les humains
 }
 
 void Entity::Field::remove()

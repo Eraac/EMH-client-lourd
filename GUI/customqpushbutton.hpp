@@ -11,6 +11,8 @@ class CustomQPushButton : public QPushButton
     public:
         CustomQPushButton(QString const& name, int id);
 
+        void reduceId();
+
     public slots:
         void click();
 

@@ -314,6 +314,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>nomLineEdit</tabstop>
+  <tabstop>description</tabstop>
+  <tabstop>messageInformation</tabstop>
+  <tabstop>messageImportant</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>writersArea</tabstop>
+  <tabstop>readersArea</tabstop>
+  <tabstop>tagsArea</tabstop>
+  <tabstop>fieldsArea</tabstop>
+  <tabstop>addFieldButton</tabstop>
+  <tabstop>validButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

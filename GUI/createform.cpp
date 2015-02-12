@@ -57,25 +57,25 @@ void createForm::addField()
 
     m_fieldsWindows.append(new fieldWindow());
 
-    QMessageBox::information(this, "title", QString("%1").arg(m_fieldsWindows.count()));
+    //QMessageBox::information(this, "title", QString("%1").arg(m_fieldsWindows.count()));
 
         m_fieldsWindows.last()->exec();
 
-    auto hlayout = new QHBoxLayout();
+    m_lines.append( new QHBoxLayout() );
 
-    CustomQPushButton *edit = new CustomQPushButton("Modifier", m_nbField);
-    CustomQPushButton *del = new CustomQPushButton("Supprimer", m_nbField);
+    m_edits.append( new CustomQPushButton("Modifier", m_nbField) );
+    m_deletes.append( new CustomQPushButton("Supprimer", m_nbField) );
 
-    QObject::connect(edit, SIGNAL(customClicked(int)), this, SLOT(editField(int)));
-    QObject::connect(del, SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
+    QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editField(int)));
+    QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
 
-    hlayout->addWidget( new QLabel(m_fieldsWindows.last()->getField().getTypeReadable()) );
-    hlayout->addWidget( new QLabel(m_fieldsWindows.last()->getField().getLabel()) );
-    hlayout->addWidget( new QLabel(QString("%1 contrainte(s)").arg(m_fieldsWindows.last()->getNbConstraint()) ) );
-    hlayout->addWidget( edit );
-    hlayout->addWidget( del );
+    m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getTypeReadable()) );
+    m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getLabel()) );
+    m_lines.last()->addWidget( new QLabel(QString("%1 contrainte(s)").arg(m_fieldsWindows.last()->getNbConstraint()) ) );
+    m_lines.last()->addWidget( m_edits.last() );
+    m_lines.last()->addWidget( m_deletes.last() );
 
-    m_fieldsLayout->addLayout(hlayout);
+    m_fieldsLayout->addLayout(m_lines.last());
 }
 
 void createForm::editField(int id)
@@ -89,9 +89,38 @@ void createForm::deleteField(int id)
 {
     m_nbField--;
 
-    m_fieldsWindows.removeAt(id);
+    for (int i = id - 1; i < m_edits.count(); i++)
+        m_edits[i]->reduceId();
+
+    for (int i = id - 1; i < m_deletes.count(); i++)
+        m_deletes[i]->reduceId();
+
+    // On supprime la fenêtre
+    m_fieldsWindows.removeAt(id - 1);
+
+    // On récupère le layout horizontal
+    QHBoxLayout* line = m_lines.takeAt(id - 1);
+
+    // Supprime le horizontal layout du vertial layout
+    m_fieldsLayout->removeItem( line );
+
+    // On supprime les widgets contenu dans le layout
+    /*auto childrens = line->children();
+
+    for (auto &children : childrens)
+        delete children;*/
+
+    QLayoutItem *item;
+
+       while ((item = line->takeAt(0)) != 0) {
+            item->widget()->deleteLater();
+            delete item;
+       }
+
+    delete line;
 
     // TODO Disconnect le signal
+
 }
 
 void createForm::valid()

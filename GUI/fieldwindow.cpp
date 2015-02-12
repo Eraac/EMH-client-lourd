@@ -54,6 +54,8 @@ void fieldWindow::valid()
     m_field.setLabel(ui->labelLineEdit->text());
     m_field.setHelpText(ui->texteDAideLineEdit->text());
     m_field.setPlaceholder(ui->placeholderLineEdit->text());
+    m_field.setIsRequired(ui->requisCheckBox->isChecked());
+    m_field.setIsMultiple(ui->choixMultipleCheckBox->isChecked());
 
     QString typeString = ui->typeComboBox->currentText();
     auto type = Entity::Field::Type::NONE;

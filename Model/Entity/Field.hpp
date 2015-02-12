@@ -23,12 +23,16 @@ namespace Entity
         void setLabel(QString const& label);                // Change le label
         void setPlaceholder(QString const& placeholder);    // Change le placeholder
         void setHelpText(QString const& helpText);          // Change le texte d'aide
+        void setIsMultiple(bool multiple);  // Change la valeur de m_isMultiple
+        void setIsRequired(bool required);  // Change la valeur de m_isRequired
 
         Field::Type getType() const;    // Retourne le type
         QString getTypeReadable() const;// Retourne le type lisable par un humain
         QString getLabel() const;       // Retourne le label
         QString getPlaceholder() const; // Retourne le placeholder
         QString getHelpText() const;    // Retourne le texte d'aide
+        bool getIsMultiple() const;     // Retourne si le champs est multiple ou pas
+        bool getIsRequired() const;     // Retourne si le champs est requis ou pas
 
         Entity::ErrorType load(unsigned int id);    // Charge l'entité depuis la base de données
         virtual int getWeight() const;              // Retourne le poids
@@ -40,6 +44,7 @@ namespace Entity
         private:
         Field::Type m_type;
         bool m_isMultiple;
+        bool m_isRequired;
         QString m_label;
         QString m_placeholder;
         QString m_helpText;

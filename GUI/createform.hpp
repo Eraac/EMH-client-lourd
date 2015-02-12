@@ -50,6 +50,9 @@ class createForm : public QDialog
 
         int m_nbField;
         QList<fieldWindow*> m_fieldsWindows;
+        QList<QHBoxLayout*> m_lines;
+        QList<CustomQPushButton*> m_edits;
+        QList<CustomQPushButton*> m_deletes;
 };
 
 #endif // CREATEFORM_HPP
