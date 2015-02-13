@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>616</width>
     <height>300</height>
    </rect>
   </property>
@@ -31,117 +31,176 @@
       </widget>
      </item>
      <item>
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelLabel">
-         <property name="text">
-          <string>Label</string>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::FieldsStayAtSizeHint</enum>
          </property>
-        </widget>
+         <item row="0" column="0">
+          <widget class="QLabel" name="labelLabel">
+           <property name="text">
+            <string>Label</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="labelLineEdit"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="texteAideLabel">
+           <property name="text">
+            <string>Texte d'aide</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="texteDAideLineEdit"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="typeLabel">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="typeComboBox">
+           <item>
+            <property name="text">
+             <string>Texte</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Nombre</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Email</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>URL</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Date</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Heure</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Date et heure</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Choix multiple</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="placeholderLabel">
+           <property name="text">
+            <string>Placeholder</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="placeholderLineEdit"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="valeurParDFautLabel">
+           <property name="text">
+            <string>Valeur par défaut</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="valeurParDFautLineEdit"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="requisLabel">
+           <property name="text">
+            <string>Requis</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QCheckBox" name="requisCheckBox"/>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="choixMultipleLabel">
+           <property name="text">
+            <string>Choix multiple</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="choixMultipleCheckBox"/>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="labelLineEdit"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="texteAideLabel">
-         <property name="text">
-          <string>Texte d'aide</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="texteDAideLineEdit"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="typeComboBox">
-         <item>
-          <property name="text">
-           <string>Texte</string>
-          </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Contraintes</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <property name="text">
-           <string>Nombre</string>
-          </property>
+          <widget class="QScrollArea" name="scrollConstraintsArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="scrollAreaConstraintsContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>285</width>
+              <height>137</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
          </item>
          <item>
-          <property name="text">
-           <string>Email</string>
-          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="addConstraintButton">
+             <property name="text">
+              <string>Ajouter contrainte</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
-         <item>
-          <property name="text">
-           <string>URL</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Date</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Heure</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Date et heure</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Choix multiple</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="typeLabel">
-         <property name="text">
-          <string>Type</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="placeholderLineEdit"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="placeholderLabel">
-         <property name="text">
-          <string>Placeholder</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QCheckBox" name="requisCheckBox"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="requisLabel">
-         <property name="text">
-          <string>Requis</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QCheckBox" name="choixMultipleCheckBox"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="choixMultipleLabel">
-         <property name="text">
-          <string>Choix multiple</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="valeurParDFautLineEdit"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="valeurParDFautLabel">
-         <property name="text">
-          <string>Valeur par défaut</string>
-         </property>
-        </widget>
+        </layout>
        </item>
       </layout>
      </item>
@@ -182,8 +241,8 @@
    <slot>valid()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>327</x>
-     <y>271</y>
+     <x>602</x>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>263</x>
@@ -191,8 +250,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addConstraintButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fieldWindow</receiver>
+   <slot>addConstraint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>463</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>422</x>
+     <y>221</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>valid()</slot>
+  <slot>addConstraint()</slot>
  </slots>
 </ui>

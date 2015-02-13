@@ -4,14 +4,20 @@
 fieldWindow::fieldWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
-    m_field()
+    m_field(), m_nbField()
 {
     ui->setupUi(this);
+
+    m_constraintLayout = new QVBoxLayout();
+
+    ui->scrollAreaConstraintsContents->setLayout(m_constraintLayout);
 }
 
 fieldWindow::~fieldWindow()
 {
     delete ui;
+
+    // TODO Supprimer les windows pour créer les fenêtres
 }
 
 void fieldWindow::persistField(int idForm)
@@ -34,7 +40,7 @@ void fieldWindow::persistField(int idForm)
         pm.persistOne(defaultValue);
     }
 
-    for (Entity::Constraint &constraint : m_constraints)
+    /*for (Entity::Constraint &constraint : m_constraints)
     {
         pm.persistOne(constraint);
 
@@ -46,7 +52,7 @@ void fieldWindow::persistField(int idForm)
     }
 
     for (Entity::Param &param : m_params)
-        pm.persistOne(param);
+        pm.persistOne(param);*/
 }
 
 void fieldWindow::valid()
@@ -84,6 +90,34 @@ void fieldWindow::valid()
     close();
 }
 
+void fieldWindow::addConstraint()
+{
+    m_nbField++;
+
+    m_lines.insert( m_nbField, new QHBoxLayout() );
+    m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
+    m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
+
+    QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editConstraint(int)));
+    QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteConstraint(int)));
+
+    m_lines.last()->addWidget( new QLabel("Regex") );
+    m_lines.last()->addWidget( m_edits.last() );
+    m_lines.last()->addWidget( m_deletes.last() );
+
+    m_constraintLayout->addLayout( m_lines.last() );
+}
+
+void fieldWindow::editConstraint(int id)
+{
+
+}
+
+void fieldWindow::deleteConstraint(int id)
+{
+
+}
+
 Entity::Field fieldWindow::getField() const
 {
     return m_field;
@@ -91,5 +125,6 @@ Entity::Field fieldWindow::getField() const
 
 int fieldWindow::getNbConstraint() const
 {
-    return m_constraints.count();
+    //return m_constraints.count();
+    return 0;
 }

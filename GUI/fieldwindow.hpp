@@ -1,11 +1,13 @@
 #ifndef FIELDWINDOW_HPP
 #define FIELDWINDOW_HPP
 
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QDialog>
 #include <QList>
+#include <QMap>
+#include "../GUI/customqpushbutton.hpp"
 #include "../Model/Entity/Field.hpp"
-#include "../Model/Entity/Constraint.hpp"
-#include "../Model/Entity/param.hpp"
 #include "../Model/Entity/DefaultValue.hpp"
 #include "../Model/Relation/Require.hpp"
 #include "../Model/Relation/Contains.hpp"
@@ -30,14 +32,23 @@ class fieldWindow : public QDialog
 
     public slots:
         void valid();
+        void addConstraint();
+        void editConstraint(int id);
+        void deleteConstraint(int id);
 
     private:
         Ui::fieldWindow *ui;
 
         Entity::Field m_field;
         QList<Entity::DefaultValue> m_defaultValues;
-        QList<Entity::Constraint> m_constraints;
-        QList<Entity::Param> m_params;
+
+        QVBoxLayout *m_constraintLayout;
+
+        int m_nbField;
+        //QMap sur la window pour les contraintes
+        QMap<int, QHBoxLayout*> m_lines;
+        QMap<int, CustomQPushButton*> m_edits;
+        QMap<int, CustomQPushButton*> m_deletes;
 };
 
 #endif // FIELDWINDOW_HPP
