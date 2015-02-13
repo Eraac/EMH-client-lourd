@@ -1,8 +1,6 @@
 #include "createform.hpp"
 #include "ui_createform.h"
 
-#include <QMessageBox>
-
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::createForm), m_color(Qt::white), m_nbField(0)
@@ -56,9 +54,6 @@ void createForm::addField()
     m_nbField++;
 
     m_fieldsWindows.insert(m_nbField, new fieldWindow());
-
-    //QMessageBox::information(this, "title", QString("%1").arg(m_fieldsWindows.count()));
-
         m_fieldsWindows.last()->exec();
 
     m_lines.insert( m_nbField, new QHBoxLayout() );
@@ -82,7 +77,14 @@ void createForm::editField(int id)
 {
     m_fieldsWindows[id]->exec();
 
-    // TODO Edit le layout
+    QLabel *labelType = dynamic_cast<QLabel*>(m_lines[id]->itemAt(0)->widget());
+        labelType->setText( m_fieldsWindows[id]->getField().getTypeReadable() );
+
+    QLabel *labelName = dynamic_cast<QLabel*>(m_lines[id]->itemAt(1)->widget());
+        labelName->setText( m_fieldsWindows[id]->getField().getLabel() );
+
+    QLabel *nbConstraints = dynamic_cast<QLabel*>(m_lines[id]->itemAt(2)->widget());
+        nbConstraints->setText( QString("%1 contrainte(s)").arg(m_fieldsWindows[id]->getNbConstraint()) );
 }
 
 void createForm::deleteField(int id)
