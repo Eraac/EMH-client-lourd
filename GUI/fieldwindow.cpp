@@ -38,6 +38,7 @@ void fieldWindow::persistField(int idForm)
     for (Entity::DefaultValue &defaultValue : m_defaultValues)
     {
         defaultValue.setIdField(m_field.getId());
+        // TODO Mettre une valeur
         pm.persistOne(defaultValue);
     }
 
@@ -142,6 +143,23 @@ void fieldWindow::deleteConstraint(int id)
     }
 
     delete line;
+}
+
+void fieldWindow::selectChange(int id)
+{
+    // Remplacer valeur par défaut par un textarea (ou inversement)
+
+    // Dégriser checkbox (ou inversement)
+    if (7 == id)
+    {
+        ui->choixMultipleCheckBox->setEnabled(true);
+    }
+    else
+    {
+        ui->choixMultipleCheckBox->setChecked(false);
+        ui->choixMultipleCheckBox->setEnabled(false);
+    }
+
 }
 
 Entity::Field fieldWindow::getField() const

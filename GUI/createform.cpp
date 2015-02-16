@@ -146,9 +146,66 @@ void createForm::valid()
 
     pm.persistOne(m_form);
 
-    for (auto &tag : m_listTags)
+    // On enregistre ceux qui pourront utiliser le formulaire
+    for (QCheckBox* writersBox : m_listWriters)
     {
+        if (writersBox->isChecked())
+        {
+            Entity::Group group;
+                auto error = group.loadByName(writersBox->text());
 
+            if (Entity::Entity::ErrorType::NONE == error)
+            {
+                Relation::Write writer;
+                    writer.setIdForm(m_form.getId());
+                    writer.setIdGroup(group.getId());
+
+                pm.persistOne(writer);
+            }
+        }
+    }
+
+    // On enregistre ceux qui pourront lire les soumissions du formulaire
+    for (QCheckBox* readersBox : m_listReaders)
+    {
+        if (readersBox->isChecked())
+        {
+            Entity::Group group;
+                auto error = group.loadByName(readersBox->text());
+
+            if (Entity::Entity::ErrorType::NONE == error)
+            {
+                Relation::Read reader;
+                    reader.setIdForm(m_form.getId());
+                    reader.setIdGroup(group.getId());
+
+                pm.persistOne(reader);
+            }
+        }
+    }
+
+    // Enregistre les tags liés au formulaire
+    for (QCheckBox* tagBox : m_listTags)
+    {
+        if (tagBox->isChecked())
+        {
+            Entity::Tag tag;
+                auto error = tag.loadByName(tagBox->text());
+
+            if (Entity::Entity::ErrorType::NONE == error)
+            {
+                Relation::Categorizing categorizing;
+                    categorizing.setIdForm(m_form.getId());
+                    categorizing.setIdTag(tag.getId());
+
+                pm.persistOne(categorizing);
+            }
+        }
+    }
+
+    for (auto it = m_fieldsWindows.begin(); it != m_fieldsWindows.end(); ++it)
+    {
+        (*it)->persistField(m_form.getId());
     }
 
     close();

@@ -31,6 +31,15 @@ Entity::Entity::ErrorType Entity::Tag::load(unsigned int id)
     return Entity::ErrorType::NONE;
 }
 
+Entity::Entity::ErrorType Entity::Tag::loadByName(const QString& name)
+{
+    // TODO
+    m_id = 5;
+    m_name = name;
+
+    return Entity::ErrorType::NONE;
+}
+
 QStringList Entity::Tag::getAll()
 {
     // TODO

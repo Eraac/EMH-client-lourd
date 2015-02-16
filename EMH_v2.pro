@@ -41,8 +41,7 @@ HEADERS += \
     GUI/customqpushbutton.hpp \
     GUI/fieldwindow.hpp \
     Model/Entity/param.hpp \
-    GUI/constraintwindow.hpp \
-    Model/Relation/constrained.hpp
+    GUI/constraintwindow.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -73,8 +72,7 @@ SOURCES += \
     GUI/customqpushbutton.cpp \
     GUI/fieldwindow.cpp \
     Model/Entity/param.cpp \
-    GUI/constraintwindow.cpp \
-    Model/Relation/constrained.cpp
+    GUI/constraintwindow.cpp
 
 RESOURCES += \
     Resource/images.qrc

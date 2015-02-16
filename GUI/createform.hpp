@@ -17,6 +17,7 @@
 #include "../Model/Relation/Belong.hpp"
 #include "../Model/Relation/Write.hpp"
 #include "../Model/Relation/Read.hpp"
+#include "../Model/Relation/Categorizing.hpp"
 #include "../GUI/fieldwindow.hpp"
 
 namespace Ui {

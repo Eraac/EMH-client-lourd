@@ -208,12 +208,13 @@ void ConstraintWindow::persistConstraint(int idField)
 
     pm.persistOne(m_constraint);
 
-    Relation::Constrained constrained;
-        constrained.setIdConstraint(m_constraint.getId());
-        constrained.setIdField(idField);
+    Relation::Require require;
+        require.setIdConstraint(m_constraint.getId());
+        require.setIdField(idField);
 
-    pm.persistOne(constrained);
+    pm.persistOne(require);
 
+    // On enregistre les parametres si besoin
     for (int i = 0; i < m_nbParams; i++)
     {
         if (m_params[i].isValid())

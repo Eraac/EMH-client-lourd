@@ -21,6 +21,7 @@ namespace Entity
             QString getName() const;                    // Retourne le nom
 
             Entity::ErrorType load(unsigned int id);    // Charge l'entité depuis la base de données
+            Entity::ErrorType loadByName(QString const& name); // Charge l'entité par son nom
 
             static QStringList getAll();                // Retourne le nom de tous les tags
             virtual int getWeight() const;              // Retourne le poids

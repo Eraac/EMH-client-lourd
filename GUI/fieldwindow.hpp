@@ -35,7 +35,8 @@ class fieldWindow : public QDialog
         void valid();
         void addConstraint();
         void editConstraint(int id);
-        void deleteConstraint(int id);
+        void deleteConstraint(int id);        
+        void selectChange(int id);
 
     private:
         Ui::fieldWindow *ui;
