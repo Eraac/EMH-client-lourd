@@ -17,13 +17,14 @@ fieldWindow::~fieldWindow()
 {
     delete ui;
 
-    // TODO Supprimer les windows pour créer les fenêtres
+    for (auto it = m_constraintsWindow.begin(); it != m_constraintsWindow.end(); ++it)
+    {
+        delete *it;
+    }
 }
 
 void fieldWindow::persistField(int idForm)
 {
-    // TODO Remplir l'objet m_field avec les infos dans le formulaire
-
     Utility::PersisterManager pm;
 
     pm.persistOne(m_field);
@@ -40,6 +41,10 @@ void fieldWindow::persistField(int idForm)
         pm.persistOne(defaultValue);
     }
 
+    for (auto it = m_constraintsWindow.begin(); it != m_constraintsWindow.end(); ++it)
+    {
+        (*it)->persistConstraint(m_field.getId());
+    }
 }
 
 void fieldWindow::valid()
@@ -102,6 +107,10 @@ void fieldWindow::addConstraint()
 
         m_constraintLayout->addLayout( m_lines.last() );
     }
+    else
+    {
+        delete m_constraintsWindow.take(m_nbField);
+    }
 }
 
 void fieldWindow::editConstraint(int id)
@@ -144,3 +153,5 @@ int fieldWindow::getNbConstraint() const
 {
     return m_constraintsWindow.count();
 }
+
+

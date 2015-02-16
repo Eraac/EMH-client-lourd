@@ -3,7 +3,7 @@
 
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::createForm), m_color(Qt::white), m_nbField(0)
+    ui(new Ui::createForm), m_color(Qt::white), m_nbField(0), m_form()
 {
     ui->setupUi(this);
 
@@ -76,6 +76,10 @@ void createForm::addField()
 
         m_fieldsLayout->addLayout(m_lines.last());
     }
+    else
+    {
+        delete m_fieldsWindows.take(m_nbField);
+    }
 }
 
 void createForm::editField(int id)
@@ -125,6 +129,27 @@ void createForm::valid()
     // Parcourir les fieldsWindow et générer les fields (vérifier qu'ils sont valides)
     // Persist les Readers et les Writers
     // Persist les tags
+
+    Utility::PersisterManager pm;
+
+    m_form.setColor(m_color);
+    m_form.setDescription(ui->description->toPlainText());
+    m_form.setIdAuthor(1); // TODO
+    m_form.setImportant(ui->messageImportant->toPlainText());
+    m_form.setInfo(ui->messageInformation->toPlainText());
+    m_form.setName(ui->nomLineEdit->text());
+
+    if (ui->demandeRadioButton->isChecked())
+        m_form.setStatus(Entity::Form::Status::DEMAND);
+    else
+        m_form.setStatus(Entity::Form::Status::INFORMATION);
+
+    pm.persistOne(m_form);
+
+    for (auto &tag : m_listTags)
+    {
+
+    }
 
     close();
 }

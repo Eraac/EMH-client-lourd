@@ -11,6 +11,7 @@
 #include <QMap>
 #include <QCheckBox>
 #include "customqpushbutton.hpp"
+#include "../Model/Entity/Form.hpp"
 #include "../Model/Entity/Group.hpp"
 #include "../Model/Entity/Tag.hpp"
 #include "../GUI/fieldwindow.hpp"
@@ -50,6 +51,7 @@ class createForm : public QDialog
         QVBoxLayout *m_fieldsLayout;
 
         int m_nbField;
+        Entity::Form m_form;
         QMap<int, fieldWindow*> m_fieldsWindows;
         QMap<int, QHBoxLayout*> m_lines;
         QMap<int, CustomQPushButton*> m_edits;

@@ -23,7 +23,7 @@ class ConstraintWindow : public QDialog
         ~ConstraintWindow();
 
         QString getTypeReadable() const;
-        void registreConstraint(int idField);
+        void persistConstraint(int idField);
 
     public slots:
         void selectChange(int type);

@@ -15,8 +15,7 @@ namespace Entity
 
         static const int weight;    // Utilisé pour trier
 
-        // TODO s'aliner par rapport à Symfony
-        enum class Status {NONE, TEST, PUBLIC};             // Le statut du formulaire
+        enum class Status {NONE, DEMAND, INFORMATION};      // Le statut du formulaire
 
         Entity::ErrorType load(unsigned int id);            // Charge l'entité depuis la base de données
         virtual int getWeight() const;                      // Retourne le poids

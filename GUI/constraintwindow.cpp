@@ -199,7 +199,7 @@ void ConstraintWindow::cleanForm()
     m_nbParams = 0;
 }
 
-void ConstraintWindow::registreConstraint(int idField)
+void ConstraintWindow::persistConstraint(int idField)
 {
     Utility::PersisterManager pm;
 
