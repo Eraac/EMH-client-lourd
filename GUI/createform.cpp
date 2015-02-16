@@ -141,7 +141,7 @@ void createForm::valid()
 
     if (ui->demandeRadioButton->isChecked())
         m_form.setStatus(Entity::Form::Status::DEMAND);
-    else
+    else if (ui->informationRadioButton->isChecked())
         m_form.setStatus(Entity::Form::Status::INFORMATION);
 
     pm.persistOne(m_form);

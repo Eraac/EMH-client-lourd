@@ -14,6 +14,9 @@
 #include "../Model/Entity/Form.hpp"
 #include "../Model/Entity/Group.hpp"
 #include "../Model/Entity/Tag.hpp"
+#include "../Model/Relation/Belong.hpp"
+#include "../Model/Relation/Write.hpp"
+#include "../Model/Relation/Read.hpp"
 #include "../GUI/fieldwindow.hpp"
 
 namespace Ui {
