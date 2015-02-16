@@ -4,7 +4,7 @@
 ConstraintWindow::ConstraintWindow(bool *ok, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConstraintWindow),
-    m_ok(ok)
+    m_ok(ok), m_nbParams(0)
 {
     m_labels[0] = nullptr;
     m_labels[1] = nullptr;
@@ -175,7 +175,7 @@ void ConstraintWindow::selectChange(int type)
 
             m_lineEdits[0] = new QLineEdit();
             m_labels[0] = new QLabel("Regex");
-            ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
+            ui->formLayout->addRow( m_labels[0], m_lineEdits[0] );
 
         break;
     }
@@ -189,11 +189,14 @@ void ConstraintWindow::cleanForm()
         if (nullptr != m_labels[i])
         {
             ui->formLayout->removeWidget(m_labels[i]);
-            ui->formLayout->removeWidget(m_lineEdits[i]);
+            delete m_labels[i];
         }
 
-        delete m_labels[i];
-        delete m_lineEdits[i];
+        if (nullptr != m_lineEdits[i])
+        {
+            ui->formLayout->removeWidget(m_lineEdits[i]);
+            delete m_lineEdits[i];
+        }
     }
 
     m_nbParams = 0;

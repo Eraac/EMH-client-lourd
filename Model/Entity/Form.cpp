@@ -22,7 +22,7 @@ Entity::Entity::ErrorType Entity::Form::load(unsigned int id)
     m_description = "Pour faire une demande de béquilles";
     m_info      = "Un médecin va venir les chercher";
     m_important = "Il faut rentre les béquilles dès que possible";
-    m_status    = Form::Status::PUBLIC;
+    m_status    = Form::Status::DEMAND;
     m_idAuthor  = 1;
 
     return Entity::ErrorType::NONE;
