@@ -7,6 +7,7 @@
 #include <QList>
 #include <QMap>
 #include "../GUI/customqpushbutton.hpp"
+#include "../GUI/constraintwindow.hpp"
 #include "../Model/Entity/Field.hpp"
 #include "../Model/Entity/DefaultValue.hpp"
 #include "../Model/Relation/Require.hpp"
@@ -22,7 +23,7 @@ class fieldWindow : public QDialog
     Q_OBJECT
 
     public:
-        explicit fieldWindow(QWidget *parent = 0);
+        explicit fieldWindow(bool *ok, QWidget *parent = 0);
         ~fieldWindow();
 
         void persistField(int idForm);
@@ -38,6 +39,7 @@ class fieldWindow : public QDialog
 
     private:
         Ui::fieldWindow *ui;
+        bool *m_ok;
 
         Entity::Field m_field;
         QList<Entity::DefaultValue> m_defaultValues;
@@ -45,7 +47,7 @@ class fieldWindow : public QDialog
         QVBoxLayout *m_constraintLayout;
 
         int m_nbField;
-        //QMap sur la window pour les contraintes
+        QMap<int, ConstraintWindow*> m_constraintsWindow;
         QMap<int, QHBoxLayout*> m_lines;
         QMap<int, CustomQPushButton*> m_edits;
         QMap<int, CustomQPushButton*> m_deletes;

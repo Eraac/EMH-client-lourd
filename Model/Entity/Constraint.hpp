@@ -17,7 +17,7 @@ namespace Entity
         enum class Type {NONE, EMAIL, LENGTH, URL,
                          BETWEEN, NOTEQUAL, LOWER, LOWEROREQUAL,
                          GREATER, GREATEROREQUAL, DATE, DATETIME,
-                         TIME, USERPASSWORD};           // Type de contrainte
+                         TIME, USERPASSWORD, REGEX};           // Type de contrainte
 
         void setType(Constraint::Type const type);      // Change le type
 

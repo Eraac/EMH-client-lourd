@@ -1,10 +1,10 @@
 #include "fieldwindow.hpp"
 #include "ui_fieldwindow.h"
 
-fieldWindow::fieldWindow(QWidget *parent) :
+fieldWindow::fieldWindow(bool *ok, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
-    m_field(), m_nbField()
+    m_field(), m_nbField(), m_ok(ok)
 {
     ui->setupUi(this);
 
@@ -40,19 +40,6 @@ void fieldWindow::persistField(int idForm)
         pm.persistOne(defaultValue);
     }
 
-    /*for (Entity::Constraint &constraint : m_constraints)
-    {
-        pm.persistOne(constraint);
-
-        Relation::Require require;
-            require.setIdField(m_field.getId());
-            require.setIdConstraint(constraint.getId());
-
-        pm.persistOne(require);
-    }
-
-    for (Entity::Param &param : m_params)
-        pm.persistOne(param);*/
 }
 
 void fieldWindow::valid()
@@ -87,6 +74,7 @@ void fieldWindow::valid()
 
     m_field.setType(type);
 
+    *m_ok = true;
     close();
 }
 
@@ -94,28 +82,57 @@ void fieldWindow::addConstraint()
 {
     m_nbField++;
 
-    m_lines.insert( m_nbField, new QHBoxLayout() );
-    m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
-    m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
+    bool ok = false;
 
-    QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editConstraint(int)));
-    QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteConstraint(int)));
+    m_constraintsWindow.insert( m_nbField, new ConstraintWindow(&ok, this) );
+        m_constraintsWindow.last()->exec();
 
-    m_lines.last()->addWidget( new QLabel("Regex") );
-    m_lines.last()->addWidget( m_edits.last() );
-    m_lines.last()->addWidget( m_deletes.last() );
+    if (ok)
+    {
+        m_lines.insert( m_nbField, new QHBoxLayout() );
+        m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
+        m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
 
-    m_constraintLayout->addLayout( m_lines.last() );
+        QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editConstraint(int)));
+        QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteConstraint(int)));
+
+        m_lines.last()->addWidget( new QLabel(m_constraintsWindow.last()->getTypeReadable()) );
+        m_lines.last()->addWidget( m_edits.last() );
+        m_lines.last()->addWidget( m_deletes.last() );
+
+        m_constraintLayout->addLayout( m_lines.last() );
+    }
 }
 
 void fieldWindow::editConstraint(int id)
 {
+    m_constraintsWindow[id]->exec();
 
+    QLabel *labelType = dynamic_cast<QLabel *> ( m_lines[id]->itemAt(0)->widget() );
+        labelType->setText( m_constraintsWindow[id]->getTypeReadable() );
 }
 
 void fieldWindow::deleteConstraint(int id)
 {
+    // On déco les slots
+    QObject::connect(m_edits[id], SIGNAL(customClicked(int)), this, SLOT(editConstraint(int)));
+    QObject::connect(m_deletes[id], SIGNAL(customClicked(int)), this, SLOT(deleteConstraint(int)));
 
+    // On supprime la fenêtre
+    delete m_constraintsWindow.take(id);
+
+    // On récupère le layout horizontal
+    QHBoxLayout *line = m_lines.take(id);
+
+    QLayoutItem *item;
+
+    while ((item = line->takeAt(0)) != 0)
+    {
+        item->widget()->deleteLater();
+        delete item;
+    }
+
+    delete line;
 }
 
 Entity::Field fieldWindow::getField() const
@@ -125,6 +142,5 @@ Entity::Field fieldWindow::getField() const
 
 int fieldWindow::getNbConstraint() const
 {
-    //return m_constraints.count();
-    return 0;
+    return m_constraintsWindow.count();
 }

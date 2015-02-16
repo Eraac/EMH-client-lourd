@@ -53,24 +53,29 @@ void createForm::addField()
 {
     m_nbField++;
 
-    m_fieldsWindows.insert(m_nbField, new fieldWindow());
+    bool ok = false;
+
+    m_fieldsWindows.insert(m_nbField, new fieldWindow(&ok));
         m_fieldsWindows.last()->exec();
 
-    m_lines.insert( m_nbField, new QHBoxLayout() );
+    if (ok)
+    {
+        m_lines.insert( m_nbField, new QHBoxLayout() );
 
-    m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
-    m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
+        m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
+        m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
 
-    QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editField(int)));
-    QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
+        QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editField(int)));
+        QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
 
-    m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getTypeReadable()) );
-    m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getLabel()) );
-    m_lines.last()->addWidget( new QLabel(QString("%1 contrainte(s)").arg(m_fieldsWindows.last()->getNbConstraint()) ) );
-    m_lines.last()->addWidget( m_edits.last() );
-    m_lines.last()->addWidget( m_deletes.last() );
+        m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getTypeReadable()) );
+        m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getLabel()) );
+        m_lines.last()->addWidget( new QLabel(QString("%1 contrainte(s)").arg(m_fieldsWindows.last()->getNbConstraint()) ) );
+        m_lines.last()->addWidget( m_edits.last() );
+        m_lines.last()->addWidget( m_deletes.last() );
 
-    m_fieldsLayout->addLayout(m_lines.last());
+        m_fieldsLayout->addLayout(m_lines.last());
+    }
 }
 
 void createForm::editField(int id)

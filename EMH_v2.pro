@@ -9,7 +9,8 @@ FORMS += \
     GUI/dashboard.ui \
     GUI/createuser.ui \
     GUI/createform.ui \
-    GUI/fieldwindow.ui
+    GUI/fieldwindow.ui \
+    GUI/constraintwindow.ui
 
 HEADERS += \
     Model/Entity/Constraint.hpp \
@@ -39,7 +40,9 @@ HEADERS += \
     GUI/createform.hpp \
     GUI/customqpushbutton.hpp \
     GUI/fieldwindow.hpp \
-    Model/Entity/param.hpp
+    Model/Entity/param.hpp \
+    GUI/constraintwindow.hpp \
+    Model/Relation/constrained.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -69,7 +72,9 @@ SOURCES += \
     GUI/createform.cpp \
     GUI/customqpushbutton.cpp \
     GUI/fieldwindow.cpp \
-    Model/Entity/param.cpp
+    Model/Entity/param.cpp \
+    GUI/constraintwindow.cpp \
+    Model/Relation/constrained.cpp
 
 RESOURCES += \
     Resource/images.qrc
