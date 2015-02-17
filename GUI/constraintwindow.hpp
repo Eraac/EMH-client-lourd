@@ -4,8 +4,10 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QLabel>
+#include <QRegExp>
 #include <array>
 #include "../Utilty/PersisterManager.hpp"
+#include "../Model/Entity/Field.hpp"
 #include "../Model/Entity/Constraint.hpp"
 #include "../Model/Relation/Require.hpp"
 #include "../Model/Entity/param.hpp"
@@ -24,6 +26,8 @@ class ConstraintWindow : public QDialog
 
         QString getTypeReadable() const;
         void persistConstraint(int idField);
+
+        bool validConstraint(Entity::Field::Type type) const;
 
     public slots:
         void selectChange(int type);

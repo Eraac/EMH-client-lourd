@@ -97,7 +97,61 @@ void fieldWindow::valid()
     m_field.setType(type);
 
     *m_ok = true;
+
     close();
+}
+
+bool fieldWindow::validField() const
+{
+    // TODO Si champs multiple vérifier que des valeurs sont fournis
+
+    if (!m_field.isValid())
+    {
+        return false;
+    }
+
+    for (auto &constraint : m_constraintsWindow)
+    {
+        if (!constraint->validConstraint(m_field.getType()))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void fieldWindow::selectChange(int id)
+{
+    if (7 == id)
+    {    
+        m_defaultValueTextEdit = new QTextEdit();
+        ui->choixMultipleCheckBox->setEnabled(true);
+        ui->formLayout->replaceWidget(m_defaultValueLineEdit, m_defaultValueTextEdit);
+        delete m_defaultValueLineEdit;
+        m_defaultValueLineEdit = nullptr;
+    }
+    else
+    {
+        if (nullptr == m_defaultValueLineEdit)
+        {
+            m_defaultValueLineEdit = new QLineEdit();
+            ui->choixMultipleCheckBox->setChecked(false);
+            ui->choixMultipleCheckBox->setEnabled(false);
+            ui->formLayout->replaceWidget(m_defaultValueTextEdit, m_defaultValueLineEdit);
+            delete m_defaultValueTextEdit;
+            m_defaultValueTextEdit = nullptr;
+        }
+    }
+
+}
+
+void fieldWindow::editConstraint(int id)
+{
+    m_constraintsWindow[id]->exec();
+
+    QLabel *labelType = dynamic_cast<QLabel *> ( m_lines[id]->itemAt(0)->widget() );
+        labelType->setText( m_constraintsWindow[id]->getTypeReadable() );
 }
 
 void fieldWindow::addConstraint()
@@ -130,14 +184,6 @@ void fieldWindow::addConstraint()
     }
 }
 
-void fieldWindow::editConstraint(int id)
-{
-    m_constraintsWindow[id]->exec();
-
-    QLabel *labelType = dynamic_cast<QLabel *> ( m_lines[id]->itemAt(0)->widget() );
-        labelType->setText( m_constraintsWindow[id]->getTypeReadable() );
-}
-
 void fieldWindow::deleteConstraint(int id)
 {
     // On déco les slots
@@ -159,31 +205,6 @@ void fieldWindow::deleteConstraint(int id)
     }
 
     delete line;
-}
-
-void fieldWindow::selectChange(int id)
-{
-    if (7 == id)
-    {    
-        m_defaultValueTextEdit = new QTextEdit();
-        ui->choixMultipleCheckBox->setEnabled(true);
-        ui->formLayout->replaceWidget(m_defaultValueLineEdit, m_defaultValueTextEdit);
-        delete m_defaultValueLineEdit;
-        m_defaultValueLineEdit = nullptr;
-    }
-    else
-    {
-        if (nullptr == m_defaultValueLineEdit)
-        {
-            m_defaultValueLineEdit = new QLineEdit();
-            ui->choixMultipleCheckBox->setChecked(false);
-            ui->choixMultipleCheckBox->setEnabled(false);
-            ui->formLayout->replaceWidget(m_defaultValueTextEdit, m_defaultValueLineEdit);
-            delete m_defaultValueTextEdit;
-            m_defaultValueTextEdit = nullptr;
-        }
-    }
-
 }
 
 Entity::Field fieldWindow::getField() const

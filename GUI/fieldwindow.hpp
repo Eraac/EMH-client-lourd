@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QTextEdit>
+#include <QMessageBox>
 #include <QDialog>
 #include <QList>
 #include <QMap>
@@ -31,7 +32,9 @@ class fieldWindow : public QDialog
         void persistField(int idForm);
 
         Entity::Field getField() const;
-        int getNbConstraint() const;        
+        int getNbConstraint() const;
+
+        bool validField() const;
 
     public slots:
         void valid();

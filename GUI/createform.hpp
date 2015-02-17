@@ -32,6 +32,8 @@ class createForm : public QDialog
         explicit createForm(QWidget *parent = 0);
         ~createForm();
 
+        bool validForm() const;
+
     public slots:
         void chooseColor();
         void addField();

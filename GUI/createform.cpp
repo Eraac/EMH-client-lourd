@@ -126,12 +126,6 @@ void createForm::deleteField(int id)
 
 void createForm::valid()
 {
-    // Parcourir les fieldsWindow et générer les fields (vérifier qu'ils sont valides)
-    // Persist les Readers et les Writers
-    // Persist les tags
-
-    Utility::PersisterManager pm;
-
     m_form.setColor(m_color);
     m_form.setDescription(ui->description->toPlainText());
     m_form.setIdAuthor(1); // TODO
@@ -144,69 +138,96 @@ void createForm::valid()
     else if (ui->informationRadioButton->isChecked())
         m_form.setStatus(Entity::Form::Status::INFORMATION);
 
-    pm.persistOne(m_form);
-
-    // On enregistre ceux qui pourront utiliser le formulaire
-    for (QCheckBox* writersBox : m_listWriters)
+    if (validForm())
     {
-        if (writersBox->isChecked())
+        Utility::PersisterManager pm;
+
+        pm.persistOne(m_form);
+
+        // On enregistre ceux qui pourront utiliser le formulaire
+        for (QCheckBox* writersBox : m_listWriters)
         {
-            Entity::Group group;
-                auto error = group.loadByName(writersBox->text());
-
-            if (Entity::Entity::ErrorType::NONE == error)
+            if (writersBox->isChecked())
             {
-                Relation::Write writer;
-                    writer.setIdForm(m_form.getId());
-                    writer.setIdGroup(group.getId());
+                Entity::Group group;
+                    auto error = group.loadByName(writersBox->text());
 
-                pm.persistOne(writer);
+                if (Entity::Entity::ErrorType::NONE == error)
+                {
+                    Relation::Write writer;
+                        writer.setIdForm(m_form.getId());
+                        writer.setIdGroup(group.getId());
+
+                    pm.persistOne(writer);
+                }
             }
         }
-    }
 
-    // On enregistre ceux qui pourront lire les soumissions du formulaire
-    for (QCheckBox* readersBox : m_listReaders)
-    {
-        if (readersBox->isChecked())
+        // On enregistre ceux qui pourront lire les soumissions du formulaire
+        for (QCheckBox* readersBox : m_listReaders)
         {
-            Entity::Group group;
-                auto error = group.loadByName(readersBox->text());
-
-            if (Entity::Entity::ErrorType::NONE == error)
+            if (readersBox->isChecked())
             {
-                Relation::Read reader;
-                    reader.setIdForm(m_form.getId());
-                    reader.setIdGroup(group.getId());
+                Entity::Group group;
+                    auto error = group.loadByName(readersBox->text());
 
-                pm.persistOne(reader);
+                if (Entity::Entity::ErrorType::NONE == error)
+                {
+                    Relation::Read reader;
+                        reader.setIdForm(m_form.getId());
+                        reader.setIdGroup(group.getId());
+
+                    pm.persistOne(reader);
+                }
             }
         }
-    }
 
-    // Enregistre les tags liés au formulaire
-    for (QCheckBox* tagBox : m_listTags)
-    {
-        if (tagBox->isChecked())
+        // Enregistre les tags liés au formulaire
+        for (QCheckBox* tagBox : m_listTags)
         {
-            Entity::Tag tag;
-                auto error = tag.loadByName(tagBox->text());
-
-            if (Entity::Entity::ErrorType::NONE == error)
+            if (tagBox->isChecked())
             {
-                Relation::Categorizing categorizing;
-                    categorizing.setIdForm(m_form.getId());
-                    categorizing.setIdTag(tag.getId());
+                Entity::Tag tag;
+                    auto error = tag.loadByName(tagBox->text());
 
-                pm.persistOne(categorizing);
+                if (Entity::Entity::ErrorType::NONE == error)
+                {
+                    Relation::Categorizing categorizing;
+                        categorizing.setIdForm(m_form.getId());
+                        categorizing.setIdTag(tag.getId());
+
+                    pm.persistOne(categorizing);
+                }
             }
         }
-    }
 
-    for (auto it = m_fieldsWindows.begin(); it != m_fieldsWindows.end(); ++it)
+        for (auto it = m_fieldsWindows.begin(); it != m_fieldsWindows.end(); ++it)
+        {
+            (*it)->persistField(m_form.getId());
+        }
+
+        close();
+    }
+    else
     {
-        (*it)->persistField(m_form.getId());
+        // Message d'erreur
+        QMessageBox::information(this, "title", "Erreur");
+        close(); // TMP
+    }
+}
+
+bool createForm::validForm() const
+{
+    if (!m_form.isValid())
+    {
+        return false;
     }
 
-    close();
+    for (auto &fieldWindow : m_fieldsWindows)
+    {
+        if (!fieldWindow->validField())
+            return false;
+    }
+
+    return true;
 }

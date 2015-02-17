@@ -225,3 +225,46 @@ void ConstraintWindow::persistConstraint(int idField)
     }
 }
 
+bool ConstraintWindow::validConstraint(Entity::Field::Type type) const
+{
+    // Vérifier si la contrainte est logique avec le type
+
+    if (!m_constraint.isValid())
+    {
+        return false;
+    }
+
+    switch (ui->typeComboBox->currentIndex())
+    {
+        case 1: // Longueur (2 params)
+        case 3: // Entre X et Y (2 params)
+            if (m_params[0].getValue().toInt() > m_params[1].getValue().toInt())
+            {
+                return false;
+            }
+        break;
+
+        case 4: // Non égal à (1 params)
+        case 5: // Inférieur à (1 params)
+        case 6: // Inférieur ou égal à (1 params)
+        case 7: // Supérieur à (1 params)
+        case 8: // Supérieur ou égal à (1 params)
+            // Vérifier que nous avons un nombre
+            if (!m_params[0].getValue().contains(QRegExp("^[0-9]+$")))
+            {
+                return false;
+            }
+        break;
+
+        case 10: // Regex (1 params)
+            QRegExp regex(m_params[0].getValue());
+
+            if (!regex.isValid())
+            {
+                return false;
+            }
+        break;
+    }
+
+    return true;
+}
