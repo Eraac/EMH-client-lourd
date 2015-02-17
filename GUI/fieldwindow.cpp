@@ -4,9 +4,11 @@
 fieldWindow::fieldWindow(bool *ok, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
-    m_field(), m_nbField(), m_ok(ok)
+    m_field(), m_nbField(), m_ok(ok), m_defaultValueTextEdit(nullptr)
 {
     ui->setupUi(this);
+
+    m_defaultValueLineEdit = ui->valeurParDefautLineEdit;
 
     m_constraintLayout = new QVBoxLayout();
 
@@ -26,6 +28,7 @@ fieldWindow::~fieldWindow()
 void fieldWindow::persistField(int idForm)
 {
     Utility::PersisterManager pm;
+    QStringList defaultValues;
 
     pm.persistOne(m_field);
 
@@ -35,10 +38,23 @@ void fieldWindow::persistField(int idForm)
 
     pm.persistOne(contains);
 
-    for (Entity::DefaultValue &defaultValue : m_defaultValues)
+    // Plusieurs valeurs
+    if (7 == ui->typeComboBox->currentIndex())
     {
-        defaultValue.setIdField(m_field.getId());
-        // TODO Mettre une valeur
+        defaultValues = m_defaultValueTextEdit->toPlainText().split('\n', QString::SkipEmptyParts);
+    }
+    // Une valeur
+    else
+    {
+        defaultValues << m_defaultValueLineEdit->text();
+    }
+
+    for (auto &value : defaultValues)
+    {
+        Entity::DefaultValue defaultValue;
+            defaultValue.setIdField(m_field.getId());
+            defaultValue.setValue(value);
+
         pm.persistOne(defaultValue);
     }
 
@@ -147,17 +163,25 @@ void fieldWindow::deleteConstraint(int id)
 
 void fieldWindow::selectChange(int id)
 {
-    // Remplacer valeur par défaut par un textarea (ou inversement)
-
-    // Dégriser checkbox (ou inversement)
     if (7 == id)
-    {
+    {    
+        m_defaultValueTextEdit = new QTextEdit();
         ui->choixMultipleCheckBox->setEnabled(true);
+        ui->formLayout->replaceWidget(m_defaultValueLineEdit, m_defaultValueTextEdit);
+        delete m_defaultValueLineEdit;
+        m_defaultValueLineEdit = nullptr;
     }
     else
     {
-        ui->choixMultipleCheckBox->setChecked(false);
-        ui->choixMultipleCheckBox->setEnabled(false);
+        if (nullptr == m_defaultValueLineEdit)
+        {
+            m_defaultValueLineEdit = new QLineEdit();
+            ui->choixMultipleCheckBox->setChecked(false);
+            ui->choixMultipleCheckBox->setEnabled(false);
+            ui->formLayout->replaceWidget(m_defaultValueTextEdit, m_defaultValueLineEdit);
+            delete m_defaultValueTextEdit;
+            m_defaultValueTextEdit = nullptr;
+        }
     }
 
 }

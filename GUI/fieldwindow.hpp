@@ -3,6 +3,8 @@
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QLineEdit>
+#include <QTextEdit>
 #include <QDialog>
 #include <QList>
 #include <QMap>
@@ -43,7 +45,9 @@ class fieldWindow : public QDialog
         bool *m_ok;
 
         Entity::Field m_field;
-        QList<Entity::DefaultValue> m_defaultValues;
+
+        QLineEdit *m_defaultValueLineEdit;
+        QTextEdit *m_defaultValueTextEdit;
 
         QVBoxLayout *m_constraintLayout;
 
