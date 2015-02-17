@@ -27,6 +27,9 @@ fieldWindow::~fieldWindow()
 
 void fieldWindow::persistField(int idForm)
 {
+    // TODO Les contraintes DATE, TIME, DATETIME, URL, EMAIL
+    // doivent être ajoutées automatiquement
+
     Utility::PersisterManager pm;
     QStringList defaultValues;
 
@@ -39,7 +42,7 @@ void fieldWindow::persistField(int idForm)
     pm.persistOne(contains);
 
     // Plusieurs valeurs
-    if (7 == ui->typeComboBox->currentIndex())
+    if (Entity::Field::Type::RADIO == m_field.getType())
     {
         defaultValues = m_defaultValueTextEdit->toPlainText().split('\n', QString::SkipEmptyParts);
     }
@@ -91,6 +94,8 @@ void fieldWindow::valid()
         type = Entity::Field::Type::DATETIME;
     else if (typeString == "Choix multiple")
         type = Entity::Field::Type::RADIO;
+    else if (typeString == "Caché")
+        type = Entity::Field::Type::PASSWORD;
     else
         type = Entity::Field::Type::TEXT;
 

@@ -86,6 +86,10 @@ QString Entity::Field::getTypeReadable() const
             type = "Url";
         break;
 
+        case Field::Type::PASSWORD:
+            type = "Caché";
+        break;
+
         default:
             type = "Texte";
     }

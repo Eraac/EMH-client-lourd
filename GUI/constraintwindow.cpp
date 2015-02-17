@@ -27,6 +27,8 @@ QString ConstraintWindow::getTypeReadable() const
 
 void ConstraintWindow::valid()
 {
+    // TODO Retirer EMAIL et URL (les id changent)
+
     switch(ui->typeComboBox->currentIndex())
     {
         case 0:
@@ -87,6 +89,7 @@ void ConstraintWindow::valid()
 
 void ConstraintWindow::selectChange(int type)
 {
+    // TODO Supprimer EMAIL et URL (les id changent)
     cleanForm();
 
     switch (type)
@@ -225,38 +228,113 @@ void ConstraintWindow::persistConstraint(int idField)
     }
 }
 
-bool ConstraintWindow::validConstraint(Entity::Field::Type type) const
+bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
 {
-    // Vérifier si la contrainte est logique avec le type
+    // TODO Supprimer la vérification sur EMAIL et URL (contrainte)
 
     if (!m_constraint.isValid())
     {
         return false;
     }
 
-    switch (ui->typeComboBox->currentIndex())
+    Entity::Constraint::Type constraintType = m_constraint.getType();
+
+    // Vérifier si la contrainte est logique avec le type
+    switch (constraintType)
     {
-        case 1: // Longueur (2 params)
-        case 3: // Entre X et Y (2 params)
-            if (m_params[0].getValue().toInt() > m_params[1].getValue().toInt())
+        case Entity::Constraint::Type::EMAIL:
+            if (Entity::Field::Type::TEXT != fieldType &&
+                Entity::Field::Type::PASSWORD != fieldType &&
+                Entity::Field::Type::EMAIL != fieldType
+                )
             {
                 return false;
             }
         break;
 
-        case 4: // Non égal à (1 params)
-        case 5: // Inférieur à (1 params)
-        case 6: // Inférieur ou égal à (1 params)
-        case 7: // Supérieur à (1 params)
-        case 8: // Supérieur ou égal à (1 params)
+        case Entity::Constraint::Type::LENGTH:
+            if (Entity::Field::Type::TEXT != fieldType &&
+                Entity::Field::Type::PASSWORD != fieldType &&
+                Entity::Field::Type::EMAIL != fieldType &&
+                Entity::Field::Type::URL != fieldType
+                )
+            {
+                return false;
+            }
+        break;
+
+        case Entity::Constraint::Type::URL:
+            if (Entity::Field::Type::TEXT != fieldType &&
+                Entity::Field::Type::PASSWORD != fieldType &&
+                Entity::Field::Type::URL != fieldType
+                )
+            {
+                return false;
+            }
+        break;
+
+        case Entity::Constraint::Type::BETWEEN:
+        case Entity::Constraint::Type::NOTEQUAL:
+        case Entity::Constraint::Type::LOWER:
+        case Entity::Constraint::Type::LOWEROREQUAL:
+        case Entity::Constraint::Type::GREATER:
+        case Entity::Constraint::Type::GREATEROREQUAL:
+            if (Entity::Field::Type::NUMBER != fieldType)
+            {
+                return false;
+            }
+        break;
+
+        case Entity::Constraint::Type::USERPASSWORD:
+            if (Entity::Field::Type::TEXT != fieldType &&
+                Entity::Field::Type::PASSWORD != fieldType
+               )
+            {
+                return false;
+            }
+        break;
+
+        case Entity::Constraint::Type::REGEX:
+            if (Entity::Field::Type::TEXT != fieldType &&
+                Entity::Field::Type::PASSWORD != fieldType &&
+                Entity::Field::Type::NUMBER != fieldType &&
+                Entity::Field::Type::EMAIL != fieldType &&
+                Entity::Field::Type::URL != fieldType
+               )
+            {
+                return false;
+            }
+        break;
+    }
+
+    // Vérification des paramètres
+    switch (constraintType)
+    {
+        case Entity::Constraint::Type::BETWEEN: // (2 params)
+            if (m_params[0].getValue().isEmpty() || m_params[1].getValue().isEmpty() ||
+                    !m_params[0].getValue().contains(QRegExp("^[0-9]+$")) ||
+                    !m_params[1].getValue().contains(QRegExp("^[0-9]+$")) ||
+                    m_params[0].getValue().toInt() > m_params[1].getValue().toInt()
+                )
+            {
+                return false;
+            }
+        break;
+
+        case Entity::Constraint::Type::LENGTH: // (1-2 params)
+        case Entity::Constraint::Type::NOTEQUAL: // (1 params)
+        case Entity::Constraint::Type::LOWER: // (1 params)
+        case Entity::Constraint::Type::LOWEROREQUAL: // (1 params)
+        case Entity::Constraint::Type::GREATER: // (1 params)
+        case Entity::Constraint::Type::GREATEROREQUAL: // (1 params)
             // Vérifier que nous avons un nombre
-            if (!m_params[0].getValue().contains(QRegExp("^[0-9]+$")))
+            if (m_params[0].getValue().isEmpty() || !m_params[0].getValue().contains(QRegExp("^[0-9]+$")))
             {
                 return false;
             }
         break;
 
-        case 10: // Regex (1 params)
+        case Entity::Constraint::Type::REGEX: // (1 params)
             QRegExp regex(m_params[0].getValue());
 
             if (!regex.isValid())
@@ -264,6 +342,16 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type type) const
                 return false;
             }
         break;
+    }
+
+    if (Entity::Constraint::Type::LENGTH == constraintType)
+    {
+        if (!m_params[1].getValue().isEmpty() &&
+               m_params[0].getValue().toInt() > m_params[1].getValue().toInt()
+           )
+        {
+            return false;
+        }
     }
 
     return true;
