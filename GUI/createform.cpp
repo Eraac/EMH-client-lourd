@@ -212,7 +212,7 @@ void createForm::valid()
     {
         // Message d'erreur
         QMessageBox::information(this, "title", "Erreur");
-        close(); // TMP
+        close(); // TODO tmp
     }
 }
 
