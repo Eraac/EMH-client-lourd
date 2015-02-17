@@ -55,7 +55,7 @@ void createForm::addField()
 
     bool ok = false;
 
-    m_fieldsWindows.insert(m_nbField, new fieldWindow(&ok));
+    m_fieldsWindows.insert(m_nbField, new fieldWindow(&ok, this));
         m_fieldsWindows.last()->exec();
 
     if (ok)
