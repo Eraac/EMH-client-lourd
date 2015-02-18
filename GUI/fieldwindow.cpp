@@ -38,11 +38,11 @@ void fieldWindow::persistField(int idForm)
 
     pm.persistOne(contains);
 
+    Entity::Constraint constraint;
+    Relation::Require require;
+
     switch (m_field.getType())
     {
-        Entity::Constraint constraint;
-        Relation::Require require;
-
         case Entity::Field::Type::DATE:
             constraint.setType(Entity::Constraint::Type::DATE);
 
