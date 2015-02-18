@@ -43,17 +43,7 @@
         <widget class="QComboBox" name="typeComboBox">
          <item>
           <property name="text">
-           <string>Email</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Longueur (min et/ou max)</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Url</string>
           </property>
          </item>
          <item>

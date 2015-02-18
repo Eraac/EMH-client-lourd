@@ -27,51 +27,42 @@ QString ConstraintWindow::getTypeReadable() const
 
 void ConstraintWindow::valid()
 {
-    // TODO Retirer EMAIL et URL (les id changent)
 
     switch(ui->typeComboBox->currentIndex())
     {
         case 0:
-            m_constraint.setType(Entity::Constraint::Type::EMAIL);
-        break;
-
-        case 1:
             m_constraint.setType(Entity::Constraint::Type::LENGTH);
         break;
 
-        case 2:
-            m_constraint.setType(Entity::Constraint::Type::URL);
-        break;
-
-        case 3:
+        case 1:
             m_constraint.setType(Entity::Constraint::Type::BETWEEN);
         break;
 
-        case 4:
+        case 2:
             m_constraint.setType(Entity::Constraint::Type::NOTEQUAL);
         break;
 
-        case 5:
+        case 3:
             m_constraint.setType(Entity::Constraint::Type::LOWER);
         break;
 
-        case 6:
+        case 4:
             m_constraint.setType(Entity::Constraint::Type::LOWEROREQUAL);
         break;
 
-        case 7:
+        case 5:
             m_constraint.setType(Entity::Constraint::Type::GREATER);
         break;
 
-        case 8:
+        case 6:
             m_constraint.setType(Entity::Constraint::Type::GREATEROREQUAL);
         break;
 
-        case 9:
+        case 7:
             m_constraint.setType(Entity::Constraint::Type::USERPASSWORD);
         break;
 
-        case 10:
+        case 8:
             m_constraint.setType(Entity::Constraint::Type::REGEX);
         break;
     }
@@ -94,7 +85,8 @@ void ConstraintWindow::selectChange(int type)
 
     switch (type)
     {
-        case 1: // Longueur
+        case 0: // Longueur
+        case 1: // Entre X et Y
 
             m_nbParams = 2;
 
@@ -108,21 +100,11 @@ void ConstraintWindow::selectChange(int type)
 
         break;
 
-        case 3: // Entre X et Y
-
-            m_nbParams = 2;
-
-            m_lineEdits[0] = new QLineEdit();
-            m_labels[0] = new QLabel("Minimum");
-            ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
-
-            m_lineEdits[1] = new QLineEdit();
-            m_labels[1] = new QLabel("Maximum");
-            ui->formLayout->addRow( m_labels[1],  m_lineEdits[1] );
-
-        break;
-
-        case 4: // Non égal à
+        case 2: // Non égal à
+        case 3: // Inférieur à
+        case 4: // Inférieur ou égal à
+        case 5: // Supérieur à
+        case 6: // Supérieur ou égal à
 
             m_nbParams = 1;
 
@@ -132,47 +114,7 @@ void ConstraintWindow::selectChange(int type)
 
         break;
 
-        case 5: // Inférieur à
-
-            m_nbParams = 1;
-
-            m_lineEdits[0] = new QLineEdit();
-            m_labels[0] = new QLabel("Nombre");
-            ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
-
-        break;
-
-        case 6: // Inférieur ou égal à
-
-            m_nbParams = 1;
-
-            m_lineEdits[0] = new QLineEdit();
-            m_labels[0] = new QLabel("Nombre");
-            ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
-
-        break;
-
-        case 7: // Supérieur à
-
-            m_nbParams = 1;
-
-            m_lineEdits[0] = new QLineEdit();
-            m_labels[0] = new QLabel("Nombre");
-            ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
-
-        break;
-
-        case 8: // Supérieur ou égal à
-
-            m_nbParams = 1;
-
-            m_lineEdits[0] = new QLineEdit();
-            m_labels[0] = new QLabel("Nombre");
-            ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
-
-        break;
-
-        case 10: // Regex
+        case 8: // Regex
 
             m_nbParams = 1;
 
