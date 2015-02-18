@@ -230,7 +230,25 @@ void createForm::validForm()
         return;
     }
 
-    // TODO Vérifier que le formulaire posséde bien des writers et des readers
+    Utility::HasCheckBoxChecked hascheckboxcheck;
+
+    int nb = 0;
+
+    nb = std::count_if(m_listReaders.begin(), m_listReaders.end(), hascheckboxcheck);
+
+    if (nb == 0)
+    {
+        displayError("Le formulaire doit avoir des lecteurs.");
+        return;
+    }
+
+    nb = std::count_if(m_listWriters.begin(), m_listWriters.end(), hascheckboxcheck);
+
+    if (nb == 0)
+    {
+        displayError("Le formulaire doit avoir des utilisateurs.");
+        return;
+    }
 
     bool valid = false;
 

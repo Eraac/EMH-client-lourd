@@ -1,6 +1,7 @@
 #ifndef CREATEFORM_HPP
 #define CREATEFORM_HPP
 
+#include <algorithm>
 #include <QDialog>
 #include <QColor>
 #include <QColorDialog>
@@ -19,6 +20,7 @@
 #include "../Model/Relation/Read.hpp"
 #include "../Model/Relation/Categorizing.hpp"
 #include "../GUI/fieldwindow.hpp"
+#include "../Utilty/Foncteur/hascheckboxchecked.hpp"
 
 namespace Ui {
     class createForm;

@@ -41,7 +41,8 @@ HEADERS += \
     GUI/customqpushbutton.hpp \
     GUI/fieldwindow.hpp \
     Model/Entity/param.hpp \
-    GUI/constraintwindow.hpp
+    GUI/constraintwindow.hpp \
+    Utilty/Foncteur/hascheckboxchecked.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -72,7 +73,8 @@ SOURCES += \
     GUI/customqpushbutton.cpp \
     GUI/fieldwindow.cpp \
     Model/Entity/param.cpp \
-    GUI/constraintwindow.cpp
+    GUI/constraintwindow.cpp \
+    Utilty/Foncteur/hascheckboxchecked.cpp
 
 RESOURCES += \
     Resource/images.qrc
