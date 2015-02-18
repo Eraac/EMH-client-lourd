@@ -34,7 +34,10 @@ class fieldWindow : public QDialog
         Entity::Field getField() const;
         int getNbConstraint() const;
 
-        bool validField() const;
+        bool validField();
+
+    signals:
+        void sendError(QString message);
 
     public slots:
         void valid();

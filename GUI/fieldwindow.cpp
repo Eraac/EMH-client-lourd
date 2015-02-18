@@ -4,7 +4,7 @@
 fieldWindow::fieldWindow(bool *ok, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
-    m_field(), m_ok(ok), m_nbField(), m_defaultValueTextEdit(nullptr)
+    m_ok(ok), m_field(), m_defaultValueTextEdit(nullptr), m_nbField()
 {
     ui->setupUi(this);
 
@@ -164,22 +164,31 @@ void fieldWindow::valid()
     close();
 }
 
-bool fieldWindow::validField() const
+bool fieldWindow::validField()
 {
     if (Entity::Field::Type::RADIO == m_field.getType() && m_defaultValueTextEdit->toPlainText().isEmpty())
     {
+        emit sendError("Des valeurs par défaut doivent être renseignées lorsque le type du champs est \"Choix multiple\”.\n\
+                        Pour le champs : " + m_field.getLabel());
         return false;
     }
 
     if (!m_field.isValid())
     {
+        emit sendError("Les informations pour le champs " + m_field.getLabel() + " ne sont pas complète");
         return false;
     }
 
+    bool valid = false;
+
+    // TODO Vérifier si doublon dans les contraintes
     for (auto &constraint : m_constraintsWindow)
     {
-        if (!constraint->validConstraint(m_field.getType()))
-        {
+        QObject::connect(constraint, SIGNAL(sendError(QString)), this->parent(), SLOT(displayError(QString)));
+        valid = !constraint->validConstraint(m_field.getType(), m_field.getLabel());
+        QObject::disconnect(constraint, SIGNAL(sendError(QString)), this->parent(), SLOT(displayError(QString)));
+
+        if (!valid) {
             return false;
         }
     }

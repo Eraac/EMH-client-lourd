@@ -32,7 +32,7 @@ class createForm : public QDialog
         explicit createForm(QWidget *parent = 0);
         ~createForm();
 
-        bool validForm() const;
+        void validForm();
 
     public slots:
         void chooseColor();
@@ -40,6 +40,7 @@ class createForm : public QDialog
         void valid();        
         void editField(int id);
         void deleteField(int id);
+        void displayError(QString message);
 
     private:
         Ui::createForm *ui;
@@ -62,6 +63,8 @@ class createForm : public QDialog
         QMap<int, QHBoxLayout*> m_lines;
         QMap<int, CustomQPushButton*> m_edits;
         QMap<int, CustomQPushButton*> m_deletes;
+
+        bool m_formIsValid;
 };
 
 #endif // CREATEFORM_HPP

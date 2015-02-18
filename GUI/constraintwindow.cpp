@@ -4,15 +4,17 @@
 ConstraintWindow::ConstraintWindow(bool *ok, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConstraintWindow),
-    m_ok(ok), m_nbParams(0)
+    m_ok(ok), m_nbParams(2)
 {
-    m_labels[0] = nullptr;
-    m_labels[1] = nullptr;
-
-    m_lineEdits[0] = nullptr;
-    m_lineEdits[1] = nullptr;
-
     ui->setupUi(this);
+
+    m_lineEdits[0] = new QLineEdit();
+    m_labels[0] = new QLabel("Minimum");
+    ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
+
+    m_lineEdits[1] = new QLineEdit();
+    m_labels[1] = new QLabel("Maximum");
+    ui->formLayout->addRow( m_labels[1],  m_lineEdits[1] );
 }
 
 ConstraintWindow::~ConstraintWindow()
@@ -169,10 +171,11 @@ void ConstraintWindow::persistConstraint(int idField)
     }
 }
 
-bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
+bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString const& label)
 {
     if (!m_constraint.isValid())
     {
+        emit sendError("Contrainte non valide pour le champs : " + label);
         return false;
     }
 
@@ -188,6 +191,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
                 Entity::Field::Type::URL != fieldType
                 )
             {
+                emit sendError("Contrainte non logique pour le champs : " + label);
                 return false;
             }
         break;
@@ -200,6 +204,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
         case Entity::Constraint::Type::GREATEROREQUAL:
             if (Entity::Field::Type::NUMBER != fieldType)
             {
+                emit sendError("Contrainte non logique pour le champs : " + label);
                 return false;
             }
         break;
@@ -209,6 +214,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
                 Entity::Field::Type::PASSWORD != fieldType
                )
             {
+                emit sendError("Contrainte non logique pour le champs : " + label);
                 return false;
             }
         break;
@@ -221,6 +227,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
                 Entity::Field::Type::URL != fieldType
                )
             {
+                emit sendError("Contrainte non logique pour le champs : " + label);
                 return false;
             }
         break;
@@ -236,6 +243,8 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
                     m_params[0].getValue().toInt() > m_params[1].getValue().toInt()
                 )
             {
+                emit sendError("Contrainte \"Entre X et Y\” doit contenir des nombres et \
+                                le minimum doit être inférieur au maximum. Pour le champs : " + label);
                 return false;
             }
         break;
@@ -249,6 +258,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
             // Vérifier que nous avons un nombre
             if (m_params[0].getValue().isEmpty() || !m_params[0].getValue().contains(QRegExp("^[0-9]+$")))
             {
+                emit sendError("Une contrainte a un paramètre manquant ou n'est pas un nombre. Pour le champs : " + label);
                 return false;
             }
         break;
@@ -258,6 +268,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
 
             if (!regex.isValid())
             {
+                emit sendError("La regex n'est pas valide. Pour le champs : " + label);
                 return false;
             }
         break;
@@ -270,6 +281,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
                m_params[0].getValue().toInt() > m_params[1].getValue().toInt()
            )
         {
+            emit sendError("La contrainte longueur du champs " + label + " n'est pas valide. Le nombre minimum est supérieur au nombre maximum.");
             return false;
         }
     }

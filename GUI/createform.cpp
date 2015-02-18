@@ -3,7 +3,8 @@
 
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::createForm), m_color(Qt::white), m_nbField(0), m_form()
+    ui(new Ui::createForm), m_color(Qt::white), m_nbField(0),
+    m_form(), m_formIsValid(false)
 {
     ui->setupUi(this);
 
@@ -138,7 +139,9 @@ void createForm::valid()
     else if (ui->informationRadioButton->isChecked())
         m_form.setStatus(Entity::Form::Status::INFORMATION);
 
-    if (validForm())
+    validForm();
+
+    if (m_formIsValid)
     {
         Utility::PersisterManager pm;
 
@@ -202,32 +205,43 @@ void createForm::valid()
         }
 
         for (auto it = m_fieldsWindows.begin(); it != m_fieldsWindows.end(); ++it)
-        {
-            (*it)->persistField(m_form.getId());
+        {            
+            (*it)->persistField(m_form.getId());            
         }
 
         close();
     }
-    else
-    {
-        // Message d'erreur
-        QMessageBox::information(this, "title", "Erreur");
-        close(); // TODO tmp
-    }
 }
 
-bool createForm::validForm() const
+void createForm::displayError(QString message)
 {
-    if (!m_form.isValid())
-    {
-        return false;
+    m_formIsValid = false;
+
+    QMessageBox::critical(this, "Erreur", message);
+}
+
+void createForm::validForm()
+{
+    m_formIsValid = true;
+
+    // TODO Vérifier si le nom du formulaire n'est pas déjà pris
+    if (!m_form.isValid()) {
+        displayError("Le formulaire n'est pas valide (incomplet).");
+        return;
     }
+
+    // TODO Vérifier que le formulaire posséde bien des writers et des readers
+
+    bool valid = false;
 
     for (auto &fieldWindow : m_fieldsWindows)
     {
-        if (!fieldWindow->validField())
-            return false;
-    }
+        QObject::connect(fieldWindow, SIGNAL(sendError(QString)), this, SLOT(displayError(QString)));
+        valid = !fieldWindow->validField();
+        QObject::disconnect(fieldWindow, SIGNAL(sendError(QString)), this, SLOT(displayError(QString)));
 
-    return true;
+        if (!valid) {
+            return;
+        }
+    }
 }
