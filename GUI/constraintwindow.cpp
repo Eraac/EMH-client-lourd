@@ -80,7 +80,6 @@ void ConstraintWindow::valid()
 
 void ConstraintWindow::selectChange(int type)
 {
-    // TODO Supprimer EMAIL et URL (les id changent)
     cleanForm();
 
     switch (type)
@@ -172,8 +171,6 @@ void ConstraintWindow::persistConstraint(int idField)
 
 bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
 {
-    // TODO Supprimer la vérification sur EMAIL et URL (contrainte)
-
     if (!m_constraint.isValid())
     {
         return false;
@@ -184,30 +181,10 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
     // Vérifier si la contrainte est logique avec le type
     switch (constraintType)
     {
-        case Entity::Constraint::Type::EMAIL:
-            if (Entity::Field::Type::TEXT != fieldType &&
-                Entity::Field::Type::PASSWORD != fieldType &&
-                Entity::Field::Type::EMAIL != fieldType
-                )
-            {
-                return false;
-            }
-        break;
-
         case Entity::Constraint::Type::LENGTH:
             if (Entity::Field::Type::TEXT != fieldType &&
                 Entity::Field::Type::PASSWORD != fieldType &&
                 Entity::Field::Type::EMAIL != fieldType &&
-                Entity::Field::Type::URL != fieldType
-                )
-            {
-                return false;
-            }
-        break;
-
-        case Entity::Constraint::Type::URL:
-            if (Entity::Field::Type::TEXT != fieldType &&
-                Entity::Field::Type::PASSWORD != fieldType &&
                 Entity::Field::Type::URL != fieldType
                 )
             {
@@ -286,6 +263,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
         break;
     }
 
+    // Pour gérer le cas de 1 ou 2 paramètres
     if (Entity::Constraint::Type::LENGTH == constraintType)
     {
         if (!m_params[1].getValue().isEmpty() &&
@@ -298,3 +276,4 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType) const
 
     return true;
 }
+

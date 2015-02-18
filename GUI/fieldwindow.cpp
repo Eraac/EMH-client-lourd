@@ -4,7 +4,7 @@
 fieldWindow::fieldWindow(bool *ok, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
-    m_field(), m_nbField(), m_ok(ok), m_defaultValueTextEdit(nullptr)
+    m_field(), m_ok(ok), m_nbField(), m_defaultValueTextEdit(nullptr)
 {
     ui->setupUi(this);
 
@@ -108,7 +108,10 @@ void fieldWindow::valid()
 
 bool fieldWindow::validField() const
 {
-    // TODO Si champs multiple vérifier que des valeurs sont fournis
+    if (Entity::Field::Type::RADIO == m_field.getType() && m_defaultValueTextEdit->toPlainText().isEmpty())
+    {
+        return false;
+    }
 
     if (!m_field.isValid())
     {
