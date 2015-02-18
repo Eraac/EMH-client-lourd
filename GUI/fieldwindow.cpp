@@ -27,9 +27,6 @@ fieldWindow::~fieldWindow()
 
 void fieldWindow::persistField(int idForm)
 {
-    // TODO Les contraintes DATE, TIME, DATETIME, URL, EMAIL
-    // doivent être ajoutées automatiquement
-
     Utility::PersisterManager pm;
     QStringList defaultValues;
 
@@ -40,6 +37,67 @@ void fieldWindow::persistField(int idForm)
         contains.setIdForm(idForm);
 
     pm.persistOne(contains);
+
+    switch (m_field.getType())
+    {
+        Entity::Constraint constraint;
+        Relation::Require require;
+
+        case Entity::Field::Type::DATE:
+            constraint.setType(Entity::Constraint::Type::DATE);
+
+            pm.persistOne(constraint);
+
+            require.setIdConstraint(constraint.getId());
+            require.setIdField(m_field.getId());
+
+            pm.persistOne(require);
+        break;
+
+        case Entity::Field::Type::TIME:
+            constraint.setType(Entity::Constraint::Type::TIME);
+
+            pm.persistOne(constraint);
+
+            require.setIdConstraint(constraint.getId());
+            require.setIdField(m_field.getId());
+
+            pm.persistOne(require);
+        break;
+
+        case Entity::Field::Type::DATETIME:
+            constraint.setType(Entity::Constraint::Type::DATETIME);
+
+            pm.persistOne(constraint);
+
+            require.setIdConstraint(constraint.getId());
+            require.setIdField(m_field.getId());
+
+            pm.persistOne(require);
+        break;
+
+        case Entity::Field::Type::URL:
+            constraint.setType(Entity::Constraint::Type::DATE);
+
+            pm.persistOne(constraint);
+
+            require.setIdConstraint(constraint.getId());
+            require.setIdField(m_field.getId());
+
+            pm.persistOne(require);
+        break;
+
+        case Entity::Field::Type::EMAIL:
+            constraint.setType(Entity::Constraint::Type::DATE);
+
+            pm.persistOne(constraint);
+
+            require.setIdConstraint(constraint.getId());
+            require.setIdField(m_field.getId());
+
+            pm.persistOne(require);
+        break;
+    }
 
     // Plusieurs valeurs
     if (Entity::Field::Type::RADIO == m_field.getType())
