@@ -1,6 +1,7 @@
 #include "createform.hpp"
 #include "ui_createform.h"
 
+
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::createForm), m_color(Qt::white), m_nbField(0),
@@ -129,10 +130,10 @@ void createForm::valid()
 {
     m_form.setColor(m_color);
     m_form.setDescription(ui->description->toPlainText());
-    m_form.setIdAuthor(1); // TODO
+    m_form.setIdAuthor( dynamic_cast<Dashboard*> ( parent() )->getUserId() );
     m_form.setImportant(ui->messageImportant->toPlainText());
     m_form.setInfo(ui->messageInformation->toPlainText());
-    m_form.setName(ui->nomLineEdit->text());
+    m_form.setName(ui->nomLineEdit->text());    
 
     if (ui->demandeRadioButton->isChecked())
         m_form.setStatus(Entity::Form::Status::DEMAND);

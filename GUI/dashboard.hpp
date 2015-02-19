@@ -24,6 +24,7 @@ class Dashboard : public QWidget
         void loadUser(Entity::User const& user);
         void setFailMessage(QString const& message);
         void setSuccessMessage(QString const& message);
+        unsigned int getUserId() const;
 
     signals:
         void disconnect();

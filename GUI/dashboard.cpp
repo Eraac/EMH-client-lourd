@@ -13,6 +13,11 @@ Dashboard::~Dashboard()
     delete ui;
 }
 
+unsigned int Dashboard::getUserId() const
+{
+    return m_user.getId();
+}
+
 void Dashboard::loadUser(Entity::User const& user)
 {
     m_user = user;
@@ -168,7 +173,7 @@ void Dashboard::editGroup()
 
 void Dashboard::addForm()
 {
-    createForm createForm;
+    createForm createForm(this);
         createForm.exec();
 }
 
