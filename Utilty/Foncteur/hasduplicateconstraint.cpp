@@ -1,7 +1,5 @@
 #include "hasduplicateconstraint.hpp"
 
-#include <QMessageBox>
-
 void Utility::HasDuplicateConstraint::operator()(ConstraintWindow* constraint)
 {
     if (m_types.contains(constraint->getType()))
