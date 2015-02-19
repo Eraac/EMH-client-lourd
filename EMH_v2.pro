@@ -42,7 +42,8 @@ HEADERS += \
     GUI/fieldwindow.hpp \
     Model/Entity/param.hpp \
     GUI/constraintwindow.hpp \
-    Utilty/Foncteur/hascheckboxchecked.hpp
+    Utilty/Foncteur/hascheckboxchecked.hpp \
+    Utilty/Foncteur/hasduplicateconstraint.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -74,7 +75,8 @@ SOURCES += \
     GUI/fieldwindow.cpp \
     Model/Entity/param.cpp \
     GUI/constraintwindow.cpp \
-    Utilty/Foncteur/hascheckboxchecked.cpp
+    Utilty/Foncteur/hascheckboxchecked.cpp \
+    Utilty/Foncteur/hasduplicateconstraint.cpp
 
 RESOURCES += \
     Resource/images.qrc

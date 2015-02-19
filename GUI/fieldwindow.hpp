@@ -1,6 +1,7 @@
 #ifndef FIELDWINDOW_HPP
 #define FIELDWINDOW_HPP
 
+#include <algorithm>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLineEdit>
@@ -16,6 +17,7 @@
 #include "../Model/Relation/Require.hpp"
 #include "../Model/Relation/Contains.hpp"
 #include "../Utilty/PersisterManager.hpp"
+#include "../Utilty/Foncteur/hasduplicateconstraint.hpp"
 
 namespace Ui {
     class fieldWindow;

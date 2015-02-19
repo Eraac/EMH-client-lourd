@@ -1,6 +1,10 @@
 #include "fieldwindow.hpp"
 #include "ui_fieldwindow.h"
 
+void myfunction (Entity::Constraint* i) {  // function:
+  int id = i->getId();
+}
+
 fieldWindow::fieldWindow(bool *ok, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
@@ -181,7 +185,17 @@ bool fieldWindow::validField()
 
     bool valid = false;
 
-    // TODO Vérifier si doublon dans les contraintes
+    // Vérifier si doublon dans les contraintes
+    Utility::HasDuplicateConstraint hasduplicateconstraint;
+
+    hasduplicateconstraint = std::for_each(m_constraintsWindow.begin(), m_constraintsWindow.end(), hasduplicateconstraint);
+
+    if (hasduplicateconstraint.hasDuplicate())
+    {
+        emit sendError("Une ou plusieurs contraintes sont en double dans le champs : " + m_field.getLabel());
+        return false;
+    }
+
     for (auto &constraint : m_constraintsWindow)
     {
         QObject::connect(constraint, SIGNAL(sendError(QString)), this->parent(), SLOT(displayError(QString)));

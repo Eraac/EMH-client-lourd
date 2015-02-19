@@ -27,6 +27,11 @@ QString ConstraintWindow::getTypeReadable() const
     return ui->typeComboBox->currentText();
 }
 
+Entity::Constraint::Type ConstraintWindow::getType() const
+{
+    return m_constraint.getType();
+}
+
 void ConstraintWindow::valid()
 {
 

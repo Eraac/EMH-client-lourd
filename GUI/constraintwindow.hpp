@@ -25,6 +25,7 @@ class ConstraintWindow : public QDialog
         ~ConstraintWindow();
 
         QString getTypeReadable() const;
+        Entity::Constraint::Type getType() const;
         void persistConstraint(int idField);
 
         bool validConstraint(Entity::Field::Type fieldType, QString const& label);
