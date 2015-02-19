@@ -14,6 +14,12 @@ Entity::Form::~Form()
 
 }
 
+bool Entity::Form::formExist(const QString &name)
+{
+    // TODO
+    return ("morphine" == name);
+}
+
 Entity::Entity::ErrorType Entity::Form::load(unsigned int id)
 {
     // TODO

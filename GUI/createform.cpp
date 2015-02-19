@@ -224,7 +224,12 @@ void createForm::validForm()
 {
     m_formIsValid = true;
 
-    // TODO Vérifier si le nom du formulaire n'est pas déjà pris
+    if (Entity::Form::formExist(m_form.getName()))
+    {
+        displayError("Le nom du formulaire est déjà existant.");
+        return;
+    }
+
     if (!m_form.isValid()) {
         displayError("Le formulaire n'est pas valide (incomplet).");
         return;
