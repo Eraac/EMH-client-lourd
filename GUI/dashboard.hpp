@@ -21,28 +21,28 @@ class Dashboard : public QWidget
         explicit Dashboard(QWidget *parent = 0);
         ~Dashboard();
 
-        void loadUser(Entity::User const& user);
-        void setFailMessage(QString const& message);
-        void setSuccessMessage(QString const& message);
-        unsigned int getUserId() const;
+        void loadUser(Entity::User const& user);        // Charge un utilisateur
+        void setFailMessage(QString const& message);    // Affiche un message d'erreur
+        void setSuccessMessage(QString const& message); // Affiche un message de succès
+        unsigned int getUserId() const;                 // Retourne l'id de l'utilisateur
 
     signals:
-        void disconnect();
+        void disconnect();  // Ferme la fenêtre
 
     public slots:
-        void clickDisconnect();
+        void clickDisconnect(); // onClick sur le bouton Déconnecter
 
-        void addUser();
-        void addUserSuccess();
-        void editUser();
-        void editUserSuccess();
-        void userDeleteSuccess();
+        void addUser();             // onClick sur le bouton Ajouter utilisateur
+        void addUserSuccess();      // Lorsque l'utilisateur est créé avec succès
+        void editUser();            // onClick sur le bouton Modifier utilisateur
+        void editUserSuccess();     // Lorsque l'utilisateur est modifié avec succès
+        void userDeleteSuccess();   // Lorsque l'utilisateur est supprimé avec succès
 
-        void addGroup();
-        void editGroup();
+        void addGroup();    // onClick sur le bouton Ajouter un groupe
+        void editGroup();   // onClick sur le bouton Modifier un groupe
 
-        void addForm();
-        void editForm();
+        void addForm();     // onClick sur le bouton Ajouter un formulaire
+        void editForm();    // onClick sur le bouton Modifier un formulaire
 
     private:
         Ui::Dashboard *ui;

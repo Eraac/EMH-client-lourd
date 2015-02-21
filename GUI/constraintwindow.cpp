@@ -8,6 +8,7 @@ ConstraintWindow::ConstraintWindow(bool *ok, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // On ajoute deux QLineEdit pour les paramètres du type Longueur (présent en 1er dans la liste)
     m_lineEdits[0] = new QLineEdit();
     m_labels[0] = new QLabel("Minimum");
     ui->formLayout->addRow( m_labels[0],  m_lineEdits[0] );
@@ -34,7 +35,7 @@ Entity::Constraint::Type ConstraintWindow::getType() const
 
 void ConstraintWindow::valid()
 {
-
+    // On donne le bon Type à la contrainte selon le choix de l'utilisateur
     switch(ui->typeComboBox->currentIndex())
     {
         case 0:
@@ -74,6 +75,7 @@ void ConstraintWindow::valid()
         break;
     }
 
+    // On récupère les paramètres si il y en a
     for (int i = 0; i < m_nbParams; i++)
     {
         if (nullptr != m_lineEdits[i])
@@ -81,14 +83,19 @@ void ConstraintWindow::valid()
                 m_params[i].setValue(m_lineEdits[i]->text());
     }
 
+    // On indique que nous avons bien cliqué sur Valider et non Fermer
     *m_ok = true;
+
+    // On ferme la fenêtre
     close();
 }
 
 void ConstraintWindow::selectChange(int type)
 {
+    // On supprime les champs présents
     cleanForm();
 
+    // On ajoute des champs selon le type et le nombre de paramètre requis
     switch (type)
     {
         case 0: // Longueur
@@ -135,10 +142,13 @@ void ConstraintWindow::selectChange(int type)
 
 void ConstraintWindow::cleanForm()
 {
+    // On parcourt les paramètres
     for (int i = 0; i < m_nbParams; i++)
     {
+        // Si le pointeur est initialisé
         if (nullptr != m_labels[i])
         {
+            // On le supprime
             ui->formLayout->removeWidget(m_labels[i]);
             delete m_labels[i];
         }
@@ -150,26 +160,33 @@ void ConstraintWindow::cleanForm()
         }
     }
 
+    // On remet le nombre de paramètre à 0
     m_nbParams = 0;
 }
 
 void ConstraintWindow::persistConstraint(int idField)
 {
+    // On instancie notre lien vers la base
     Utility::PersisterManager pm;
 
+    // On persist la contrainte
     pm.persistOne(m_constraint);
 
+    // On créer une relation entre le champs et la contrainte
     Relation::Require require;
         require.setIdConstraint(m_constraint.getId());
         require.setIdField(idField);
 
+    // On persist cette relation
     pm.persistOne(require);
 
     // On enregistre les parametres si besoin
     for (int i = 0; i < m_nbParams; i++)
     {
+        // Si le paramètre est valide
         if (m_params[i].isValid())
         {
+            // On l'enregistre
             m_params[i].setIdConstraint(m_constraint.getId());
             pm.persistOne(m_params[i]);
         }
@@ -178,17 +195,21 @@ void ConstraintWindow::persistConstraint(int idField)
 
 bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString const& label)
 {
+    // Si la contrainte n'est pas valide
     if (!m_constraint.isValid())
     {
+        // On envoi une erreur
         emit sendError("Contrainte non valide pour le champs : " + label);
         return false;
     }
 
+    // On récupère le type de la contrainte pour effectuer des vérifications
     Entity::Constraint::Type constraintType = m_constraint.getType();
 
-    // Vérifier si la contrainte est logique avec le type
+    // Vérifier si la contrainte est logique par rapport au type
     switch (constraintType)
     {
+        // La contrainte Longueur est compatible uniquement avec : Les champs textes, mot de passe, email, url
         case Entity::Constraint::Type::LENGTH:
             if (Entity::Field::Type::TEXT != fieldType &&
                 Entity::Field::Type::PASSWORD != fieldType &&
@@ -201,6 +222,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString co
             }
         break;
 
+        // Les contraintes de comparaison est compatible uniquement avec : le champs nombre
         case Entity::Constraint::Type::BETWEEN:
         case Entity::Constraint::Type::NOTEQUAL:
         case Entity::Constraint::Type::LOWER:
@@ -214,6 +236,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString co
             }
         break;
 
+        // La contrainte mot de passe utilisateur est uniquement compatible avec : les champs texte et mot de passe
         case Entity::Constraint::Type::USERPASSWORD:
             if (Entity::Field::Type::TEXT != fieldType &&
                 Entity::Field::Type::PASSWORD != fieldType
@@ -224,6 +247,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString co
             }
         break;
 
+        // La contrainte regex est uniquement compatible avec : les champs texte, mot de passe, nombre, email, url
         case Entity::Constraint::Type::REGEX:
             if (Entity::Field::Type::TEXT != fieldType &&
                 Entity::Field::Type::PASSWORD != fieldType &&
@@ -238,7 +262,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString co
         break;
     }
 
-    // Vérification des paramètres
+    // Vérification des paramètres (non manquant, non correct, ...)
     switch (constraintType)
     {
         case Entity::Constraint::Type::BETWEEN: // (2 params)

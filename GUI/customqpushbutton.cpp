@@ -7,6 +7,7 @@ CustomQPushButton::CustomQPushButton(const QString &name, int id) : QPushButton(
 
 void CustomQPushButton::click()
 {
+    // Renvoi son ID quand on clique dessus
     emit customClicked(m_id);
 }
 

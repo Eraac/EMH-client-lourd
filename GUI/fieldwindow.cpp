@@ -36,6 +36,7 @@ void fieldWindow::persistField(int idForm)
 
     pm.persistOne(m_field);
 
+    // On ajoute la relation "Contains" entre le formulaire et le champs
     Relation::Contains contains;
         contains.setIdField(m_field.getId());
         contains.setIdForm(idForm);
@@ -45,6 +46,7 @@ void fieldWindow::persistField(int idForm)
     Entity::Constraint constraint;
     Relation::Require require;
 
+    // Selon le type du champs on ajoute des contraintes (Date, Time, Datetime, Url, Email)
     switch (m_field.getType())
     {
         case Entity::Field::Type::DATE:
@@ -114,8 +116,10 @@ void fieldWindow::persistField(int idForm)
         defaultValues << m_defaultValueLineEdit->text();
     }
 
+    // Pour toutes les valeurs par défaut
     for (auto &value : defaultValues)
     {
+        // On persist la l'entité
         Entity::DefaultValue defaultValue;
             defaultValue.setIdField(m_field.getId());
             defaultValue.setValue(value);
@@ -123,14 +127,17 @@ void fieldWindow::persistField(int idForm)
         pm.persistOne(defaultValue);
     }
 
+    // Pour toute les fenêtres qui contient les contraintes
     for (auto it = m_constraintsWindow.begin(); it != m_constraintsWindow.end(); ++it)
     {
+        // On persist la contrainte
         (*it)->persistConstraint(m_field.getId());
     }
 }
 
 void fieldWindow::valid()
 {
+    // On charge l'entité du champs selon les informations dans l'interface
     m_field.setLabel(ui->labelLineEdit->text());
     m_field.setHelpText(ui->texteDAideLineEdit->text());
     m_field.setPlaceholder(ui->placeholderLineEdit->text());
@@ -140,6 +147,7 @@ void fieldWindow::valid()
     QString typeString = ui->typeComboBox->currentText();
     auto type = Entity::Field::Type::NONE;
 
+    // On applique le bon type selon le choix de l'utilisateur
     if (typeString == "Texte")
         type = Entity::Field::Type::TEXT;
     else if (typeString == "Nombre")
@@ -163,6 +171,7 @@ void fieldWindow::valid()
 
     m_field.setType(type);
 
+    // On indique que l'utilisateur à cliqué sur OK
     *m_ok = true;
 
     close();
@@ -170,6 +179,7 @@ void fieldWindow::valid()
 
 bool fieldWindow::validField()
 {
+    // Si aucune infomation n'est fourni dans les valeurs par défaut et que le type du champs RADIO
     if (Entity::Field::Type::RADIO == m_field.getType() && m_defaultValueTextEdit->toPlainText().isEmpty())
     {
         emit sendError("Des valeurs par défaut doivent être renseignées lorsque le type du champs est \"Choix multiple\”.\n\
@@ -177,6 +187,7 @@ bool fieldWindow::validField()
         return false;
     }
 
+    // Si le champs n'est pas valide
     if (!m_field.isValid())
     {
         emit sendError("Les informations pour le champs " + m_field.getLabel() + " ne sont pas complète");
@@ -188,20 +199,25 @@ bool fieldWindow::validField()
     // Vérifier si doublon dans les contraintes
     Utility::HasDuplicateConstraint hasduplicateconstraint;
 
+    // On vérifie qu'aucune contrainte n'est dupliqué
     hasduplicateconstraint = std::for_each(m_constraintsWindow.begin(), m_constraintsWindow.end(), hasduplicateconstraint);
 
+    // Si une contrainte est dupliqué
     if (hasduplicateconstraint.hasDuplicate())
     {
+        // On prévient l'utilisateur
         emit sendError("Une ou plusieurs contraintes sont en double dans le champs : " + m_field.getLabel());
         return false;
     }
 
+    // On parcours les contraintes
     for (auto &constraint : m_constraintsWindow)
     {
         QObject::connect(constraint, SIGNAL(sendError(QString)), this->parent(), SLOT(displayError(QString)));
         valid = !constraint->validConstraint(m_field.getType(), m_field.getLabel());
         QObject::disconnect(constraint, SIGNAL(sendError(QString)), this->parent(), SLOT(displayError(QString)));
 
+        // Si une n'est pas valide on quitte
         if (!valid) {
             return false;
         }
@@ -212,8 +228,10 @@ bool fieldWindow::validField()
 
 void fieldWindow::selectChange(int id)
 {
+    // Si l'utilisateur choisit "Choix multiple"
     if (7 == id)
     {    
+        // On change le QLineEdit en QTextEdit
         m_defaultValueTextEdit = new QTextEdit();
         ui->choixMultipleCheckBox->setEnabled(true);
         ui->formLayout->replaceWidget(m_defaultValueLineEdit, m_defaultValueTextEdit);
@@ -222,8 +240,10 @@ void fieldWindow::selectChange(int id)
     }
     else
     {
+        // Si avant ce n'était pas déjà le QLineEdit
         if (nullptr == m_defaultValueLineEdit)
         {
+            // On change le QTextEdit en QLineEdit
             m_defaultValueLineEdit = new QLineEdit();
             ui->choixMultipleCheckBox->setChecked(false);
             ui->choixMultipleCheckBox->setEnabled(false);
@@ -237,8 +257,10 @@ void fieldWindow::selectChange(int id)
 
 void fieldWindow::editConstraint(int id)
 {
+    // On lance la fenêtre correspondant à la contrainte
     m_constraintsWindow[id]->exec();
 
+    // On mets à jour l'interface
     QLabel *labelType = dynamic_cast<QLabel *> ( m_lines[id]->itemAt(0)->widget() );
         labelType->setText( m_constraintsWindow[id]->getTypeReadable() );
 }
@@ -249,11 +271,13 @@ void fieldWindow::addConstraint()
 
     bool ok = false;
 
+    // On ajoute un objet ConstraintWindow dans la QMap
     m_constraintsWindow.insert( m_nbField, new ConstraintWindow(&ok, this) );
         m_constraintsWindow.last()->exec();
 
+    // Si l'utilisateur à valider
     if (ok)
-    {
+    {        
         m_lines.insert( m_nbField, new QHBoxLayout() );
         m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
         m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
@@ -267,8 +291,10 @@ void fieldWindow::addConstraint()
 
         m_constraintLayout->addLayout( m_lines.last() );
     }
+    // Si l'utilisateur à fermer la fenêtre
     else
     {
+        // On retire la fenêtre du QMap
         delete m_constraintsWindow.take(m_nbField);
     }
 }

@@ -31,31 +31,31 @@ class fieldWindow : public QDialog
         explicit fieldWindow(bool *ok, QWidget *parent = 0);
         ~fieldWindow();
 
-        void persistField(int idForm);
+        void persistField(int idForm);  // Persist le champs
 
-        Entity::Field getField() const;
-        int getNbConstraint() const;
+        Entity::Field getField() const; // Retourne le champs
+        int getNbConstraint() const;    // Retourne le nombre de contraintes liées au champs
 
-        bool validField();
+        bool validField();      // Retourne true si le champs est valide
 
     signals:
-        void sendError(QString message);
+        void sendError(QString message); // Envoi un message d'erreur à la fenêtre createForm
 
     public slots:
-        void valid();
-        void addConstraint();
-        void editConstraint(int id);
-        void deleteConstraint(int id);        
-        void selectChange(int id);
+        void valid();                   // onClick sur le bouton Valider
+        void addConstraint();           // Ajoute une contrainte sur le champs
+        void editConstraint(int id);    // Edite une contrainte
+        void deleteConstraint(int id);  // Supprime une contrainte
+        void selectChange(int id);      // Méthode appelé quand le formulaire change
 
     private:
         Ui::fieldWindow *ui;
         bool *m_ok;
 
-        Entity::Field m_field;
+        Entity::Field m_field;  // Contient le champs
 
-        QLineEdit *m_defaultValueLineEdit;
-        QTextEdit *m_defaultValueTextEdit;
+        QLineEdit *m_defaultValueLineEdit; // Pour les valeurs par défaut des champs qui ne sont pas TYPE::RADIO
+        QTextEdit *m_defaultValueTextEdit; // Pour les valeurs par défaut des champs qui sont TYPE::RADIO
 
         QVBoxLayout *m_constraintLayout;
 

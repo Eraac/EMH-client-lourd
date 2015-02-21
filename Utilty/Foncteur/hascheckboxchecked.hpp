@@ -8,7 +8,7 @@ namespace Utility
     class HasCheckBoxChecked
     {
         public:
-            bool operator()(QCheckBox* checkbox) const;
+            bool operator()(QCheckBox* checkbox) const; // Vérifie que la checkbox soit checkée
     };
 }
 

@@ -35,15 +35,15 @@ class createForm : public QDialog
         explicit createForm(QWidget *parent = 0);
         ~createForm();
 
-        void validForm();
+        void validForm();   // Méthode appelée lors du clique sur le bouton "Valider"
 
     public slots:
-        void chooseColor();
-        void addField();
-        void valid();        
-        void editField(int id);
-        void deleteField(int id);
-        void displayError(QString message);
+        void chooseColor();                     // Pour choisir une couleur (onClick sur le bouton "Couleur")
+        void addField();                        // Pour ajouter un champs (onClick sur le bouton "Ajouter un champs")
+        void valid();                           // Pour stocker les informations dans l'attribut m_field (onClick sur le bouton "Valider")
+        void editField(int id);                 // Pour modifier un champs (onClick sur le bouton "Modifier")
+        void deleteField(int id);               // Pour supprimer un champs (onClick sur le bouton "Supprimer")
+        void displayError(QString message);     // Affiche une erreur si elle reçoit un signal
 
     private:
         Ui::createForm *ui;
@@ -60,14 +60,14 @@ class createForm : public QDialog
 
         QVBoxLayout *m_fieldsLayout;
 
-        int m_nbField;
-        Entity::Form m_form;
-        QMap<int, fieldWindow*> m_fieldsWindows;
-        QMap<int, QHBoxLayout*> m_lines;
-        QMap<int, CustomQPushButton*> m_edits;
-        QMap<int, CustomQPushButton*> m_deletes;
+        int m_nbField;                              // Permet d'avoir une id unique pour chaque champs ajouter sur les QMaps
+        Entity::Form m_form;                        // Contient le formulaire
+        QMap<int, fieldWindow*> m_fieldsWindows;    // Contient les fenêtres pour gérer les champs
+        QMap<int, QHBoxLayout*> m_lines;            // Les layouts contenant les informations d'un champs
+        QMap<int, CustomQPushButton*> m_edits;      // Les boutons "Modifier" pour chaque champs
+        QMap<int, CustomQPushButton*> m_deletes;    // Les boutons "Supprimer" pour chaque champs
 
-        bool m_formIsValid;
+        bool m_formIsValid;                         // Pour savoir si un message à été affiché via displayError()
 };
 
 #endif // CREATEFORM_HPP

@@ -23,8 +23,8 @@ class DatabaseSetting : public QDialog
         ~DatabaseSetting();
 
     public slots:
-        void formChange();
-        void valid();
+        void formChange();  // Lorsque le formulaire change on appel cette méthode
+        void valid();       // onClick sur le bouton Valider (enregistre les données dans le fichier INI)
 
     private:
         Ui::DatabaseSetting *ui;

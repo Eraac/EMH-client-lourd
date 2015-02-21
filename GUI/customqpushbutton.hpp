@@ -11,15 +11,15 @@ class CustomQPushButton : public QPushButton
     public:
         CustomQPushButton(QString const& name, int id);
 
-        void reduceId();
+        void reduceId();    // Décrement l'id
 
-        int getId() const;
+        int getId() const;  // Retourne l'id
 
     public slots:
-        void click();
+        void click();   // Lorsque que l'on clique sur le bouton
 
     signals:
-        void customClicked(int id);
+        void customClicked(int id); // Envoi ce signal avec son id lorsque on clique dessus
 
     private:
         int m_id;

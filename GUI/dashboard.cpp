@@ -27,12 +27,14 @@ void Dashboard::loadUser(Entity::User const& user)
 
 void Dashboard::setFailMessage(const QString &message)
 {
+    // Affiche un message rouge
     ui->message->setStyleSheet("color: red");
     ui->message->setText(message);
 }
 
 void Dashboard::setSuccessMessage(const QString &message)
 {
+    // Affiche un message vert
     ui->message->setStyleSheet("color: green");
     ui->message->setText(message);
 }
@@ -44,6 +46,7 @@ void Dashboard::clickDisconnect()
 
 void Dashboard::addUser()
 {
+    // On instancie un objet pour créer un utilisateur et on l'execute
     CreateUser createUser;
 
     QObject::connect(&createUser, SIGNAL(userCreateSuccess()), this, SLOT(addUserSuccess()));
@@ -60,22 +63,29 @@ void Dashboard::addUserSuccess()
 
 void Dashboard::editUser()
 {
+    // Regex pour valider les emails
     QRegExp emailRegEx("\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b");
             emailRegEx.setCaseSensitivity(Qt::CaseInsensitive);
             emailRegEx.setPatternSyntax(QRegExp::RegExp);
 
     bool ok = false;
 
+    // On récupère l'email de l'utilisateur que l'on souhaite modifier
     QString email = QInputDialog::getText(this, "Email", "Quel est l'email de l'utilisateur ?", QLineEdit::Normal, QString(), &ok);
 
+    // Si on clique sur OK et que l'email est valide
     if (ok && !email.isEmpty() && emailRegEx.exactMatch(email))
     {
+        // On instancie un User
         Entity::User user;
 
+        // On charge l'utilisateur par son email
         auto error = user.loadUserByEmail(email);
 
+        // Si aucune erreur pendant le chargement de l'utilisateur
         if (error == Entity::User::ErrorType::NONE)
         {
+            // On lance la fenêtre pour éditer l'utilisateur
             CreateUser editUser;
 
             QObject::connect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
@@ -87,8 +97,10 @@ void Dashboard::editUser()
             QObject::disconnect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
             QObject::disconnect(&editUser, SIGNAL(userDeleteSuccess()), this, SLOT(userDeleteSuccess()));
         }
+        // Si une erreur arrive
         else
         {
+            // On indique à l'utilisateur
             QMessageBox::warning(this, "Utilisateur introuvable", "L'utilisateur " + email + " est introuvable.");
         }
 
@@ -112,10 +124,13 @@ void Dashboard::addGroup()
 
     QString groupname = QInputDialog::getText(this, "Ajouter un groupe", "Quel est le nom du nouveau groupe ?", QLineEdit::Normal, QString(), &ok);
 
+    // Si on clique sur ok et que le nom du groupe n'est pas vide
     if (ok && !groupname.isEmpty())
     {
+        // Si le nom n'est pas déjà pris
         if (!Entity::Group::groupExist(groupname))
         {
+            // On créer le groupe
             Entity::Group group;
                 group.setName(groupname);
 
@@ -136,22 +151,28 @@ void Dashboard::editGroup()
 {
     bool ok = false;
 
+    // On demande le nom du groupe
     QString groupname = QInputDialog::getText(this, "Modifier un groupe", "Quel est le nom du nouveau groupe ?", QLineEdit::Normal, QString(), &ok);
 
+    // Si l'utilisateur à cliqué sur OK et que le nom du groupe n'est pas vide
     if (ok && !groupname.isEmpty())
     {
-        // Le groupe existe bien
+        // Si groupe existe bien
         if (Entity::Group::groupExist(groupname))
         {
-            groupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
+            // On demande le nouveau nom du groupe
+            newGroupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
 
-            if (ok && !groupname.isEmpty())
+            // Si l'utilisateur à cliqué sur OK et que le nom du groupe n'est pas vide
+            if (ok && !newGroupname.isEmpty())
             {
                 // Le nouveau nom n'existe pas déjà
-                if (!Entity::Group::groupExist(groupname))
+                if (!Entity::Group::groupExist(newGroupname))
                 {
+                    // On charge le groupe
                     Entity::Group group;
                         group.loadByName(groupname);
+                        group.setName(newGroupname);
 
                     Utility::PersisterManager pm;
                     pm.persistOne(group);

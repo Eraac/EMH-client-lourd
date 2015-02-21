@@ -13,10 +13,10 @@ namespace Utility
         public:
             void operator()(ConstraintWindow* constraint);
 
-            bool hasDuplicate() const;
+            bool hasDuplicate() const; // Prédicat pour savoir si un élèment est présent plusieurs fois
 
         private:
-            QMap<Entity::Constraint::Type, int> m_types;
+            QMap<Entity::Constraint::Type, int> m_types; // Contient la liste des types présent dans la liste
     };
 }
 
