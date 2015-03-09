@@ -161,7 +161,7 @@ void Dashboard::editGroup()
         if (Entity::Group::groupExist(groupname))
         {
             // On demande le nouveau nom du groupe
-            newGroupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
+            QString newGroupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
 
             // Si l'utilisateur à cliqué sur OK et que le nom du groupe n'est pas vide
             if (ok && !newGroupname.isEmpty())
