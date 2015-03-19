@@ -46,6 +46,7 @@ Entity::Entity::ErrorType Entity::User::loadUserByEmail(const QString &email)
 
 Entity::Entity::ErrorType Entity::User::load(unsigned int id)
 {
+    // TODO
     m_id = id;
     m_name = "Labesse";
     m_firstName = "Kévin";

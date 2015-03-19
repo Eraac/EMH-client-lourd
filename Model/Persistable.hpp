@@ -2,7 +2,6 @@
 #define PERSISTABLE_HPP
 
 #include <QSqlDatabase>
-#include <memory>
 
 namespace Model
 {
@@ -26,8 +25,9 @@ namespace Model
         virtual int getWeight() const;  // Retourne le poids d'une entité pour obtenir l'ordre d'enregistrement
 
         protected:
-        // TODO
-        //static std::unique_ptr<QSqlDatabase> m_db;    // Connexion à la base de données
+        bool initDB();
+
+        static QSqlDatabase m_db;    // Connexion à la base de données
 
     };
 }
