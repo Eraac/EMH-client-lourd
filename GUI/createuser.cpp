@@ -12,8 +12,10 @@ CreateUser::CreateUser(QWidget *parent) :
     m_listGroupsLayout = new QVBoxLayout();
     ui->scrollAreaWidgetContents->setLayout(m_listGroupsLayout);
 
+    Entity::Group group;
+
     // On charge les groupes
-    for (auto groupname : Entity::Group::getAll())
+    for (auto groupname : group.getAll())
     {
         m_listGroups.append(new QCheckBox(groupname));        
         m_listGroupsLayout->addWidget(m_listGroups.last());

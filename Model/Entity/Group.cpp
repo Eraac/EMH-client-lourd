@@ -48,14 +48,17 @@ QString Entity::Group::getName() const
 
 QStringList Entity::Group::getAll()
 {
+    initDB();
+
+    QSqlQuery query = m_db.exec("SELECT name FROM groups");
+
     QStringList listGroup;
 
-    listGroup.append("Medecin");
-    listGroup.append("Administratif");
-    listGroup.append("Patient");
-    listGroup.append("Militaire");
-    listGroup.append("Chirurgien");
-    listGroup.append("Homme de ménage");
+    while (query.next())
+    {
+        QString groupname = query.value(0).toString();
+        listGroup.append(groupname);
+    }
 
     return listGroup;
 }

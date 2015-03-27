@@ -21,8 +21,10 @@ createForm::createForm(QWidget *parent) :
     ui->scrollAreaTags->setLayout(m_listTagsLayout);
     ui->scrollAreaFields->setLayout(m_fieldsLayout);
 
+    Entity::Group group;
+
     // On parcourt les groupes
-    for (auto groupname : Entity::Group::getAll())
+    for (auto groupname : group.getAll())
     {
         // On ajoute dans le layout le groupe
         m_listReaders.append(new QCheckBox(groupname));

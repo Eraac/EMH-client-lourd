@@ -22,7 +22,7 @@ namespace Entity
 
         QString getName() const;                    // Retourne le nom
 
-        static QStringList getAll();                // Retourne le nom de tous les groupes
+        QStringList getAll();                       // Retourne le nom de tous les groupes
         virtual int getWeight() const;              // Retourne le poids
 
         virtual void persist() override;            // Persiste l'entité dans la base de données
