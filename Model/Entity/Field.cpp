@@ -124,11 +124,24 @@ bool Entity::Field::getIsRequired() const
 
 Entity::Entity::ErrorType Entity::Field::load(unsigned int id)
 {
-    m_id = id;
-    m_isMultiple = false;
-    m_label = "Prenom";
-    m_placeholder = "Votre prénom";
-    m_helpText = "Entrez votre prénom pas votre nom";
+    if (!initDB())
+        return Entity::ErrorType::DATABASE_ERROR;
+
+    QSqlQuery query = m_db.exec("SELECT * FROM field WHERE id = ?");
+
+    query.bindValue(0, id);
+    query.exec();
+
+    if (!query.first())
+        return Entity::ErrorType::NOT_FOUND;
+
+    m_id            = id;
+    m_isMultiple    = query.value("multiple").toBool();
+    m_label         = query.value("label").toString();
+    m_placeholder   = query.value("placeholder").toString();
+    m_helpText      = query.value("helpText").toString();
+    m_type          = query.value("type").toInt();
+    m_isRequired    = query.value("isRequired").toBool();
 
     return Entity::ErrorType::NONE;
 }
@@ -140,16 +153,70 @@ int Entity::Field::getWeight() const
 
 void Entity::Field::persist()
 {
-    // TODO
-    // Ne pas oublier le labelField qui est unique et le labelHuman pour les humains
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    // Si déjà une ID alors update
+    if (m_id != 0)
+    {
+        preUpdate();
+        QSqlQuery query = m_db.exec(
+                    "UPDATE field SET multiple = ?, label = ?, placeholder = ?, helpText = ?, \
+                    type = ?, isRequired = ? WHERE id = ?"
+                    );
+
+        query.bindValue(0, m_isMultiple);
+        query.bindValue(1, m_label);
+        query.bindValue(2, m_placeholder);
+        query.bindValue(3, m_helpText);
+        query.bindValue(4, m_type);
+        query.bindValue(5, m_isRequired);
+        query.bindValue(6, m_id);
+        query.exec();
+
+        postUpdate();
+    }
+    else
+    {
+        preInsert();
+        QSqlQuery query = m_db.exec(
+                    "INSERT INTO field (multiple, label, placeholder, helpText, type, isRequired) \
+                    VALUES(?, ?, ?, ?, ?, ?)"
+                    );
+
+        query.bindValue(0, m_isMultiple);
+        query.bindValue(1, m_label);
+        query.bindValue(2, m_placeholder);
+        query.bindValue(3, m_helpText);
+        query.bindValue(4, m_type);
+        query.bindValue(5, m_isRequired);
+        query.exec();
+
+        postInsert();
+
+        m_id = query.lastInsertId().toInt();
+    }
 }
 
 void Entity::Field::remove()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    if (m_id == 0)
+        return; // TODO Add exception ?
+
+    preRemove();
+
+    QSqlQuery query = m_db.exec("DELETE FROM field WHERE id = ?");
+    query.bindValue(0, m_id);
+
+    query.exec();
+
+    postRemove();
 }
 
 bool Entity::Field::isValid() const
 {
-    return (m_type != Field::Type::NONE && !m_label.isEmpty()); // TODO Vérifier si les droits sont configurés
+    return (m_type != Field::Type::NONE && !m_label.isEmpty() && !m_uniqueLabel.isEmpty());
 }
