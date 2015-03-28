@@ -34,10 +34,20 @@ unsigned int Entity::DefaultValue::getIdField() const
 
 Entity::Entity::ErrorType Entity::DefaultValue::load(unsigned int id)
 {
-    // TODO
-    m_id        = id;
-    m_value     = "Valeur par défaut";
-    m_idField   = 2;
+    if (!initDB())
+        return Entity::ErrorType::DATABASE_ERROR;
+
+    QSqlQuery query = m_db.exec("SELECT * FROM defaultValue WHERE id = ?");
+
+    query.bindValue(0, id);
+    query.exec();
+
+    if (!query.first())
+        return Entity::ErrorType::NOT_FOUND;
+
+    m_id        = query.value("id").toInt();
+    m_value     = query.value("value").toString();
+    m_idField   = query.value("field_id").toInt();
 
     return Entity::ErrorType::NONE;
 }
@@ -49,12 +59,53 @@ int Entity::DefaultValue::getWeight() const
 
 void Entity::DefaultValue::persist()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    // Si déjà une ID alors update
+    if (m_id != 0)
+    {
+        preUpdate();
+        QSqlQuery query = m_db.exec("UPDATE defaultValue SET value = ?, field_id = ? WHERE id = ?");
+
+        query.bindValue(0, m_value);
+        query.bindValue(1, m_idField);
+        query.bindValue(2, m_id);
+        query.exec();
+
+        postUpdate();
+    }
+    else
+    {
+        preInsert();
+        QSqlQuery query = m_db.exec("INSERT INTO defaultValue (value, field_id) VALUES(?, ?)");
+
+        query.bindValue(0, m_value);
+        query.bindValue(1, m_idField);
+        query.exec();
+
+        postInsert();
+
+        m_id = query.lastInsertId().toInt();
+    }
 }
 
 void Entity::DefaultValue::remove()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    if (m_id == 0)
+        return; // TODO Add exception ?
+
+    preRemove();
+
+    QSqlQuery query = m_db.exec("DELETE FROM defaultValue WHERE id = ?");
+    query.bindValue(0, m_id);
+
+    query.exec();
+
+    postRemove();
 }
 
 bool Entity::DefaultValue::isValid() const
