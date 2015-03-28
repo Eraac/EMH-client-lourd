@@ -13,46 +13,96 @@ Entity::User::~User()
 
 bool Entity::User::emailExist(QString const& email)
 {
-    // TODO
+    initDB();
 
-    return ("kevin@labesse.me" == email); // valeur de test
+    QSqlQuery query = m_db.exec("SELECT COUNT(*) FROM user WHERE username = ?");
+
+    if (email.isEmpty() && !m_name.isEmpty())
+        query.bindValue(0, m_name);
+    else if (!email.isEmpty())
+        query.bindValue(0, email);
+    else
+        return false;
+
+    query.exec();
+    query.next();
+
+    int count = query.value(0).toInt();
+
+    return (count > 0) ? true : false;
 }
 
 Entity::Entity::ErrorType Entity::User::loadUserByLogin(QString const& email, QString const& password)
 {
-    // TODO Requete SQL here pour charger user
-    m_id = 2;
-    m_email = email;
-    m_name = "Labesse";
-    m_firstName = "Kévin";
-    m_password = password;
-    m_isAdmin = true;
+    if (!initDB())
+        return Entity::ErrorType::DATABASE_ERROR;
+
+    // TODO Crypter le mot de passe
+
+    QSqlQuery query = m_db.exec("SELECT * FROM user WHERE username = ? AND password = ?");
+
+    query.bindValue(0, email);
+    query.bindValue(1, password);
+    query.exec();
+
+    if (!query.first())
+        return Entity::ErrorType::NOT_FOUND;
+
+    m_id        = query.value("id").toInt();
+    m_email     = email;
+    m_name      = query.value("name").toString();
+    m_firstName = query.value("firstName").toString();
+    m_password  = password;
+    m_isAdmin   = query.value("isAdmin").toBool();
+    m_hasEncryptedPassword = true;
 
     return Entity::ErrorType::NONE;
 }
 
 Entity::Entity::ErrorType Entity::User::loadUserByEmail(const QString &email)
 {
-    // TODO SQL
-    m_id = 2;
-    m_email = email;
-    m_name = "Labesse";
-    m_firstName = "Kévin";
-    m_password = "kevin";
-    m_isAdmin = true;
+    if (!initDB())
+        return Entity::ErrorType::DATABASE_ERROR;
+
+    QSqlQuery query = m_db.exec("SELECT * FROM user WHERE username = ?");
+
+    query.bindValue(0, email);
+    query.exec();
+
+    if (!query.first())
+        return Entity::ErrorType::NOT_FOUND;
+
+    m_id        = query.value("id").toInt();
+    m_email     = email;
+    m_name      = query.value("name").toString();
+    m_firstName = query.value("firstName").toString();
+    m_password  = query.value("password").toString();
+    m_isAdmin   = query.value("isAdmin").toBool();
+    m_hasEncryptedPassword = true;
 
     return Entity::ErrorType::NONE;
 }
 
 Entity::Entity::ErrorType Entity::User::load(unsigned int id)
 {
-    // TODO
-    m_id = id;
-    m_name = "Labesse";
-    m_firstName = "Kévin";
-    m_email = "kevin@labesse.me";
-    m_password = "kevin";
-    m_isAdmin = true;
+    if (!initDB())
+        return Entity::ErrorType::DATABASE_ERROR;
+
+    QSqlQuery query = m_db.exec("SELECT * FROM user WHERE id = ?");
+
+    query.bindValue(0, id);
+    query.exec();
+
+    if (!query.first())
+        return Entity::ErrorType::NOT_FOUND;
+
+    m_id        = id;
+    m_email     = query.value("username").toString();;
+    m_name      = query.value("name").toString();
+    m_firstName = query.value("firstName").toString();
+    m_password  = query.value("password").toString();
+    m_isAdmin   = query.value("isAdmin").toBool();
+    m_hasEncryptedPassword = true;
 
     return Entity::ErrorType::NONE;
 }
@@ -91,10 +141,19 @@ QStringList Entity::User::getGroupsName() const
 {
     QStringList groupsNameOfUser;
 
-    // TODO requete SQL
+    if (!initDB())
+        return groupsNameOfUser;
 
-    groupsNameOfUser.append("Patient");
-    groupsNameOfUser.append("Administratif");
+    QSqlQuery query = m_db.exec("SELECT groups.name FROM user JOIN belong ON belong.user_id = user.id JOIN groups ON groups.id = belong.usergroup_id WHERE user.username = ?");
+
+    query.bindValue(0, m_email);
+    query.exec();
+
+    while (query.next())
+    {
+        QString groupname = query.value(0).toString();
+        groupsNameOfUser.append(groupname);
+    }
 
     return groupsNameOfUser;
 }
@@ -157,14 +216,61 @@ void Entity::User::encryptePassword()
 
 void Entity::User::persist()
 {
-    // TODO
-    // TMP
-    m_id = 5;
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    // Si déjà une ID alors update
+    if (m_id != 0)
+    {
+        preUpdate();
+        QSqlQuery query = m_db.exec(
+                    "UPDATE user SET name = ?, firstName = ?, password = ?, isAdmin = ? WHERE id = ?"
+                    );
+
+        query.bindValue(0, m_name);
+        query.bindValue(1, m_firstName);
+        query.bindValue(2, m_password);
+        query.bindValue(3, m_isAdmin);
+        query.bindValue(4, m_id);
+        query.exec();
+
+        postUpdate();
+    }
+    else
+    {
+        preInsert();
+        QSqlQuery query = m_db.exec(
+                    "INSERT INTO user (name, firstName, password, isAdmin) VALUES(?, ?, ?, ?)"
+                    );
+
+        query.bindValue(0, m_name);
+        query.bindValue(1, m_firstName);
+        query.bindValue(2, m_password);
+        query.bindValue(3, m_isAdmin);
+        query.exec();
+
+        postInsert();
+
+        m_id = query.lastInsertId().toInt();
+    }
 }
 
 void Entity::User::remove()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    if (m_id == 0)
+        return; // TODO Add exception ?
+
+    preRemove();
+
+    QSqlQuery query = m_db.exec("DELETE FROM user WHERE id = ?");
+    query.bindValue(0, m_id);
+
+    query.exec();
+
+    postRemove();
 }
 
 void Entity::User::prePersist()
