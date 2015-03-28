@@ -127,12 +127,13 @@ void Dashboard::addGroup()
     // Si on clique sur ok et que le nom du groupe n'est pas vide
     if (ok && !groupname.isEmpty())
     {
+        Entity::Group group;
+
         // Si le nom n'est pas déjà pris
-        if (!Entity::Group::groupExist(groupname))
+        if (!group.groupExist(groupname))
         {
             // On créer le groupe
-            Entity::Group group;
-                group.setName(groupname);
+            group.setName(groupname);
 
             Utility::PersisterManager pm;
 
@@ -157,8 +158,10 @@ void Dashboard::editGroup()
     // Si l'utilisateur à cliqué sur OK et que le nom du groupe n'est pas vide
     if (ok && !groupname.isEmpty())
     {
+        Entity::Group group;
+
         // Si groupe existe bien
-        if (Entity::Group::groupExist(groupname))
+        if (group.groupExist(groupname))
         {
             // On demande le nouveau nom du groupe
             QString newGroupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
@@ -167,12 +170,11 @@ void Dashboard::editGroup()
             if (ok && !newGroupname.isEmpty())
             {
                 // Le nouveau nom n'existe pas déjà
-                if (!Entity::Group::groupExist(newGroupname))
+                if (!group.groupExist(newGroupname))
                 {
                     // On charge le groupe
-                    Entity::Group group;
-                        group.loadByName(groupname);
-                        group.setName(newGroupname);
+                    group.loadByName(groupname);
+                    group.setName(newGroupname);
 
                     Utility::PersisterManager pm;
                     pm.persistOne(group);

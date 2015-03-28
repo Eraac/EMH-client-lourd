@@ -13,7 +13,7 @@ namespace Entity
         virtual ~Group();                                   // Destructeur
 
         static const int weight;                    // Utilisé pour trier
-        static bool groupExist(QString const& name); // Retourne vrai si le groupe existe
+        bool groupExist(QString const& name = "");  // Retourne vrai si le groupe existe
 
         Entity::ErrorType loadByName(QString const& name); // Charge un groupe par son nom
         Entity::ErrorType load(unsigned int id);    // Charge l'entité depuis la base de données

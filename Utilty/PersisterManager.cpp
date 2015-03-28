@@ -40,7 +40,7 @@ void Utility::PersisterManager::persistAll()
 
 void Utility::PersisterManager::sortList()
 {
-    // Faire le tri des trucs non valide
+    // Trier par poids et retirer les non valide
 }
 
 
