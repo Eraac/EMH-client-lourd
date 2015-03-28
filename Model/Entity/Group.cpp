@@ -133,7 +133,6 @@ void Entity::Group::persist()
 
         m_id = query.lastInsertId().toInt();
     }
-
 }
 
 void Entity::Group::remove()
