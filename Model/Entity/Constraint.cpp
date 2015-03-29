@@ -37,7 +37,7 @@ Entity::Entity::ErrorType Entity::Constraint::load(unsigned int id)
         return Entity::ErrorType::NOT_FOUND;
 
     m_id = query.value("id").toInt();
-    m_type = query.value("type").toInt();
+    m_type = static_cast<Constraint::Type> (query.value("type").toInt());
 
     return Entity::ErrorType::NONE;
 }
@@ -58,7 +58,7 @@ void Entity::Constraint::persist()
         preUpdate();
         QSqlQuery query = m_db.exec("UPDATE fieldConstraint SET type = ? WHERE id = ?");
 
-        query.bindValue(0, m_type);
+        query.bindValue(0, static_cast<int> (m_type));
         query.bindValue(1, m_id);
         query.exec();
 
@@ -69,7 +69,7 @@ void Entity::Constraint::persist()
         preInsert();
         QSqlQuery query = m_db.exec("INSERT INTO fieldConstraint (type) VALUES(?)");
 
-        query.bindValue(0, m_type);
+        query.bindValue(0, static_cast<int> (m_type));
         query.exec();
 
         postInsert();

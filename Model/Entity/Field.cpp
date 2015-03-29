@@ -140,7 +140,7 @@ Entity::Entity::ErrorType Entity::Field::load(unsigned int id)
     m_label         = query.value("label").toString();
     m_placeholder   = query.value("placeholder").toString();
     m_helpText      = query.value("helpText").toString();
-    m_type          = query.value("type").toInt();
+    m_type          = static_cast<Field::Type> (query.value("type").toInt());
     m_isRequired    = query.value("isRequired").toBool();
 
     return Entity::ErrorType::NONE;
@@ -169,7 +169,7 @@ void Entity::Field::persist()
         query.bindValue(1, m_label);
         query.bindValue(2, m_placeholder);
         query.bindValue(3, m_helpText);
-        query.bindValue(4, m_type);
+        query.bindValue(4, static_cast<int> (m_type));
         query.bindValue(5, m_isRequired);
         query.bindValue(6, m_id);
         query.exec();
@@ -188,7 +188,7 @@ void Entity::Field::persist()
         query.bindValue(1, m_label);
         query.bindValue(2, m_placeholder);
         query.bindValue(3, m_helpText);
-        query.bindValue(4, m_type);
+        query.bindValue(4, static_cast<int> (m_type));
         query.bindValue(5, m_isRequired);
         query.exec();
 
@@ -218,5 +218,5 @@ void Entity::Field::remove()
 
 bool Entity::Field::isValid() const
 {
-    return (m_type != Field::Type::NONE && !m_label.isEmpty() && !m_uniqueLabel.isEmpty());
+    return (m_type != Field::Type::NONE && !m_label.isEmpty());
 }

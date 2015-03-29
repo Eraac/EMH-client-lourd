@@ -17,7 +17,7 @@ namespace Entity
 
         enum class Status {NONE, DEMAND, INFORMATION};      // Le statut du formulaire
 
-        static bool formExist(QString const& name);         // Renvoi false si le nom du formulaire n'est pas déjà pris
+        bool formExist(QString const& name);                // Renvoi false si le nom du formulaire n'est pas déjà pris
         Entity::ErrorType load(unsigned int id);            // Charge l'entité depuis la base de données
         virtual int getWeight() const;                      // Retourne le poids
 

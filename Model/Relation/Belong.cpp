@@ -19,12 +19,36 @@ bool Relation::Belong::isValid() const
 
 void Relation::Belong::persist()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preInsert();
+
+    QSqlQuery query = m_db.exec("INSERT INTO belong (user_id, usergroup_id) VALUES(?, ?)");
+
+    query.bindValue(0, m_idUser);
+    query.bindValue(1, m_idGroup);
+
+    query.exec();
+
+    postInsert();
 }
 
 void Relation::Belong::remove()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preRemove();
+
+    QSqlQuery query = m_db.exec("DELETE FROM belong WHERE user_id = ? AND usergroup_id = ?");
+
+    query.bindValue(0, m_idUser);
+    query.bindValue(1, m_idGroup);
+
+    query.exec();
+
+    postRemove();
 }
 
 void Relation::Belong::setIdUser(unsigned int id)

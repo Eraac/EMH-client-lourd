@@ -19,12 +19,36 @@ bool Relation::Read::isValid() const
 
 void Relation::Read::persist()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preInsert();
+
+    QSqlQuery query = m_db.exec("INSERT INTO reader (form_id, usergroup_id) VALUES(?, ?)");
+
+    query.bindValue(0, m_idForm);
+    query.bindValue(1, m_idGroup);
+
+    query.exec();
+
+    postInsert();
 }
 
 void Relation::Read::remove()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preRemove();
+
+    QSqlQuery query = m_db.exec("DELETE FROM reader WHERE form_id = ? AND usergroup_id = ?");
+
+    query.bindValue(0, m_idForm);
+    query.bindValue(1, m_idGroup);
+
+    query.exec();
+
+    postRemove();
 }
 
 int Relation::Read::getWeight() const

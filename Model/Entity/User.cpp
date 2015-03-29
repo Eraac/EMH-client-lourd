@@ -13,16 +13,17 @@ Entity::User::~User()
 
 bool Entity::User::emailExist(QString const& email)
 {
-    initDB();
+    if (!initDB())
+        return false;
 
     QSqlQuery query = m_db.exec("SELECT COUNT(*) FROM user WHERE username = ?");
 
-    if (email.isEmpty() && !m_name.isEmpty())
-        query.bindValue(0, m_name);
-    else if (!email.isEmpty())
+    if (!email.isEmpty())
         query.bindValue(0, email);
+    else if (!m_name.isEmpty())
+        query.bindValue(0, m_name);
     else
-        return false;
+        return false;    
 
     query.exec();
     query.next();
@@ -240,18 +241,20 @@ void Entity::User::persist()
     {
         preInsert();
         QSqlQuery query = m_db.exec(
-                    "INSERT INTO user (name, firstName, password, isAdmin) VALUES(?, ?, ?, ?)"
+                    "INSERT INTO user (username, name, firstName, password, roles, isAdmin) VALUES(?, ?, ?, ?, ?, ?)"
                     );
 
-        query.bindValue(0, m_name);
-        query.bindValue(1, m_firstName);
-        query.bindValue(2, m_password);
-        query.bindValue(3, m_isAdmin);
+        query.bindValue(0, m_email);
+        query.bindValue(1, m_name);
+        query.bindValue(2, m_firstName);
+        query.bindValue(3, m_password);
+        query.bindValue(4, "a:1:{i:0;s:9:\"ROLE_USER\";}");
+        query.bindValue(5, m_isAdmin);
         query.exec();
 
         postInsert();
 
-        m_id = query.lastInsertId().toInt();
+        m_id = query.lastInsertId().toInt();        
     }
 }
 

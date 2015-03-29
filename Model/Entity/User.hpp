@@ -17,7 +17,7 @@ namespace Entity
 
         static const int weight;            // Utilisé pour trier
 
-        static bool emailExist(QString const& email);   // Retourne true si l'email existe déjà
+        bool emailExist(QString const& email);   // Retourne true si l'email existe déjà
         Entity::ErrorType loadUserByLogin(QString const& email, QString const& password); // Charge un user par son identifiant
         Entity::ErrorType loadUserByEmail(QString const& email);    // Charge l'utilisateur par son email
         Entity::ErrorType load(unsigned int id);                    // Charge l'entité depuis la base de données

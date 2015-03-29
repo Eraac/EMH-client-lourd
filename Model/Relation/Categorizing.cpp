@@ -19,12 +19,36 @@ bool Relation::Categorizing::isValid() const
 
 void Relation::Categorizing::persist()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preInsert();
+
+    QSqlQuery query = m_db.exec("INSERT INTO categorizing (form_id, tag_id) VALUES(?, ?)");
+
+    query.bindValue(0, m_idForm);
+    query.bindValue(1, m_idTag);
+
+    query.exec();
+
+    postInsert();
 }
 
 void Relation::Categorizing::remove()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preRemove();
+
+    QSqlQuery query = m_db.exec("DELETE FROM categorizing WHERE form_id = ? AND tag_id = ?");
+
+    query.bindValue(0, m_idForm);
+    query.bindValue(1, m_idTag);
+
+    query.exec();
+
+    postRemove();
 }
 
 void Relation::Categorizing::setIdForm(unsigned int id)

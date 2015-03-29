@@ -19,12 +19,36 @@ bool Relation::Require::isValid() const
 
 void Relation::Require::persist()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preInsert();
+
+    QSqlQuery query = m_db.exec("INSERT INTO constrained (field_id, fieldConstraint_id) VALUES(?, ?)");
+
+    query.bindValue(0, m_idField);
+    query.bindValue(1, m_idConstraint);
+
+    query.exec();
+
+    postInsert();
 }
 
 void Relation::Require::remove()
 {
-    // TODO
+    if (!initDB())
+        return; // TODO Add exception ?
+
+    preRemove();
+
+    QSqlQuery query = m_db.exec("DELETE FROM constrained WHERE field_id = ? AND fieldConstraint_id = ?");
+
+    query.bindValue(0, m_idField);
+    query.bindValue(1, m_idConstraint);
+
+    query.exec();
+
+    postRemove();
 }
 
 void Relation::Require::setIdConstraint(unsigned int id)

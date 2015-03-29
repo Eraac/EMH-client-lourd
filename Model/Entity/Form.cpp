@@ -54,7 +54,7 @@ Entity::Entity::ErrorType Entity::Form::load(unsigned int id)
     m_info          = query.value("info").toString();
     m_important     = query.value("important").toString();
     m_color         = query.value("color").toString();
-    m_status        = query.value("status").toInt();
+    m_status        = static_cast<Form::Status> (query.value("status").toInt());
     m_idAuthor      = query.value("author_id").toInt();
 
 
@@ -91,7 +91,7 @@ void Entity::Form::persist()
         query.bindValue(2, m_description);
         query.bindValue(3, m_info);
         query.bindValue(4, m_important);
-        query.bindValue(5, m_status);
+        query.bindValue(5, static_cast<int> (m_status));
         query.bindValue(6, m_color);
         query.bindValue(7, m_id);
         query.exec();
@@ -111,7 +111,7 @@ void Entity::Form::persist()
         query.bindValue(2, m_description);
         query.bindValue(3, m_info);
         query.bindValue(4, m_important);
-        query.bindValue(5, m_status);
+        query.bindValue(5, static_cast<int> (m_status));
         query.bindValue(6, m_color);
         query.exec();
 

@@ -69,7 +69,7 @@ void CreateUser::loadUser(Entity::User user)
 void CreateUser::valideUser()
 {
     // On vérifie que l'emaim n'existe pas si l'utilisateur est nouveau
-    if (Entity::User::emailExist(ui->emailLineEdit->text()) && newUser)
+    if (m_user.emailExist(ui->emailLineEdit->text()) && newUser)
     {
         ui->message->setText("L'email existe déjà");
     }

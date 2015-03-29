@@ -30,9 +30,12 @@ void LoginWindow::connectSlot()
                 ui->passwordLineEdit->text()
             );
 
-    // Si aucun problème on émet un signal avec l'utilisateur
+    // Si aucun problème on émet un signal avec l'utilisateur    
     if (Entity::User::ErrorType::NONE == error) {
-        emit connectUser(user);
+        if (user.isAdmin())
+            emit connectUser(user);
+        else
+            ui->errorLogin->setText("Ce compte n'est pas autorisé");
     }
     // Si on trouve pas l'utilisateur on l'indique à l'utilisateur
     else if (Entity::User::ErrorType::NOT_FOUND == error) {
