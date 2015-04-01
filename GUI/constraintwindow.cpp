@@ -172,6 +172,7 @@ void ConstraintWindow::persistConstraint(int idField)
     // On persist la contrainte
     pm.persistOne(m_constraint);
 
+
     // On créer une relation entre le champs et la contrainte
     Relation::Require require;
         require.setIdConstraint(m_constraint.getId());
@@ -183,13 +184,9 @@ void ConstraintWindow::persistConstraint(int idField)
     // On enregistre les parametres si besoin
     for (int i = 0; i < m_nbParams; i++)
     {
-        // Si le paramètre est valide
-        if (m_params[i].isValid())
-        {
-            // On l'enregistre
-            m_params[i].setIdConstraint(m_constraint.getId());
-            pm.persistOne(m_params[i]);
-        }
+        // On l'enregistre
+        m_params[i].setIdConstraint(m_constraint.getId());
+        pm.persistOne(m_params[i]);
     }
 }
 
