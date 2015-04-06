@@ -5,7 +5,7 @@
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::createForm), m_color(Qt::white), m_nbField(0),
-    m_form(), m_formIsValid(false)
+    m_form(), m_formIsValid(false), m_newForm(true)
 {
     ui->setupUi(this);
 
@@ -158,7 +158,7 @@ void createForm::valid()
     m_form.setInfo(ui->messageInformation->toPlainText());
     m_form.setName(ui->nomLineEdit->text());    
 
-    // Selon le bouto cliqué on lui donne le bon Status
+    // Selon le bouton cliqué on lui donne le bon Status
     if (ui->demandeRadioButton->isChecked())
         m_form.setStatus(Entity::Form::Status::DEMAND);
     else if (ui->informationRadioButton->isChecked())
@@ -329,4 +329,79 @@ void createForm::validForm()
             return;
         }
     }
+}
+
+void createForm::loadForm(Entity::Form form)
+{
+    m_newForm = false;
+
+    ui->nomLineEdit->setText(form.getName());
+    ui->description->setPlainText(form.getDescription());
+    ui->messageInformation->setPlainText(form.getInfo());
+    ui->messageImportant->setPlainText(form.getImportant());
+
+    if (form.getStatus() == Entity::Form::Status::DEMAND)
+        ui->demandeRadioButton->setChecked(true);
+    else
+        ui->informationRadioButton->setChecked(true);
+
+    m_color.setNamedColor("#" + form.getColor());
+
+    QStringList writers = form.getWriters();
+
+    // Ajout des utilisateurs
+    for (QCheckBox* writerBox : m_listWriters)
+    {
+        if (writers.contains(writerBox->text()))
+            writerBox->setChecked(true);
+    }
+
+    QStringList readers = form.getReaders();
+
+    // Ajout des lecteurs
+    for (QCheckBox* readerBox : m_listReaders)
+    {
+        if (readers.contains(readerBox->text()))
+            readerBox->setChecked(true);
+    }
+
+    QStringList tags = form.getTags();
+
+    // Ajout des tags
+    for (QCheckBox* tagBox : m_listTags)
+    {
+        if (tags.contains(tagBox->text()))
+            tagBox->setChecked(true);
+    }
+
+    QList<Entity::Field> fields = form.getFields();
+
+    for (auto field : fields)
+    {/*
+        // Ajout des champs
+        m_nbField++;
+
+        // On ajoute une fenêtre dans la liste
+        m_fieldsWindows.insert(m_nbField, new fieldWindow(&ok, this));
+
+        // On ajoute la ligne dans le layout des champs
+        m_lines.insert( m_nbField, new QHBoxLayout() );
+
+        // Nous ajoutons nos boutons personnalisés
+        m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
+        m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
+
+        // On connect les slots pour savoir qu'elle bouton est appuyer
+        QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editField(int)));
+        QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
+
+        // Nous ajoutons des informations du champs dans le layout
+        m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getTypeReadable()) );
+        m_lines.last()->addWidget( new QLabel(m_fieldsWindows.last()->getField().getLabel()) );
+        m_lines.last()->addWidget( new QLabel(QString("%1 contrainte(s)").arg(m_fieldsWindows.last()->getNbConstraint()) ) );
+        m_lines.last()->addWidget( m_edits.last() );
+        m_lines.last()->addWidget( m_deletes.last() );
+
+        m_fieldsLayout->addLayout(m_lines.last());
+    */}
 }

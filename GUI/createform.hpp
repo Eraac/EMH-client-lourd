@@ -35,7 +35,13 @@ class createForm : public QDialog
         explicit createForm(QWidget *parent = 0);
         ~createForm();
 
+        void loadForm(Entity::Form form);   // Charge un formulaire
+
         void validForm();   // Méthode appelée lors du clique sur le bouton "Valider"
+
+    signals:
+        void successAddForm();  // TODO A gerer
+        void successEditForm();
 
     public slots:
         void chooseColor();                     // Pour choisir une couleur (onClick sur le bouton "Couleur")
@@ -62,6 +68,7 @@ class createForm : public QDialog
 
         int m_nbField;                              // Permet d'avoir une id unique pour chaque champs ajouter sur les QMaps
         Entity::Form m_form;                        // Contient le formulaire
+        bool m_newForm;
         QMap<int, fieldWindow*> m_fieldsWindows;    // Contient les fenêtres pour gérer les champs
         QMap<int, QHBoxLayout*> m_lines;            // Les layouts contenant les informations d'un champs
         QMap<int, CustomQPushButton*> m_edits;      // Les boutons "Modifier" pour chaque champs
