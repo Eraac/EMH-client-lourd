@@ -3,7 +3,8 @@
 const int Entity::Field::weight = 1;
 
 Entity::Field::Field() : Entity(), m_type(Field::Type::NONE), m_isMultiple(false),
-                         m_label(""), m_placeholder(""), m_helpText(""), m_isRequired(true)
+                         m_label(""), m_placeholder(""), m_helpText(""), m_isRequired(true),
+                         m_idForm(0)
 {
 
 }
@@ -41,6 +42,11 @@ void Entity::Field::setIsMultiple(bool multiple)
 void Entity::Field::setIsRequired(bool required)
 {
     m_isRequired = required;
+}
+
+void Entity::Field::setFormId(unsigned int id)
+{
+    m_idForm = id;
 }
 
 Entity::Field::Type Entity::Field::getType() const
@@ -122,6 +128,11 @@ bool Entity::Field::getIsRequired() const
     return m_isRequired;
 }
 
+unsigned int Entity::Field::getFormId() const
+{
+    return m_idForm;
+}
+
 Entity::Entity::ErrorType Entity::Field::load(unsigned int id)
 {
     if (!initDB())
@@ -142,6 +153,7 @@ Entity::Entity::ErrorType Entity::Field::load(unsigned int id)
     m_helpText      = query.value("helpText").toString();
     m_type          = static_cast<Field::Type> (query.value("type").toInt());
     m_isRequired    = query.value("isRequired").toBool();
+    m_idForm        = query.value("form_id").toInt();
 
     return Entity::ErrorType::NONE;
 }
@@ -162,7 +174,7 @@ void Entity::Field::persist()
         preUpdate();
         QSqlQuery query = m_db.exec(
                     "UPDATE field SET multiple = ?, label = ?, placeholder = ?, helpText = ?, \
-                    type = ?, isRequired = ? WHERE id = ?"
+                    type = ?, isRequired = ?, form_id = ? WHERE id = ?"
                     );
 
         query.bindValue(0, m_isMultiple);
@@ -171,7 +183,8 @@ void Entity::Field::persist()
         query.bindValue(3, m_helpText);
         query.bindValue(4, static_cast<int> (m_type));
         query.bindValue(5, m_isRequired);
-        query.bindValue(6, m_id);
+        query.bindValue(6, m_idForm);
+        query.bindValue(7, m_id);
         query.exec();
 
         postUpdate();
@@ -180,8 +193,8 @@ void Entity::Field::persist()
     {
         preInsert();
         QSqlQuery query = m_db.exec(
-                    "INSERT INTO field (multiple, label, placeholder, helpText, type, isRequired) \
-                    VALUES(?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO field (multiple, label, placeholder, helpText, type, isRequired, form_id) \
+                    VALUES(?, ?, ?, ?, ?, ?, ?)"
                     );
 
         query.bindValue(0, m_isMultiple);
@@ -190,6 +203,7 @@ void Entity::Field::persist()
         query.bindValue(3, m_helpText);
         query.bindValue(4, static_cast<int> (m_type));
         query.bindValue(5, m_isRequired);
+        query.bindValue(6, m_idForm);
         query.exec();
 
         postInsert();
