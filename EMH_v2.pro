@@ -10,7 +10,8 @@ FORMS += \
     GUI/createuser.ui \
     GUI/createform.ui \
     GUI/fieldwindow.ui \
-    GUI/constraintwindow.ui
+    GUI/constraintwindow.ui \
+    GUI/chooseform.ui
 
 HEADERS += \
     Model/Entity/Constraint.hpp \
@@ -43,7 +44,8 @@ HEADERS += \
     Model/Entity/param.hpp \
     GUI/constraintwindow.hpp \
     Utilty/Foncteur/hascheckboxchecked.hpp \
-    Utilty/Foncteur/hasduplicateconstraint.hpp
+    Utilty/Foncteur/hasduplicateconstraint.hpp \
+    GUI/chooseform.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -76,7 +78,8 @@ SOURCES += \
     Model/Entity/param.cpp \
     GUI/constraintwindow.cpp \
     Utilty/Foncteur/hascheckboxchecked.cpp \
-    Utilty/Foncteur/hasduplicateconstraint.cpp
+    Utilty/Foncteur/hasduplicateconstraint.cpp \
+    GUI/chooseform.cpp
 
 RESOURCES += \
     Resource/images.qrc
