@@ -35,6 +35,25 @@ bool Entity::Form::formExist(const QString &name)
     return (count > 0) ? true : false;
 }
 
+QStringList Entity::Form::getAllFormName()
+{
+    QStringList listForm;
+
+    if (!initDB())
+        return listForm;
+
+    QSqlQuery query = m_db.exec("SELECT name FROM form");
+    query.exec();
+
+    while (query.next())
+    {
+        QString formname = query.value(0).toString();
+        listForm.append(formname);
+    }
+
+    return listForm;
+}
+
 Entity::Entity::ErrorType Entity::Form::load(unsigned int id)
 {
     if (!initDB())

@@ -18,6 +18,7 @@ namespace Entity
         enum class Status {NONE, DEMAND, INFORMATION};      // Le statut du formulaire
 
         bool formExist(QString const& name);                // Renvoi false si le nom du formulaire n'est pas déjà pris
+        QStringList getAllFormName();                       // Retourne la liste des noms de tous les formulaires disponible
         Entity::ErrorType load(unsigned int id);            // Charge l'entité depuis la base de données
         virtual int getWeight() const;                      // Retourne le poids
 
@@ -34,7 +35,7 @@ namespace Entity
         void setColor(QColor const& color);                 // Change la couleur
 
         QString getName() const;                            // Retourne le nom du formulaire
-        QString getDescription() const;                     // Retoure la description du formulaire
+        QString getDescription() const;                     // Retourne la description du formulaire
         QString getInfo() const;                            // Retourne le texte d'information
         QString getImportant() const;                       // Retourne le texte important
         Form::Status getStatus() const;                     // Retourne le statut du formulaire
