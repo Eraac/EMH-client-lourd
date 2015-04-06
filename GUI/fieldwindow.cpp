@@ -34,15 +34,16 @@ void fieldWindow::persistField(int idForm)
     Utility::PersisterManager pm;
     QStringList defaultValues;
 
+    m_field.setFormId(idForm);
     pm.persistOne(m_field);
 
     // On ajoute la relation "Contains" entre le formulaire et le champs
-    Relation::Contains contains;
+    /*Relation::Contains contains;
         contains.setIdField(m_field.getId());
         contains.setIdForm(idForm);
 
     pm.persistOne(contains);
-
+*/
     Entity::Constraint constraint;
     Relation::Require require;
 
