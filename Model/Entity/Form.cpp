@@ -80,9 +80,129 @@ Entity::Entity::ErrorType Entity::Form::load(unsigned int id)
     return Entity::ErrorType::NONE;
 }
 
+Entity::Entity::ErrorType Entity::Form::loadByName(QString const& name)
+{
+    if (!initDB())
+        return Entity::ErrorType::DATABASE_ERROR;
+
+    QSqlQuery query = m_db.exec("SELECT * FROM form WHERE name = ?");
+
+    query.bindValue(0, name);
+    query.exec();
+
+    if (!query.first())
+        return Entity::ErrorType::NOT_FOUND;
+
+    m_id            = query.value("id").toInt();
+    m_name          = name;
+    m_description   = query.value("description").toString();
+    m_info          = query.value("info").toString();
+    m_important     = query.value("important").toString();
+    m_color         = query.value("color").toString();
+    m_status        = static_cast<Form::Status> (query.value("status").toInt());
+    m_idAuthor      = query.value("author_id").toInt();
+
+
+    return Entity::ErrorType::NONE;
+}
+
 int Entity::Form::getWeight() const
 {
     return Form::weight;
+}
+
+QStringList Entity::Form::getWriters() const
+{
+    QStringList listWriters;
+
+    if (!initDB())
+        return listWriters; // TODO Add exception ?
+
+    QSqlQuery query = m_db.exec("SELECT groups.name FROM groups \
+                                JOIN writer ON groups.id = writer.usergroup_id \
+                                JOIN form ON writer.form_id = form.id \
+                                WHERE form.id = ?");
+
+    query.bindValue(0, m_id);
+    query.exec();
+
+    while (query.next())
+    {
+        QString groupname = query.value(0).toString();
+        listWriters.append(groupname);
+    }
+
+    return listWriters;
+}
+
+QStringList Entity::Form::getReaders() const
+{
+    QStringList listReaders;
+
+    if (!initDB())
+        return listReaders; // TODO Add exception ?
+
+    QSqlQuery query = m_db.exec("SELECT groups.name FROM groups \
+                                JOIN reader ON groups.id = reader.usergroup_id \
+                                JOIN form ON reader.form_id = form.id \
+                                WHERE form.id = ?");
+
+    query.bindValue(0, m_id);
+    query.exec();
+
+    while (query.next())
+    {
+        QString groupname = query.value(0).toString();
+        listReaders.append(groupname);
+    }
+
+    return listReaders;
+}
+
+QStringList Entity::Form::getTags() const
+{
+    QStringList listTags;
+
+    if (!initDB())
+        return listTags; // TODO Add exception ?
+
+    QSqlQuery query = m_db.exec("SELECT tag.name FROM tag \
+                                JOIN categorizing ON tag.id = categorizing.tag_id \
+                                JOIN form ON categorizing.form_id = form.id \
+                                WHERE form.id = ?");
+
+    query.bindValue(0, m_id);
+    query.exec();
+
+    while (query.next())
+    {
+        QString tagname = query.value(0).toString();
+        listTags.append(tagname);
+    }
+
+    return listTags;
+}
+
+QStringList Entity::Form::getFields()
+{
+    QList<Entity::Field> listFields;
+
+    if (!initDB())
+        return listFields; // TODO Add exception ?
+
+    QSqlQuery query = m_db.exec("SELECT field.id FROM field \
+                                JOIN form ON field.form_id = form.id \
+                                WHERE form.id = ?");
+
+    query.bindValue(0, m_id);
+    query.exec();
+
+    while (query.next())
+    {
+
+    }
+
+    return listFields;
 }
 
 void Entity::Form::persist()
@@ -227,7 +347,6 @@ Entity::Form::Status Entity::Form::getStatus() const
 {
     return m_status;
 }
-
 
 unsigned int Entity::Form::getIdAuthor() const
 {

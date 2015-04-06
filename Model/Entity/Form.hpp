@@ -2,6 +2,7 @@
 #define FORM_HPP
 
 #include <QString>
+#include <QList>
 #include <QColor>
 #include "Entity.hpp"
 
@@ -20,6 +21,7 @@ namespace Entity
         bool formExist(QString const& name);                // Renvoi false si le nom du formulaire n'est pas déjà pris
         QStringList getAllFormName();                       // Retourne la liste des noms de tous les formulaires disponible
         Entity::ErrorType load(unsigned int id);            // Charge l'entité depuis la base de données
+        Entity::ErrorType loadByName(QString const& formName); // Charge l'entité par son nom
         virtual int getWeight() const;                      // Retourne le poids
 
         virtual void persist() override;                    // Persiste l'entité en base de données
@@ -41,6 +43,11 @@ namespace Entity
         Form::Status getStatus() const;                     // Retourne le statut du formulaire
         unsigned int getIdAuthor() const;                   // Retourne l'id du createur
         QString getColor() const;                           // Retoune la couleur
+
+        QStringList getWriters() const;                     // Retourne les groupes autorisés à utiliser le formulaire
+        QStringList getReaders() const;                     // Retourne les groupes autorisés à lire les soumissions
+        QStringList getTags() const;                        // Retourne la liste des tags
+        QList<Entity::Field> getFields();                   // Retourne la liste des fields
 
         private:
         QString m_name;
