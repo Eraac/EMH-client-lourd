@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include "../GUI/createuser.hpp"
 #include "../GUI/createform.hpp"
+#include "../GUI/chooseform.hpp"
 #include "../Model/Entity/User.hpp"
 #include "../Utilty/PersisterManager.hpp"
 

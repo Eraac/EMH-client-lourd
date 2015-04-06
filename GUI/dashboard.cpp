@@ -196,11 +196,39 @@ void Dashboard::editGroup()
 
 void Dashboard::addForm()
 {
-    createForm createForm(this);
-        createForm.exec();
+    createForm addForm(this);
+        addForm.exec();
 }
 
 void Dashboard::editForm()
 {
+    Entity::Form form{};
 
+    ChooseForm chooseForm{};
+        chooseForm.setForms(form.getAllFormName());
+        chooseForm.exec();
+
+    const QString formName = chooseForm.getFormName();
+
+    if (formName.isEmpty())
+        return;
+
+    form.loadByName(formName);
+
+    createForm editForm(this);
+        editForm.loadForm(form);
+        editForm.exec();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
