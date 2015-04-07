@@ -67,7 +67,7 @@ void createForm::addField()
     bool ok = false;
 
     // On ajoute une fenêtre dans la liste
-    m_fieldsWindows.insert(m_nbField, new fieldWindow(&ok, this));
+    m_fieldsWindows.insert(m_nbField, new fieldWindow(this, &ok));
         // On l'execute
         m_fieldsWindows.last()->exec();
 
@@ -377,12 +377,14 @@ void createForm::loadForm(Entity::Form form)
     QList<Entity::Field> fields = form.getFields();
 
     for (auto field : fields)
-    {/*
+    {
         // Ajout des champs
         m_nbField++;
 
         // On ajoute une fenêtre dans la liste
-        m_fieldsWindows.insert(m_nbField, new fieldWindow(&ok, this));
+        fieldWindow *fieldWd = new fieldWindow(this);
+        fieldWd->load(field);
+        m_fieldsWindows.insert(m_nbField, fieldWd);
 
         // On ajoute la ligne dans le layout des champs
         m_lines.insert( m_nbField, new QHBoxLayout() );
@@ -403,5 +405,5 @@ void createForm::loadForm(Entity::Form form)
         m_lines.last()->addWidget( m_deletes.last() );
 
         m_fieldsLayout->addLayout(m_lines.last());
-    */}
+    }
 }

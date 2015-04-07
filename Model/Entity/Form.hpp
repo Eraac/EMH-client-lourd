@@ -5,6 +5,7 @@
 #include <QList>
 #include <QColor>
 #include "Entity.hpp"
+#include "Field.hpp"
 
 namespace Entity
 {
@@ -47,7 +48,7 @@ namespace Entity
         QStringList getWriters() const;                     // Retourne les groupes autorisés à utiliser le formulaire
         QStringList getReaders() const;                     // Retourne les groupes autorisés à lire les soumissions
         QStringList getTags() const;                        // Retourne la liste des tags
-        QList<Entity::Field> getFields();                   // Retourne la liste des fields
+        QList<Field> getFields();                   // Retourne la liste des fields
 
         private:
         QString m_name;

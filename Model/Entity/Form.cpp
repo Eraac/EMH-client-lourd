@@ -183,9 +183,9 @@ QStringList Entity::Form::getTags() const
     return listTags;
 }
 
-QStringList Entity::Form::getFields()
+QList<Entity::Field> Entity::Form::getFields()
 {
-    QList<Entity::Field> listFields;
+    QList<Field> listFields;
 
     if (!initDB())
         return listFields; // TODO Add exception ?
@@ -199,7 +199,10 @@ QStringList Entity::Form::getFields()
 
     while (query.next())
     {
+        Field field;
+            field.load(query.value(0).toInt());
 
+        listFields.append(field);
     }
 
     return listFields;

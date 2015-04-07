@@ -1,11 +1,7 @@
 #include "fieldwindow.hpp"
 #include "ui_fieldwindow.h"
 
-void myfunction (Entity::Constraint* i) {  // function:
-  int id = i->getId();
-}
-
-fieldWindow::fieldWindow(bool *ok, QWidget *parent) :
+fieldWindow::fieldWindow(QWidget *parent, bool *ok) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
     m_ok(ok), m_field(), m_defaultValueTextEdit(nullptr), m_nbField()
@@ -37,13 +33,6 @@ void fieldWindow::persistField(int idForm)
     m_field.setFormId(idForm);
     pm.persistOne(m_field);
 
-    // On ajoute la relation "Contains" entre le formulaire et le champs
-    /*Relation::Contains contains;
-        contains.setIdField(m_field.getId());
-        contains.setIdForm(idForm);
-
-    pm.persistOne(contains);
-*/
     Entity::Constraint constraint;
     Relation::Require require;
 
@@ -84,7 +73,7 @@ void fieldWindow::persistField(int idForm)
         break;
 
         case Entity::Field::Type::URL:
-            constraint.setType(Entity::Constraint::Type::DATE);
+            constraint.setType(Entity::Constraint::Type::URL);
 
             pm.persistOne(constraint);
 
@@ -95,7 +84,7 @@ void fieldWindow::persistField(int idForm)
         break;
 
         case Entity::Field::Type::EMAIL:
-            constraint.setType(Entity::Constraint::Type::DATE);
+            constraint.setType(Entity::Constraint::Type::EMAIL);
 
             pm.persistOne(constraint);
 
@@ -136,6 +125,43 @@ void fieldWindow::persistField(int idForm)
     }
 }
 
+void fieldWindow::load(Entity::Field field)
+{
+    m_field = field;
+
+    ui->labelLineEdit->setText(m_field.getLabel());
+    ui->texteDAideLineEdit->setText(m_field.getHelpText());
+    ui->placeholderLineEdit->setText(m_field.getPlaceholder());
+    ui->requisCheckBox->setChecked(m_field.getIsRequired());
+    ui->choixMultipleCheckBox->setChecked(m_field.getIsMultiple());
+
+    // TODO Gèrer le type puis charger les contraintes
+    ui->typeComboBox->setCurrentIndex();
+
+    // Select avec multiple selection possible
+    if (m_field.getType() == Entity::Field::Type::RADIO)
+    {
+        m_defaultValueTextEdit = new QTextEdit();
+        ui->choixMultipleCheckBox->setEnabled(true);
+        ui->formLayout->replaceWidget(m_defaultValueLineEdit, m_defaultValueTextEdit);
+        delete m_defaultValueLineEdit;
+        m_defaultValueLineEdit = nullptr;
+
+        m_defaultValueTextEdit->setText(m_field.getDefaultValue());
+    }
+    else
+    {
+        m_defaultValueLineEdit = new QLineEdit();
+        ui->choixMultipleCheckBox->setChecked(false);
+        ui->choixMultipleCheckBox->setEnabled(false);
+        ui->formLayout->replaceWidget(m_defaultValueTextEdit, m_defaultValueLineEdit);
+        delete m_defaultValueTextEdit;
+        m_defaultValueTextEdit = nullptr;
+
+        m_defaultValueLineEdit->setText(m_field.getDefaultValue());
+    }
+}
+
 void fieldWindow::valid()
 {
     // On charge l'entité du champs selon les informations dans l'interface
@@ -173,7 +199,8 @@ void fieldWindow::valid()
     m_field.setType(type);
 
     // On indique que l'utilisateur à cliqué sur OK
-    *m_ok = true;
+    if (m_ok != nullptr)
+        *m_ok = true;
 
     close();
 }

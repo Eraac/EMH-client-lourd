@@ -28,10 +28,11 @@ class fieldWindow : public QDialog
     Q_OBJECT
 
     public:
-        explicit fieldWindow(bool *ok, QWidget *parent = 0);
+        explicit fieldWindow(QWidget *parent = 0, bool *ok = nullptr);
         ~fieldWindow();
 
         void persistField(int idForm);  // Persist le champs
+        void load(Entity::Field field); // Charge un champs
 
         Entity::Field getField() const; // Retourne le champs
         int getNbConstraint() const;    // Retourne le nombre de contraintes liées au champs
