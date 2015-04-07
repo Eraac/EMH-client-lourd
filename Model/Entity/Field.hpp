@@ -35,6 +35,7 @@ namespace Entity
         bool getIsMultiple() const;     // Retourne si le champs est multiple ou pas
         bool getIsRequired() const;     // Retourne si le champs est requis ou pas
         unsigned int getFormId() const; // Retourne l'id du formulaire associé
+        QString getDefaultValue();      // Retourne la valeur par défaut du champs
 
         Entity::ErrorType load(unsigned int id);    // Charge l'entité depuis la base de données
         virtual int getWeight() const;              // Retourne le poids

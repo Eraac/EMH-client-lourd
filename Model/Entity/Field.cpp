@@ -133,6 +133,27 @@ unsigned int Entity::Field::getFormId() const
     return m_idForm;
 }
 
+QString Entity::Field::getDefaultValue()
+{
+    QString defaultValue;
+
+    if (!initDB() || m_id == 0)
+        return defaultValue;
+
+    QSqlQuery query = m_db.exec("SELECT defaultValue.value \
+                                FROM defaultValue WHERE field_id = ?");
+
+    query.bindValue(0, m_id);
+    query.exec();
+
+    while (query.next())
+    {
+        defaultValue.append(query.value(0).toString() + "\n");
+    }
+
+    return defaultValue;
+}
+
 Entity::Entity::ErrorType Entity::Field::load(unsigned int id)
 {
     if (!initDB())
