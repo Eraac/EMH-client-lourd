@@ -17,7 +17,7 @@ namespace Entity
 
         enum class Type {NONE, DATE, DATETIME,
                          EMAIL, NUMBER, TEXT,
-                         TIME, URL, RADIO, PASSWORD};       // Type HTML du champs
+                         TIME, URL, RADIO, TEXTAREA, PASSWORD};       // Type HTML du champs
 
         void setType(Field::Type const type);               // Change le type
         void setLabel(QString const& label);                // Change le label

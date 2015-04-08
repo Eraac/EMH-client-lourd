@@ -14,10 +14,10 @@ namespace Entity
         static const int weight;    // Utilisé pour trier
 
         // TODO Vérifier par rapport à ceux de Symfony
-        enum class Type {NONE, EMAIL, LENGTH, URL,
-                         BETWEEN, NOTEQUAL, LOWER, LOWEROREQUAL,
-                         GREATER, GREATEROREQUAL, DATE, DATETIME,
-                         TIME, USERPASSWORD, REGEX};           // Type de contrainte
+        enum class Type {NONE, NOTNULL, EMAIL, LENGTH, URL,
+                         REGEX, BETWEEN, NOTEQUAL, DATE, DATETIME,
+                         TIME, USERPASSWORD, LOWER, LOWEROREQUAL,
+                         GREATER, GREATEROREQUAL};           // Type de contrainte
 
         void setType(Constraint::Type const type);      // Change le type
 
