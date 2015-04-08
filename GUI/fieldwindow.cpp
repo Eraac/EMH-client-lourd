@@ -95,6 +95,22 @@ void fieldWindow::persistField(int idForm)
         break;
     }
 
+    // Si le champs est requis on ajoute la contrainte not null
+    if (m_field.getIsRequired())
+    {
+        Entity::Constraint constraintNotNull;
+        Relation::Require requireNotNull;
+
+        constraintNotNull.setType(Entity::Constraint::Type::NOTNULL);
+
+        pm.persistOne(constraint);
+
+        requireNotNull.setIdConstraint(constraintNotNull.getId());
+        requireNotNull.setIdField(m_field.getId());
+
+        pm.persistOne(requireNotNull);
+    }
+
     // Plusieurs valeurs
     if (Entity::Field::Type::RADIO == m_field.getType())
     {
@@ -136,7 +152,7 @@ void fieldWindow::load(Entity::Field field)
     ui->choixMultipleCheckBox->setChecked(m_field.getIsMultiple());
 
     // TODO Gèrer le type puis charger les contraintes
-    ui->typeComboBox->setCurrentIndex();
+    //ui->typeComboBox->setCurrentIndex();
 
     // Select avec multiple selection possible
     if (m_field.getType() == Entity::Field::Type::RADIO)
@@ -193,6 +209,8 @@ void fieldWindow::valid()
         type = Entity::Field::Type::RADIO;
     else if (typeString == "Caché")
         type = Entity::Field::Type::PASSWORD;
+    else if (typeString == "Long texte")
+        type = Entity::Field::Type::TEXTAREA;
     else
         type = Entity::Field::Type::TEXT;
 
