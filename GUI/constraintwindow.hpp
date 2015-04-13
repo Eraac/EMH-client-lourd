@@ -21,8 +21,10 @@ class ConstraintWindow : public QDialog
     Q_OBJECT
 
     public:
-        explicit ConstraintWindow(bool* ok, QWidget *parent = 0);
+        explicit ConstraintWindow(QWidget *parent = 0, bool* ok = nullptr);
         ~ConstraintWindow();
+
+        void load(Entity::Constraint constraint);
 
         QString getTypeReadable() const;            // Retourne le type de la contrainte en QString
         Entity::Constraint::Type getType() const;   // Retourne le type de la contrainte sous forme d'enum

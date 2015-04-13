@@ -1,7 +1,7 @@
 #include "constraintwindow.hpp"
 #include "ui_constraintwindow.h"
 
-ConstraintWindow::ConstraintWindow(bool *ok, QWidget *parent) :
+ConstraintWindow::ConstraintWindow(QWidget *parent, bool *ok) :
     QDialog(parent),
     ui(new Ui::ConstraintWindow),
     m_ok(ok), m_nbParams(2)
@@ -23,9 +23,62 @@ ConstraintWindow::~ConstraintWindow()
     delete ui;
 }
 
+void ConstraintWindow::load(Entity::Constraint constraint)
+{
+    m_constraint = constraint;
+
+    int index = 0;
+
+    switch(m_constraint.getType())
+    {
+        case Entity::Constraint::Type::LENGTH:
+            index = 0;
+        break;
+
+        case Entity::Constraint::Type::BETWEEN:
+            index = 1;
+        break;
+
+        case Entity::Constraint::Type::NOTEQUAL:
+            index = 2;
+        break;
+
+        case Entity::Constraint::Type::LOWER:
+            index = 3;
+        break;
+
+        case Entity::Constraint::Type::LOWEROREQUAL:
+            index = 4;
+        break;
+
+        case Entity::Constraint::Type::GREATER:
+            index = 5;
+        break;
+
+        case Entity::Constraint::Type::GREATEROREQUAL:
+            index = 6;
+        break;
+
+        case Entity::Constraint::Type::USERPASSWORD:
+            index = 7;
+        break;
+
+        case Entity::Constraint::Type::REGEX:
+            index = 8;
+        break;
+    }
+
+    ui->typeComboBox->setCurrentIndex(index);
+
+    QStringList listParams = m_constraint.getParams();
+
+    for (int i = 0; i < listParams.length(); i++)
+        m_lineEdits[i]->setText(listParams[i]);
+}
+
 QString ConstraintWindow::getTypeReadable() const
 {
-    return ui->typeComboBox->currentText();
+    return m_constraint.getTypeReadable();
 }
 
 Entity::Constraint::Type ConstraintWindow::getType() const
@@ -84,7 +137,8 @@ void ConstraintWindow::valid()
     }
 
     // On indique que nous avons bien cliqué sur Valider et non Fermer
-    *m_ok = true;
+    if (m_ok != nullptr)
+        *m_ok = true;
 
     // On ferme la fenêtre
     close();
@@ -166,20 +220,14 @@ void ConstraintWindow::cleanForm()
 
 void ConstraintWindow::persistConstraint(int idField)
 {
+    m_constraint.setFieldId(idField);
+
     // On instancie notre lien vers la base
     Utility::PersisterManager pm;
 
     // On persist la contrainte
     pm.persistOne(m_constraint);
 
-
-    // On créer une relation entre le champs et la contrainte
-    Relation::Require require;
-        require.setIdConstraint(m_constraint.getId());
-        require.setIdField(idField);
-
-    // On persist cette relation
-    pm.persistOne(require);
 
     // On enregistre les parametres si besoin
     for (int i = 0; i < m_nbParams; i++)
