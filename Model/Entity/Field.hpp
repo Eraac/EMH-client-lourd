@@ -4,6 +4,7 @@
 #include <QString>
 #include <QColor>
 #include "Entity.hpp"
+#include "Model/Entity/Constraint.hpp"
 
 namespace Entity
 {
@@ -27,6 +28,7 @@ namespace Entity
         void setIsRequired(bool required);  // Change la valeur de m_isRequired
         void setFormId(unsigned int id);    // Change l'id du formulaire
 
+        QList<Constraint> getConstraints();
         Field::Type getType() const;    // Retourne le type
         QString getTypeReadable() const;// Retourne le type lisable par un humain
         QString getLabel() const;       // Retourne le label

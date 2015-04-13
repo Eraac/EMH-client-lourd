@@ -96,6 +96,10 @@ QString Entity::Field::getTypeReadable() const
             type = "Caché";
         break;
 
+        case Field::Type::TEXTAREA:
+            type = "Long texte";
+        break;
+
         default:
             type = "Texte";
     }
@@ -152,6 +156,30 @@ QString Entity::Field::getDefaultValue()
     }
 
     return defaultValue;
+}
+
+QList<Entity::Constraint> Entity::Field::getConstraints()
+{
+    QList<Constraint> listConstraints;
+
+    if (!initDB())
+        return listConstraints; // TODO Add exception ?
+
+    QSqlQuery query = m_db.exec("SELECT fieldConstraint.id FROM fieldConstraint \
+                                WHERE fieldConstraint.fields_id = ?");
+
+    query.bindValue(0, m_id);
+    query.exec();
+
+    while (query.next())
+    {
+        Constraint constraint;
+            constraint.load(query.value(0).toInt());
+
+        listConstraints.append(constraint);
+    }
+
+    return listConstraints;
 }
 
 Entity::Entity::ErrorType Entity::Field::load(unsigned int id)

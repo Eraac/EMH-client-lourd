@@ -10,6 +10,7 @@
 #include <QDialog>
 #include <QList>
 #include <QMap>
+#include <QDebug>
 #include "../GUI/customqpushbutton.hpp"
 #include "../GUI/constraintwindow.hpp"
 #include "../Model/Entity/Field.hpp"

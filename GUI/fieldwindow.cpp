@@ -151,30 +151,89 @@ void fieldWindow::load(Entity::Field field)
     ui->requisCheckBox->setChecked(m_field.getIsRequired());
     ui->choixMultipleCheckBox->setChecked(m_field.getIsMultiple());
 
-    // TODO Gèrer le type puis charger les contraintes
-    //ui->typeComboBox->setCurrentIndex();
+    int type = 0;
+
+    switch(m_field.getType())
+    {
+        case Entity::Field::Type::DATE:
+            type = 4;
+        break;
+
+        case Entity::Field::Type::DATETIME:
+            type = 6;
+        break;
+
+        case Entity::Field::Type::EMAIL:
+            type = 2;
+        break;
+
+        case Entity::Field::Type::NUMBER:
+            type = 1;
+        break;
+
+        case Entity::Field::Type::TEXT:
+            type = 0;
+        break;
+
+        case Entity::Field::Type::TIME:
+            type = 5;
+        break;
+
+        case Entity::Field::Type::URL:
+            type = 3;
+        break;
+
+        case Entity::Field::Type::RADIO:
+            type = 7;
+        break;
+
+        case Entity::Field::Type::TEXTAREA:
+            type = 9;
+        break;
+
+        case Entity::Field::Type::PASSWORD:
+            type = 8;
+        break;
+    }
+
+    ui->typeComboBox->setCurrentIndex(type);
 
     // Select avec multiple selection possible
     if (m_field.getType() == Entity::Field::Type::RADIO)
     {
-        m_defaultValueTextEdit = new QTextEdit();
-        ui->choixMultipleCheckBox->setEnabled(true);
-        ui->formLayout->replaceWidget(m_defaultValueLineEdit, m_defaultValueTextEdit);
-        delete m_defaultValueLineEdit;
-        m_defaultValueLineEdit = nullptr;
-
         m_defaultValueTextEdit->setText(m_field.getDefaultValue());
     }
     else
     {
-        m_defaultValueLineEdit = new QLineEdit();
-        ui->choixMultipleCheckBox->setChecked(false);
-        ui->choixMultipleCheckBox->setEnabled(false);
-        ui->formLayout->replaceWidget(m_defaultValueTextEdit, m_defaultValueLineEdit);
-        delete m_defaultValueTextEdit;
-        m_defaultValueTextEdit = nullptr;
-
         m_defaultValueLineEdit->setText(m_field.getDefaultValue());
+    }
+
+    // Charge les contraintes
+
+    QList<Entity::Constraint> constraints = m_field.getConstraints();
+
+    for (auto constraint : constraints)
+    {
+        m_nbField++;
+
+        // On ajoute un objet ConstraintWindow dans la QMap
+        ConstraintWindow *constraintWd = new ConstraintWindow(this);
+            constraintWd->load(constraint);
+
+        m_constraintsWindow.insert( m_nbField, constraintWd );
+
+        m_lines.insert( m_nbField, new QHBoxLayout() );
+        m_edits.insert( m_nbField, new CustomQPushButton("Modifier", m_nbField) );
+        m_deletes.insert( m_nbField, new CustomQPushButton("Supprimer", m_nbField) );
+
+        QObject::connect(m_edits.last(), SIGNAL(customClicked(int)), this, SLOT(editConstraint(int)));
+        QObject::connect(m_deletes.last(), SIGNAL(customClicked(int)), this, SLOT(deleteConstraint(int)));
+
+        m_lines.last()->addWidget( new QLabel(m_constraintsWindow.last()->getTypeReadable()) );
+        m_lines.last()->addWidget( m_edits.last() );
+        m_lines.last()->addWidget( m_deletes.last() );
+
+        m_constraintLayout->addLayout( m_lines.last() );
     }
 }
 
@@ -318,7 +377,7 @@ void fieldWindow::addConstraint()
     bool ok = false;
 
     // On ajoute un objet ConstraintWindow dans la QMap
-    m_constraintsWindow.insert( m_nbField, new ConstraintWindow(&ok, this) );
+    m_constraintsWindow.insert( m_nbField, new ConstraintWindow(this, &ok) );
         m_constraintsWindow.last()->exec();
 
     // Si l'utilisateur à valider
