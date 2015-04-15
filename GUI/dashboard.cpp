@@ -68,44 +68,35 @@ void Dashboard::editUser()
             emailRegEx.setCaseSensitivity(Qt::CaseInsensitive);
             emailRegEx.setPatternSyntax(QRegExp::RegExp);
 
-    bool ok = false;
+    Entity::User user{};
 
-    // On récupère l'email de l'utilisateur que l'on souhaite modifier
-    QString email = QInputDialog::getText(this, "Email", "Quel est l'email de l'utilisateur ?", QLineEdit::Normal, QString(), &ok);
+    ChooseUser chooseUser{};
+        chooseUser.setUsers(user.getAllEmail());
+        chooseUser.exec();
 
-    // Si on clique sur OK et que l'email est valide
-    if (ok && !email.isEmpty() && emailRegEx.exactMatch(email))
+    const QString email = chooseUser.getUserEmail();
+
+    if (email.isEmpty())
+        return;
+
+    // On charge l'utilisateur par son email
+    auto error = user.loadUserByEmail(email);
+
+    // Si aucune erreur pendant le chargement de l'utilisateur
+    if (error == Entity::User::ErrorType::NONE)
     {
-        // On instancie un User
-        Entity::User user;
+        // On lance la fenêtre pour éditer l'utilisateur
+        CreateUser editUser;
 
-        // On charge l'utilisateur par son email
-        auto error = user.loadUserByEmail(email);
+        QObject::connect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
+        QObject::connect(&editUser, SIGNAL(userDeleteSuccess()), this, SLOT(userDeleteSuccess()));
 
-        // Si aucune erreur pendant le chargement de l'utilisateur
-        if (error == Entity::User::ErrorType::NONE)
-        {
-            // On lance la fenêtre pour éditer l'utilisateur
-            CreateUser editUser;
+        editUser.loadUser(user);
+        editUser.exec();
 
-            QObject::connect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
-            QObject::connect(&editUser, SIGNAL(userDeleteSuccess()), this, SLOT(userDeleteSuccess()));
-
-            editUser.loadUser(user);
-            editUser.exec();
-
-            QObject::disconnect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
-            QObject::disconnect(&editUser, SIGNAL(userDeleteSuccess()), this, SLOT(userDeleteSuccess()));
-        }
-        // Si une erreur arrive
-        else
-        {
-            // On indique à l'utilisateur
-            QMessageBox::warning(this, "Utilisateur introuvable", "L'utilisateur " + email + " est introuvable.");
-        }
-
+        QObject::disconnect(&editUser, SIGNAL(userEditSuccess()), this, SLOT(editUserSuccess()));
+        QObject::disconnect(&editUser, SIGNAL(userDeleteSuccess()), this, SLOT(userDeleteSuccess()));
     }
-
 }
 
 void Dashboard::editUserSuccess()
