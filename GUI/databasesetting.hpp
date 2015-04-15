@@ -2,13 +2,8 @@
 #define DATABASESETTING_HPP
 
 #include <QDialog>
-#include <QSettings>
 #include <QString>
-
-const QString DB_ADDRESS = "address";
-const QString DB_USERNAME = "username";
-const QString DB_PASSWORD = "password";
-const QString DB_PORT = "port";
+#include "Utilty/Settings.hpp"
 
 namespace Ui {
     class DatabaseSetting;
@@ -28,7 +23,7 @@ class DatabaseSetting : public QDialog
 
     private:
         Ui::DatabaseSetting *ui;
-        QSettings m_ini;
+        Settings m_ini;
 };
 
 #endif // DATABASESETTING_HPP
