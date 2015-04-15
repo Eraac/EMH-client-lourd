@@ -13,7 +13,6 @@ namespace Entity
 
         static const int weight;    // Utilisé pour trier
 
-        // TODO Vérifier par rapport à ceux de Symfony
         enum class Type {NONE, NOTNULL, EMAIL, LENGTH, URL,
                          REGEX, BETWEEN, NOTEQUAL, DATE, DATETIME,
                          TIME, USERPASSWORD, LOWER, LOWEROREQUAL,
