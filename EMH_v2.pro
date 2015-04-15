@@ -13,7 +13,8 @@ FORMS += \
     GUI/constraintwindow.ui \
     GUI/chooseform.ui \
     GUI/choosegroup.ui \
-    GUI/chooseuser.ui
+    GUI/chooseuser.ui \
+    GUI/editgroup.ui
 
 HEADERS += \
     Model/Entity/Constraint.hpp \
@@ -51,7 +52,8 @@ HEADERS += \
     Utilty/Settings.hpp \
     Utilty/encodepassword.hpp \
     GUI/choosegroup.hpp \
-    GUI/chooseuser.hpp
+    GUI/chooseuser.hpp \
+    GUI/editgroup.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -89,7 +91,8 @@ SOURCES += \
     Utilty/Settings.cpp \
     Utilty/encodepassword.cpp \
     GUI/choosegroup.cpp \
-    GUI/chooseuser.cpp
+    GUI/chooseuser.cpp \
+    GUI/editgroup.cpp
 
 RESOURCES += \
     Resource/images.qrc

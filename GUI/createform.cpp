@@ -333,6 +333,14 @@ void createForm::validForm()
 
 void createForm::loadForm(Entity::Form form)
 {
+    m_form = form;
+
+    QPushButton *supprimer = new QPushButton("Supprimer");
+
+    ui->layoutButton->addWidget(supprimer);
+
+    connect(supprimer, SIGNAL(clicked()), this, SLOT(deleteForm()));
+
     m_newForm = false;
 
     ui->nomLineEdit->setText(form.getName());
@@ -406,4 +414,10 @@ void createForm::loadForm(Entity::Form form)
 
         m_fieldsLayout->addLayout(m_lines.last());
     }
+}
+
+void createForm::deleteForm()
+{
+    m_form.remove();
+    close();
 }

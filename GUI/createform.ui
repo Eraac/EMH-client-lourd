@@ -160,8 +160,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>180</width>
-              <height>342</height>
+              <width>192</width>
+              <height>382</height>
              </rect>
             </property>
            </widget>
@@ -188,8 +188,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>180</width>
-              <height>342</height>
+              <width>193</width>
+              <height>382</height>
              </rect>
             </property>
            </widget>
@@ -216,8 +216,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>180</width>
-              <height>342</height>
+              <width>192</width>
+              <height>382</height>
              </rect>
             </property>
            </widget>
@@ -249,7 +249,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>818</width>
+          <width>824</width>
           <height>298</height>
          </rect>
         </property>
@@ -287,7 +287,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="layoutButton">
        <item>
         <spacer name="horizontalSpacer_2">
          <property name="orientation">

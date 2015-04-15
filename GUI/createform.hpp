@@ -51,6 +51,8 @@ class createForm : public QDialog
         void deleteField(int id);               // Pour supprimer un champs (onClick sur le bouton "Supprimer")
         void displayError(QString message);     // Affiche une erreur si elle reçoit un signal
 
+        void deleteForm();
+
     private:
         Ui::createForm *ui;
         QColor m_color;
