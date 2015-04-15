@@ -4,8 +4,10 @@
 #include <QString>
 #include <QCryptographicHash>
 #include <QList>
+#include <QDebug>
 #include "Entity.hpp"
 #include "Group.hpp"
+#include "Utilty/encodepassword.hpp"
 
 namespace Entity
 {

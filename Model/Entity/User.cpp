@@ -38,12 +38,13 @@ Entity::Entity::ErrorType Entity::User::loadUserByLogin(QString const& email, QS
     if (!initDB())
         return Entity::ErrorType::DATABASE_ERROR;
 
-    // TODO Crypter le mot de passe
+    Utility::EncodePassword encodePassword;
+    QString hashed = encodePassword.encodePassword(password);
 
     QSqlQuery query = m_db.exec("SELECT * FROM user WHERE username = ? AND password = ?");
 
     query.bindValue(0, email);
-    query.bindValue(1, password);
+    query.bindValue(1, hashed);
     query.exec();
 
     if (!query.first())
@@ -53,7 +54,7 @@ Entity::Entity::ErrorType Entity::User::loadUserByLogin(QString const& email, QS
     m_email     = email;
     m_name      = query.value("name").toString();
     m_firstName = query.value("firstName").toString();
-    m_password  = password;
+    m_password  = hashed;
     m_isAdmin   = query.value("isAdmin").toBool();
     m_hasEncryptedPassword = true;
 
@@ -207,12 +208,11 @@ int Entity::User::getWeight() const
 
 void Entity::User::encryptePassword()
 {
-    // TODO Si mdp deja crypte on crypte pas (sinon crypter + mettre boolen a true)
-    //QCryptographicHash hash(QCryptographicHash::Sha512);
+    Utility::EncodePassword encodePassword;
 
-    //hash.addData(&m_password, m_password.length()); // Erreur il ne doit pas recevoir un QString mais un char*
+    m_password = encodePassword.encodePassword(m_password);
 
-   // m_password = hash.result();
+    m_hasEncryptedPassword = true;
 }
 
 void Entity::User::persist()
