@@ -20,9 +20,7 @@ namespace Entity
         protected:
         unsigned int m_id;                  // ID de l'entité dans le base de données
 
-        void setId(unsigned int const id);
-
-        // TODO Faire method privé pour get avec ID + nom de la table
+        void setId(unsigned int const id);       
     };
 }
 
