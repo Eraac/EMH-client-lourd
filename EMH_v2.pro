@@ -1,6 +1,6 @@
 QT += widgets
 QT += sql
-CONFIG += c++11
+CONFIG += c++11 crypto
 
 FORMS += \
     GUI/loginwindow.ui \
@@ -45,7 +45,9 @@ HEADERS += \
     GUI/constraintwindow.hpp \
     Utilty/Foncteur/hascheckboxchecked.hpp \
     Utilty/Foncteur/hasduplicateconstraint.hpp \
-    GUI/chooseform.hpp
+    GUI/chooseform.hpp \
+    Utilty/Settings.hpp \
+    Utilty/encodepassword.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -79,7 +81,9 @@ SOURCES += \
     GUI/constraintwindow.cpp \
     Utilty/Foncteur/hascheckboxchecked.cpp \
     Utilty/Foncteur/hasduplicateconstraint.cpp \
-    GUI/chooseform.cpp
+    GUI/chooseform.cpp \
+    Utilty/Settings.cpp \
+    Utilty/encodepassword.cpp
 
 RESOURCES += \
     Resource/images.qrc
