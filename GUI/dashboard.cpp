@@ -152,33 +152,19 @@ void Dashboard::editGroup()
     if (groupName.isEmpty())
         return;
 
-    group.loadByName(groupName);
+    EditGroup editGroup(groupName);
 
-    bool ok = false;
+    QObject::connect(&editGroup, SIGNAL(groupModified()), this, SLOT(editGroupSuccess()));
 
-    // On demande le nouveau nom du groupe
-    QString newGroupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
+    editGroup.exec();
 
-    // Si l'utilisateur à cliqué sur OK et que le nom du groupe n'est pas vide
-    if (ok && !newGroupname.isEmpty())
-    {
-        // Le nouveau nom n'existe pas déjà
-        if (!group.groupExist(newGroupname))
-        {
-            // On charge le groupe
-            group.loadByName(groupName);
-            group.setName(newGroupname);
+    QObject::disconnect(&editGroup, SIGNAL(groupModified()), this, SLOT(editGroupSuccess()));
+}
 
-            Utility::PersisterManager pm;
-            pm.persistOne(group);
-
-            setSuccessMessage("Le groupe " + groupName + " à bien été changé.");
-        }
-        else
-        {
-            setFailMessage("Le groupe " + newGroupname + " existe déjà.");
-        }
-    }
+void Dashboard::editGroupSuccess()
+{
+    QString message = "Groupe modifié avec succès";
+    setSuccessMessage(message);
 }
 
 void Dashboard::addForm()
