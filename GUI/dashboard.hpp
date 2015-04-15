@@ -7,6 +7,7 @@
 #include "../GUI/createuser.hpp"
 #include "../GUI/createform.hpp"
 #include "../GUI/chooseform.hpp"
+#include "../GUI/choosegroup.hpp"
 #include "../Model/Entity/User.hpp"
 #include "../Utilty/PersisterManager.hpp"
 

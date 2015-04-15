@@ -150,46 +150,42 @@ void Dashboard::addGroup()
 
 void Dashboard::editGroup()
 {
+    Entity::Group group{};
+
+    ChooseGroup chooseGroup{};
+        chooseGroup.setGroups(group.getAll());
+        chooseGroup.exec();
+
+    const QString groupName = chooseGroup.getGroupName();
+
+    if (groupName.isEmpty())
+        return;
+
+    group.loadByName(groupName);
+
     bool ok = false;
 
-    // On demande le nom du groupe
-    QString groupname = QInputDialog::getText(this, "Modifier un groupe", "Quel est le nom du nouveau groupe ?", QLineEdit::Normal, QString(), &ok);
+    // On demande le nouveau nom du groupe
+    QString newGroupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
 
     // Si l'utilisateur à cliqué sur OK et que le nom du groupe n'est pas vide
-    if (ok && !groupname.isEmpty())
+    if (ok && !newGroupname.isEmpty())
     {
-        Entity::Group group;
-
-        // Si groupe existe bien
-        if (group.groupExist(groupname))
+        // Le nouveau nom n'existe pas déjà
+        if (!group.groupExist(newGroupname))
         {
-            // On demande le nouveau nom du groupe
-            QString newGroupname = QInputDialog::getText(this, "Nouveau nom", "Quel est le nouveau nom pour le groupe ?", QLineEdit::Normal, QString(), &ok);
+            // On charge le groupe
+            group.loadByName(groupName);
+            group.setName(newGroupname);
 
-            // Si l'utilisateur à cliqué sur OK et que le nom du groupe n'est pas vide
-            if (ok && !newGroupname.isEmpty())
-            {
-                // Le nouveau nom n'existe pas déjà
-                if (!group.groupExist(newGroupname))
-                {
-                    // On charge le groupe
-                    group.loadByName(groupname);
-                    group.setName(newGroupname);
+            Utility::PersisterManager pm;
+            pm.persistOne(group);
 
-                    Utility::PersisterManager pm;
-                    pm.persistOne(group);
-
-                    setSuccessMessage("Le groupe " + groupname + " à bien été changé.");
-                }
-                else
-                {
-                    setFailMessage("Le groupe " + groupname + " existe déjà.");
-                }
-            }
+            setSuccessMessage("Le groupe " + groupName + " à bien été changé.");
         }
         else
         {
-            setFailMessage("Le groupe " + groupname + " n'existe pas.");
+            setFailMessage("Le groupe " + newGroupname + " existe déjà.");
         }
     }
 }

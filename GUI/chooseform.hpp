@@ -21,9 +21,6 @@ class ChooseForm : public QDialog
     public slots:
         void chooseForm();
 
-    signals:
-        void selectForm(QString formName);
-
     private:
         Ui::ChooseForm *ui;
         QString m_formName;
