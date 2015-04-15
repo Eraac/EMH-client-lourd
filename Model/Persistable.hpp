@@ -5,6 +5,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVariant>
+#include "Utilty/Settings.hpp"
 
 namespace Model
 {

@@ -17,10 +17,13 @@ bool Model::Persistable::initDB()
     if (m_db.isOpen())
         return true;
 
-    m_db.setHostName("192.168.1.75"); // TODO recupèrer dans le fichier de conf
-    m_db.setDatabaseName("qt");
-    m_db.setUserName("qt");
-    m_db.setPassword("qtpass");
+    Settings settings;
+
+    m_db.setHostName(settings.getValue(DB_ADDRESS).toString());
+    m_db.setDatabaseName(settings.getValue(DB_NAME).toString());
+    m_db.setUserName(settings.getValue(DB_USERNAME).toString());
+    m_db.setPassword(settings.getValue(DB_PASSWORD).toString());
+    m_db.setPort(settings.getValue(DB_PORT).toInt());
     m_db.open();
 
     return m_db.isOpen();
@@ -33,7 +36,7 @@ bool Model::Persistable::isValid() const
 
 void Model::Persistable::prePersist()
 {
-    // If m_db is nullptr -> initialize
+
 }
 
 void Model::Persistable::postPersist()
