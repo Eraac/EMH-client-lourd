@@ -160,6 +160,26 @@ QStringList Entity::User::getGroupsName() const
     return groupsNameOfUser;
 }
 
+QStringList Entity::User::getAllEmail() const
+{
+    QStringList emailOfUser;
+
+    if (!initDB())
+        return emailOfUser;
+
+    QSqlQuery query = m_db.exec("SELECT user.username FROM user");
+
+    query.exec();
+
+    while (query.next())
+    {
+        QString email = query.value(0).toString();
+        emailOfUser.append(email);
+    }
+
+    return emailOfUser;
+}
+
 void Entity::User::setName(const QString &name)
 {
     if (!name.isEmpty()) // Si le nom n'est pas vide on le remplace

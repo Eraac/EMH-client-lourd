@@ -32,6 +32,7 @@ namespace Entity
         bool hasEncryptedPassword() const;  // Retourne si le mot de passe est crypté
 
         QStringList getGroupsName() const;  // Retourne la liste des groupes de l'utilisateur
+        QStringList getAllEmail() const;    // Retourne la liste des emails
 
         void setName(QString const& name);                              // Change le nom de l'utilisateur
         void setFirstName(QString const& firstName);                    // Change le prénom de l'utilisateur
