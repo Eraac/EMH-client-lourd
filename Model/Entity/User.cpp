@@ -261,18 +261,21 @@ void Entity::User::persist()
     {
         preInsert();
         QSqlQuery query = m_db.exec(
-                    "INSERT INTO user (username, name, firstName, password, roles, isAdmin) VALUES(?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO user (username, name, firstName, password, salt, roles, isAdmin) VALUES(?, ?, ?, ?, ?, ?, ?)"
                     );
 
         query.bindValue(0, m_email);
         query.bindValue(1, m_name);
         query.bindValue(2, m_firstName);
         query.bindValue(3, m_password);
-        query.bindValue(4, "a:1:{i:0;s:9:\"ROLE_USER\";}");
-        query.bindValue(5, m_isAdmin);
+        query.bindValue(4, "");
+        query.bindValue(5, "a:1:{i:0;s:9:\"ROLE_USER\";}");
+        query.bindValue(6, m_isAdmin);
         query.exec();
 
         postInsert();
+
+        qDebug() << query.lastError().text();
 
         m_id = query.lastInsertId().toInt();        
     }
