@@ -34,81 +34,44 @@ void fieldWindow::persistField(int idForm)
     pm.persistOne(m_field);
 
     Entity::Constraint constraint;
-    Relation::Require require;
+
+    constraint.setFieldId(m_field.getId());
 
     // Selon le type du champs on ajoute des contraintes (Date, Time, Datetime, Url, Email)
     switch (m_field.getType())
     {
         case Entity::Field::Type::DATE:
             constraint.setType(Entity::Constraint::Type::DATE);
-
-            pm.persistOne(constraint);
-
-            require.setIdConstraint(constraint.getId());
-            require.setIdField(m_field.getId());
-
-            pm.persistOne(require);
         break;
 
         case Entity::Field::Type::TIME:
             constraint.setType(Entity::Constraint::Type::TIME);
-
-            pm.persistOne(constraint);
-
-            require.setIdConstraint(constraint.getId());
-            require.setIdField(m_field.getId());
-
-            pm.persistOne(require);
         break;
 
         case Entity::Field::Type::DATETIME:
             constraint.setType(Entity::Constraint::Type::DATETIME);
-
-            pm.persistOne(constraint);
-
-            require.setIdConstraint(constraint.getId());
-            require.setIdField(m_field.getId());
-
-            pm.persistOne(require);
         break;
 
         case Entity::Field::Type::URL:
             constraint.setType(Entity::Constraint::Type::URL);
-
-            pm.persistOne(constraint);
-
-            require.setIdConstraint(constraint.getId());
-            require.setIdField(m_field.getId());
-
-            pm.persistOne(require);
         break;
 
         case Entity::Field::Type::EMAIL:
-            constraint.setType(Entity::Constraint::Type::EMAIL);
-
-            pm.persistOne(constraint);
-
-            require.setIdConstraint(constraint.getId());
-            require.setIdField(m_field.getId());
-
-            pm.persistOne(require);
+            constraint.setType(Entity::Constraint::Type::EMAIL);            
         break;
     }
+
+    pm.persistOne(constraint);
 
     // Si le champs est requis on ajoute la contrainte not null
     if (m_field.getIsRequired())
     {
         Entity::Constraint constraintNotNull;
-        Relation::Require requireNotNull;
 
         constraintNotNull.setType(Entity::Constraint::Type::NOTNULL);
+        constraintNotNull.setFieldId(m_field.getId());
 
         pm.persistOne(constraint);
-
-        requireNotNull.setIdConstraint(constraintNotNull.getId());
-        requireNotNull.setIdField(m_field.getId());
-
-        pm.persistOne(requireNotNull);
     }
 
     // Plusieurs valeurs
