@@ -258,6 +258,8 @@ void Entity::Field::persist()
         postInsert();
 
         m_id = query.lastInsertId().toInt();
+
+        qDebug() << query.lastError().text();
     }
 }
 
