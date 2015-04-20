@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>533</width>
-    <height>331</height>
+    <width>488</width>
+    <height>335</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,10 +68,10 @@
            <widget class="QPushButton" name="addUserButton">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>30</y>
-              <width>151</width>
-              <height>32</height>
+              <x>10</x>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
              </rect>
             </property>
             <property name="text">
@@ -82,9 +82,9 @@
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>30</y>
-              <width>161</width>
-              <height>32</height>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
              </rect>
             </property>
             <property name="text">
@@ -102,9 +102,9 @@
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>30</y>
-              <width>161</width>
-              <height>32</height>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
              </rect>
             </property>
             <property name="text">
@@ -114,14 +114,50 @@
            <widget class="QPushButton" name="addGroupButton">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>30</y>
-              <width>151</width>
-              <height>32</height>
+              <x>10</x>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
              </rect>
             </property>
             <property name="text">
              <string>Ajouter un groupe</string>
+            </property>
+           </widget>
+           <zorder>editGroupButton</zorder>
+           <zorder>addGroupButton</zorder>
+           <zorder>groupBox_3</zorder>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="title">
+            <string>Tag</string>
+           </property>
+           <widget class="QPushButton" name="addUserButton_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Ajouter un tag</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="editUserButton_2">
+            <property name="geometry">
+             <rect>
+              <x>150</x>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Modifier un tag</string>
             </property>
            </widget>
           </widget>
@@ -135,9 +171,9 @@
             <property name="geometry">
              <rect>
               <x>150</x>
-              <y>30</y>
-              <width>161</width>
-              <height>32</height>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
              </rect>
             </property>
             <property name="text">
@@ -147,10 +183,10 @@
            <widget class="QPushButton" name="addFormButton">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>30</y>
-              <width>151</width>
-              <height>32</height>
+              <x>10</x>
+              <y>20</y>
+              <width>131</width>
+              <height>21</height>
              </rect>
             </property>
             <property name="text">
@@ -222,8 +258,8 @@
    <slot>clickDisconnect()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>519</x>
-     <y>317</y>
+     <x>476</x>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
      <x>370</x>
@@ -270,8 +306,8 @@
    <slot>addGroup()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
-     <y>194</y>
+     <x>112</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
@@ -286,8 +322,8 @@
    <slot>editGroup()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>194</y>
+     <x>257</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
@@ -302,8 +338,8 @@
    <slot>addForm()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>90</x>
-     <y>257</y>
+     <x>112</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
@@ -318,12 +354,44 @@
    <slot>editForm()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>257</y>
+     <x>257</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>266</x>
      <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addUserButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>addTag()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>226</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editUserButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Dashboard</receiver>
+   <slot>editTag()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>262</y>
     </hint>
    </hints>
   </connection>
@@ -337,5 +405,7 @@
   <slot>editGroup()</slot>
   <slot>addForm()</slot>
   <slot>editForm()</slot>
+  <slot>addTag()</slot>
+  <slot>editTag()</slot>
  </slots>
 </ui>
