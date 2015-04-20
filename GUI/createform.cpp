@@ -333,6 +333,8 @@ void createForm::validForm()
 
 void createForm::loadForm(Entity::Form form)
 {
+    ui->nomLineEdit->setEnabled(false);
+
     m_form = form;
 
     QPushButton *supprimer = new QPushButton("Supprimer");
