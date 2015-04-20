@@ -16,6 +16,8 @@ namespace Entity
 
             static const int weight;    // Utilisé pour trier
 
+            bool tagExist(QString const& tagname);      // Retourne true si le tag existe
+
             void setName(QString const& name);          // Change le nom
 
             QString getName() const;                    // Retourne le nom

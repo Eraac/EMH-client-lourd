@@ -12,6 +12,28 @@ Entity::Tag::~Tag()
 
 }
 
+bool Entity::Tag::tagExist(const QString &tagname)
+{
+    if (!initDB())
+        return false;
+
+    QSqlQuery query = m_db.exec("SELECT COUNT(*) FROM tag WHERE name = ?");
+
+    if (tagname.isEmpty() && !m_name.isEmpty())
+        query.bindValue(0, m_name);
+    else if (!tagname.isEmpty())
+        query.bindValue(0, tagname);
+    else
+        return false;
+
+    query.exec();
+    query.next();
+
+    int count = query.value(0).toInt();
+
+    return (count > 0) ? true : false;
+}
+
 void Entity::Tag::setName(const QString &name)
 {
     m_name = name;
