@@ -177,6 +177,15 @@ void fieldWindow::load(Entity::Field field)
 
     for (auto constraint : constraints)
     {
+        // Si la contrainte fait partie des contraintes "automatique" on ne l'affiche pas
+        if (constraint.getType() == Entity::Constraint::Type::DATE ||
+            constraint.getType() == Entity::Constraint::Type::TIME ||
+            constraint.getType() == Entity::Constraint::Type::DATETIME ||
+            constraint.getType() == Entity::Constraint::Type::URL ||
+            constraint.getType() == Entity::Constraint::Type::EMAIL
+            )
+            continue;
+
         m_nbField++;
 
         // On ajoute un objet ConstraintWindow dans la QMap
