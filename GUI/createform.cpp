@@ -278,7 +278,7 @@ void createForm::validForm()
     m_formIsValid = true;
 
     // On vérifie que le nom du formulaire n'existe pas
-    if (m_form.formExist(m_form.getName()))
+    if (m_form.formExist(m_form.getName()) && m_newForm)
     {
         displayError("Le nom du formulaire est déjà existant.");
         return;
