@@ -109,6 +109,63 @@ void Dashboard::userDeleteSuccess()
     setSuccessMessage("Utilisateur supprimé avec succès.");
 }
 
+void Dashboard::addTag()
+{
+    bool ok = false;
+
+    QString tagname = QInputDialog::getText(this, "Ajouter un tag", "Quel est le nom du nouveau tag ?", QLineEdit::Normal, QString(), &ok);
+
+    // Si on clique sur ok et que le nom du groupe n'est pas vide
+    if (ok && !tagname.isEmpty())
+    {
+        Entity::Tag tag;
+
+        // Si le nom n'est pas déjà pris
+        if (!tag.tagExist(tagname))
+        {
+            // On créer le groupe
+            tag.setName(tagname);
+
+            Utility::PersisterManager pm;
+
+            pm.persistOne(tag);
+
+            setSuccessMessage("Le tag " + tagname + " est bien créé.");
+        }
+        else
+        {
+            setFailMessage("Le tag " + tagname + " existe déjà.");
+        }
+    }
+}
+
+void Dashboard::editTag()
+{
+    Entity::Tag tag{};
+
+    ChooseTag chooseTag{};
+        chooseTag.setTags(tag.getAll());
+        chooseTag.exec();
+
+    const QString tagName = chooseTag.getTagName();
+
+    if (tagName.isEmpty())
+        return;
+
+    EditTag editTag(tagName);
+
+    QObject::connect(&editTag, SIGNAL(tagModified()), this, SLOT(editTagSuccess()));
+
+    editTag.exec();
+
+    QObject::disconnect(&editTag, SIGNAL(tagModified()), this, SLOT(editTagSuccess()));
+}
+
+void Dashboard::editTagSuccess()
+{
+    setSuccessMessage("Tag modifié avec succès");
+}
+
 void Dashboard::addGroup()
 {
     bool ok = false;

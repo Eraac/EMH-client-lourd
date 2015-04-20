@@ -10,6 +10,8 @@
 #include "../GUI/choosegroup.hpp"
 #include "../GUI/chooseuser.hpp"
 #include "../GUI/editgroup.hpp"
+#include "../GUI/choosetag.hpp"
+#include "../GUI/edittag.hpp"
 #include "../Model/Entity/User.hpp"
 #include "../Utilty/PersisterManager.hpp"
 
@@ -46,6 +48,11 @@ class Dashboard : public QWidget
         void editGroup();   // onClick sur le bouton Modifier un groupe
 
         void editGroupSuccess();
+
+        void addTag();      // onClick sur le bouton Ajouter un tag
+        void editTag();     // onClick sur le bouton Modifier un tag
+
+        void editTagSuccess();
 
         void addForm();     // onClick sur le bouton Ajouter un formulaire
         void editForm();    // onClick sur le bouton Modifier un formulaire
