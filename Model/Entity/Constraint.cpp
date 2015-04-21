@@ -94,6 +94,17 @@ QStringList Entity::Constraint::getParams()
     return listParams;
 }
 
+void Entity::Constraint::removeParams()
+{
+    if (!initDB())
+        return;
+
+   QSqlQuery query = m_db.exec("DELETE FROM param WHERE fieldConstraint_id = ?");
+
+   query.bindValue(0, m_id);
+   query.exec();
+}
+
 Entity::Entity::ErrorType Entity::Constraint::load(unsigned int id)
 {
     if (!initDB())
@@ -149,8 +160,6 @@ void Entity::Constraint::persist()
         postInsert();
 
         m_id = query.lastInsertId().toInt();
-
-        qDebug() << query.lastError().text();
     }
 }
 

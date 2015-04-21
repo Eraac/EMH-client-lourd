@@ -72,8 +72,15 @@ void ConstraintWindow::load(Entity::Constraint constraint)
 
     QStringList listParams = m_constraint.getParams();
 
-    for (int i = 0; i < listParams.length(); i++)
+    for (int i = 0; i < listParams.length(); i++) {
         m_lineEdits[i]->setText(listParams[i]);
+        m_params[i].setValue(listParams[i]);
+    }
+}
+
+Entity::Constraint ConstraintWindow::getConstraint() const
+{
+    return m_constraint;
 }
 
 QString ConstraintWindow::getTypeReadable() const
@@ -132,9 +139,11 @@ void ConstraintWindow::valid()
     for (int i = 0; i < m_nbParams; i++)
     {
         if (nullptr != m_lineEdits[i])
-            if (!m_lineEdits[i]->text().isEmpty())
-                m_params[i].setValue(m_lineEdits[i]->text());
+            if (!m_lineEdits[i]->text().isEmpty()) {
+                m_params[i].setValue(m_lineEdits[i]->text());                
+            }
     }
+
 
     // On indique que nous avons bien cliqué sur Valider et non Fermer
     if (m_ok != nullptr)
@@ -219,7 +228,9 @@ void ConstraintWindow::cleanForm()
 }
 
 void ConstraintWindow::persistConstraint(int idField)
-{
+{   
+    m_constraint.removeParams();
+
     m_constraint.setFieldId(idField);
 
     // On instancie notre lien vers la base
@@ -227,7 +238,6 @@ void ConstraintWindow::persistConstraint(int idField)
 
     // On persist la contrainte
     pm.persistOne(m_constraint);
-
 
     // On enregistre les parametres si besoin
     for (int i = 0; i < m_nbParams; i++)
@@ -257,6 +267,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString co
         // La contrainte Longueur est compatible uniquement avec : Les champs textes, mot de passe, email, url
         case Entity::Constraint::Type::LENGTH:
             if (Entity::Field::Type::TEXT != fieldType &&
+                Entity::Field::Type::TEXTAREA != fieldType &&
                 Entity::Field::Type::PASSWORD != fieldType &&
                 Entity::Field::Type::EMAIL != fieldType &&
                 Entity::Field::Type::URL != fieldType
@@ -295,6 +306,7 @@ bool ConstraintWindow::validConstraint(Entity::Field::Type fieldType, QString co
         // La contrainte regex est uniquement compatible avec : les champs texte, mot de passe, nombre, email, url
         case Entity::Constraint::Type::REGEX:
             if (Entity::Field::Type::TEXT != fieldType &&
+                Entity::Field::Type::TEXTAREA != fieldType &&
                 Entity::Field::Type::PASSWORD != fieldType &&
                 Entity::Field::Type::NUMBER != fieldType &&
                 Entity::Field::Type::EMAIL != fieldType &&

@@ -4,7 +4,8 @@
 fieldWindow::fieldWindow(QWidget *parent, bool *ok) :
     QDialog(parent),
     ui(new Ui::fieldWindow),
-    m_ok(ok), m_field(), m_defaultValueTextEdit(nullptr), m_nbField()
+    m_ok(ok), m_field(), m_defaultValueTextEdit(nullptr), m_nbField(),
+    m_deletedConstraint()
 {
     ui->setupUi(this);
 
@@ -27,6 +28,9 @@ fieldWindow::~fieldWindow()
 
 void fieldWindow::persistField(int idForm)
 {
+    for (auto constraint : m_deletedConstraint)
+        constraint.remove();
+
     Utility::PersisterManager pm;
     QStringList defaultValues;
 
@@ -61,7 +65,8 @@ void fieldWindow::persistField(int idForm)
         break;
     }
 
-    pm.persistOne(constraint);
+    if (constraint.getType() != Entity::Constraint::Type::NONE)
+        pm.persistOne(constraint);
 
     // Si le champs est requis on ajoute la contrainte not null
     if (m_field.getIsRequired())
@@ -71,7 +76,7 @@ void fieldWindow::persistField(int idForm)
         constraintNotNull.setType(Entity::Constraint::Type::NOTNULL);
         constraintNotNull.setFieldId(m_field.getId());
 
-        pm.persistOne(constraint);
+        pm.persistOne(constraintNotNull);
     }
 
     // Plusieurs valeurs
@@ -182,9 +187,12 @@ void fieldWindow::load(Entity::Field field)
             constraint.getType() == Entity::Constraint::Type::TIME ||
             constraint.getType() == Entity::Constraint::Type::DATETIME ||
             constraint.getType() == Entity::Constraint::Type::URL ||
-            constraint.getType() == Entity::Constraint::Type::EMAIL
-            )
+            constraint.getType() == Entity::Constraint::Type::EMAIL ||
+            constraint.getType() == Entity::Constraint::Type::NOTNULL ||
+            constraint.getType() == Entity::Constraint::Type::NONE
+            ) {
             continue;
+        }
 
         m_nbField++;
 
@@ -383,7 +391,11 @@ void fieldWindow::deleteConstraint(int id)
     QObject::connect(m_deletes[id], SIGNAL(customClicked(int)), this, SLOT(deleteConstraint(int)));
 
     // On supprime la fenêtre
-    delete m_constraintsWindow.take(id);
+    ConstraintWindow *constraintWd = m_constraintsWindow.take(id);
+
+    m_deletedConstraint.append(constraintWd->getConstraint());
+
+    delete constraintWd;
 
     // On récupère le layout horizontal
     QHBoxLayout *line = m_lines.take(id);

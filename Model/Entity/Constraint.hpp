@@ -23,7 +23,8 @@ namespace Entity
 
         Constraint::Type getType() const;               // Retourne le type
         QString getTypeReadable() const;                // Retourne le type sous forme de string
-        QStringList getParams();                // Retourne les paramètres associés à la contrainte
+        QStringList getParams();                        // Retourne les paramètres associés à la contrainte
+        void removeParams();
 
         Entity::ErrorType load(unsigned int id);        // Charge l'entité depuis la base de données
 
