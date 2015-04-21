@@ -66,6 +66,7 @@ class fieldWindow : public QDialog
         QMap<int, QHBoxLayout*> m_lines;
         QMap<int, CustomQPushButton*> m_edits;
         QMap<int, CustomQPushButton*> m_deletes;
+        QList<Entity::Constraint> m_deletedConstraint;
 };
 
 #endif // FIELDWINDOW_HPP

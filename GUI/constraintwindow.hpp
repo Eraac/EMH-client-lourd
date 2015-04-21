@@ -26,6 +26,7 @@ class ConstraintWindow : public QDialog
 
         void load(Entity::Constraint constraint);
 
+        Entity::Constraint getConstraint() const;
         QString getTypeReadable() const;            // Retourne le type de la contrainte en QString
         Entity::Constraint::Type getType() const;   // Retourne le type de la contrainte sous forme d'enum
         void persistConstraint(int idField);        // Persit la contrainte
