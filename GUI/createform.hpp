@@ -68,6 +68,8 @@ class createForm : public QDialog
 
         QVBoxLayout *m_fieldsLayout;
 
+        QList<Entity::Field> m_deletedFields;
+
         int m_nbField;                              // Permet d'avoir une id unique pour chaque champs ajouter sur les QMaps
         Entity::Form m_form;                        // Contient le formulaire
         bool m_newForm;

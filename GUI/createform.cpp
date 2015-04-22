@@ -5,7 +5,7 @@
 createForm::createForm(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::createForm), m_color(Qt::white), m_nbField(0),
-    m_form(), m_formIsValid(false), m_newForm(true)
+    m_form(), m_formIsValid(false), m_newForm(true), m_deletedFields()
 {
     ui->setupUi(this);
 
@@ -125,7 +125,11 @@ void createForm::deleteField(int id)
     QObject::disconnect(m_deletes[id], SIGNAL(customClicked(int)), this, SLOT(deleteField(int)));
 
     // On supprime la fenêtre
-    delete m_fieldsWindows.take(id);
+    auto fieldWd = m_fieldsWindows.take(id);
+
+    m_deletedFields.append(fieldWd->getField());
+
+    delete fieldWd;
 
     // On récupère le layout horizontal
     QHBoxLayout* line = m_lines.take(id);
@@ -143,9 +147,7 @@ void createForm::deleteField(int id)
     }
 
     // On supprime la ligne
-    delete line;
-
-    // TODO Stocker les fields supprimer pour call la méthode remove quand il s'agit d'un formulaire existant
+    delete line;    
 }
 
 void createForm::valid()
@@ -170,6 +172,12 @@ void createForm::valid()
     // Si le formulaire est valide
     if (m_formIsValid)
     {
+        for (auto field : m_deletedFields)
+            field.remove();
+
+        m_form.removeAccess();
+        m_form.removeTag();
+
         // On instancie notre objet pour la base de données
         Utility::PersisterManager pm;
 
