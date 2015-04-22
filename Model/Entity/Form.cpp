@@ -14,6 +14,36 @@ Entity::Form::~Form()
 
 }
 
+void Entity::Form::removeAccess()
+{
+    if (!initDB() || m_id == 0)
+        return;
+
+    QSqlQuery query = m_db.exec("DELETE FROM writer WHERE form_id = ?");
+
+    query.bindValue(0, m_id);
+
+    query.exec();
+
+    query = m_db.exec("DELETE FROM reader WHERE form_id = ?");
+
+    query.bindValue(0, m_id);
+
+    query.exec();
+}
+
+void Entity::Form::removeTag()
+{
+    if (!initDB() || m_id == 0)
+        return;
+
+    QSqlQuery query = m_db.exec("DELETE FROM categorizing WHERE form_id = ?");
+
+    query.bindValue(0, m_id);
+
+    query.exec();
+}
+
 bool Entity::Form::formExist(const QString &name)
 {
     initDB();

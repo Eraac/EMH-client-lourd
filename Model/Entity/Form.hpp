@@ -17,7 +17,10 @@ namespace Entity
 
         static const int weight;    // Utilisé pour trier
 
-        enum class Status {NONE, DISABLE, DEMAND, INFORMATION};      // Le statut du formulaire
+        enum class Status {NONE, DISABLE, INFORMATION, DEMAND};  // Le statut du formulaire
+
+        void removeAccess();
+        void removeTag();
 
         bool formExist(QString const& name);                // Renvoi false si le nom du formulaire n'est pas déjà pris
         QStringList getAllFormName();                       // Retourne la liste des noms de tous les formulaires disponible
