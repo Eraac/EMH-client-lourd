@@ -137,6 +137,36 @@ unsigned int Entity::Field::getFormId() const
     return m_idForm;
 }
 
+void Entity::Field::deleteAutoConstraint()
+{
+    if (!initDB() || m_id == 0)
+        return;
+
+    QSqlQuery query = m_db.exec("DELETE FROM fieldConstraint WHERE fields_id = ? AND type IN (?, ?, ?, ?, ?, ?)");
+
+    query.bindValue(0, m_id);
+    query.bindValue(1, static_cast<int> (Constraint::Type::DATE));
+    query.bindValue(2, static_cast<int> (Constraint::Type::TIME));
+    query.bindValue(3, static_cast<int> (Constraint::Type::DATETIME));
+    query.bindValue(4, static_cast<int> (Constraint::Type::URL));
+    query.bindValue(5, static_cast<int> (Constraint::Type::EMAIL));
+    query.bindValue(6, static_cast<int> (Constraint::Type::NOTNULL));
+
+    query.exec();
+}
+
+void Entity::Field::deleteDefaultValue()
+{
+    if (!initDB() || m_id == 0)
+        return;
+
+    QSqlQuery query = m_db.exec("DELETE FROM defaultValue WHERE field_id = ?");
+
+    query.bindValue(0, m_id);
+
+    query.exec();
+}
+
 QString Entity::Field::getDefaultValue()
 {
     QString defaultValue;

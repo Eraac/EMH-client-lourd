@@ -28,6 +28,9 @@ namespace Entity
         void setIsRequired(bool required);  // Change la valeur de m_isRequired
         void setFormId(unsigned int id);    // Change l'id du formulaire
 
+        void deleteAutoConstraint();
+        void deleteDefaultValue();
+
         QList<Constraint> getConstraints();
         Field::Type getType() const;    // Retourne le type
         QString getTypeReadable() const;// Retourne le type lisable par un humain
