@@ -31,6 +31,9 @@ void fieldWindow::persistField(int idForm)
     for (auto constraint : m_deletedConstraint)
         constraint.remove();
 
+    m_field.deleteAutoConstraint();
+    m_field.deleteDefaultValue();
+
     Utility::PersisterManager pm;
     QStringList defaultValues;
 

@@ -59,7 +59,7 @@ class fieldWindow : public QDialog
         QLineEdit *m_defaultValueLineEdit; // Pour les valeurs par défaut des champs qui ne sont pas TYPE::RADIO
         QTextEdit *m_defaultValueTextEdit; // Pour les valeurs par défaut des champs qui sont TYPE::RADIO
 
-        QVBoxLayout *m_constraintLayout;
+        QVBoxLayout *m_constraintLayout;        
 
         int m_nbField;
         QMap<int, ConstraintWindow*> m_constraintsWindow;
