@@ -85,12 +85,14 @@ void fieldWindow::persistField(int idForm)
     // Plusieurs valeurs
     if (Entity::Field::Type::RADIO == m_field.getType())
     {
-        defaultValues = m_defaultValueTextEdit->toPlainText().split('\n', QString::SkipEmptyParts);
+        if (!m_defaultValueTextEdit->toPlainText().isEmpty())
+            defaultValues = m_defaultValueTextEdit->toPlainText().split('\n', QString::SkipEmptyParts);
     }
     // Une valeur
     else
     {
-        defaultValues << m_defaultValueLineEdit->text();
+        if (!m_defaultValueLineEdit->text().isEmpty())
+            defaultValues << m_defaultValueLineEdit->text();
     }
 
     // Pour toutes les valeurs par défaut
