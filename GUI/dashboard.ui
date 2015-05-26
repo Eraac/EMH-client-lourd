@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>488</width>
-    <height>335</height>
+    <width>541</width>
+    <height>355</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,9 +81,9 @@
            <widget class="QPushButton" name="editUserButton">
             <property name="geometry">
              <rect>
-              <x>150</x>
+              <x>160</x>
               <y>20</y>
-              <width>131</width>
+              <width>151</width>
               <height>21</height>
              </rect>
             </property>
@@ -101,9 +101,9 @@
            <widget class="QPushButton" name="editGroupButton">
             <property name="geometry">
              <rect>
-              <x>150</x>
+              <x>170</x>
               <y>20</y>
-              <width>131</width>
+              <width>141</width>
               <height>21</height>
              </rect>
             </property>
@@ -124,9 +124,6 @@
              <string>Ajouter un groupe</string>
             </property>
            </widget>
-           <zorder>editGroupButton</zorder>
-           <zorder>addGroupButton</zorder>
-           <zorder>groupBox_3</zorder>
           </widget>
          </item>
          <item>
@@ -150,9 +147,9 @@
            <widget class="QPushButton" name="editUserButton_2">
             <property name="geometry">
              <rect>
-              <x>150</x>
+              <x>170</x>
               <y>20</y>
-              <width>131</width>
+              <width>141</width>
               <height>21</height>
              </rect>
             </property>
@@ -170,9 +167,9 @@
            <widget class="QPushButton" name="editFormButton">
             <property name="geometry">
              <rect>
-              <x>150</x>
+              <x>160</x>
               <y>20</y>
-              <width>131</width>
+              <width>161</width>
               <height>21</height>
              </rect>
             </property>
@@ -185,7 +182,7 @@
              <rect>
               <x>10</x>
               <y>20</y>
-              <width>131</width>
+              <width>141</width>
               <height>21</height>
              </rect>
             </property>

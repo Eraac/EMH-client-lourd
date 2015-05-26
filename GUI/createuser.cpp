@@ -33,6 +33,9 @@ void CreateUser::loadUser(Entity::User user)
 
     m_user = user;
 
+    ui->title->setText("Modifier un utilisateur");
+    this->setWindowTitle("Modifier un utilisateur");
+
     // On charge les données de l'utilisateur dans le formulaire
     ui->nomLineEdit->setText(m_user.getName());
     ui->prenomLineEdit->setText(m_user.getFirstName());

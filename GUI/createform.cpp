@@ -341,6 +341,9 @@ void createForm::validForm()
 
 void createForm::loadForm(Entity::Form form)
 {
+    ui->title->setText("Modifier un formulaire");
+    this->setWindowTitle("Modifier un formulaire");
+
     ui->nomLineEdit->setEnabled(false);
 
     m_form = form;
