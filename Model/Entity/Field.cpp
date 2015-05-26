@@ -182,7 +182,12 @@ QString Entity::Field::getDefaultValue()
 
     while (query.next())
     {
-        defaultValue.append(query.value(0).toString() + "\n");
+        QString value = query.value(0).toString();
+
+        if (m_type == Field::Type::RADIO)
+            value.append("\n");
+
+        defaultValue.append(value);
     }
 
     return defaultValue;

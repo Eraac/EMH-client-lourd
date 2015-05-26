@@ -92,7 +92,7 @@ void fieldWindow::persistField(int idForm)
     else
     {
         if (!m_defaultValueLineEdit->text().isEmpty())
-            defaultValues << m_defaultValueLineEdit->text();
+            defaultValues << m_defaultValueLineEdit->text().trimmed();
     }
 
     // Pour toutes les valeurs par défaut
