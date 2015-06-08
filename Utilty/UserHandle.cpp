@@ -1,6 +1,6 @@
 #include "UserHandle.hpp"
 
-UserHandle::UserHandle() : QWidget(), m_loginWidget(nullptr), m_dashboard(nullptr)
+UserHandle::UserHandle() : QWidget(), m_loginWidget(nullptr), m_dashboard(nullptr), m_session()
 {
 
 }
@@ -24,6 +24,13 @@ void UserHandle::connect(Entity::User const& user)
     // On supprime la fenêtre
     delete m_loginWidget;
 
+    // On log la connexion de l'utilisateur
+    m_session.setUserId(user.getId());
+    m_session.setLogin(QDateTime::currentDateTime());
+
+    Utility::PersisterManager pm{};
+        pm.persistOne(m_session);
+
     // Initialisation du tableau de bord
     m_dashboard = new Dashboard;
         // On charge l'utilisateur dans le tableau de bord
@@ -42,6 +49,11 @@ void UserHandle::disconnect()
 
     // On supprime la fenêtre
     delete m_dashboard;
+
+    // On log la deconnexion de l'utilisateur
+    m_session.setLogout(QDateTime::currentDateTime());
+    Utility::PersisterManager pm{};
+        pm.persistOne(m_session);
 
     // On initialise la fenêtre de connexion
     m_loginWidget = new LoginWindow;

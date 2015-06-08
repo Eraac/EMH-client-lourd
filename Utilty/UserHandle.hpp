@@ -3,6 +3,8 @@
 
 #include "../GUI/loginwindow.hpp"
 #include "../GUI/dashboard.hpp"
+#include "../Model/Entity/session.hpp"
+#include "PersisterManager.hpp"
 
 class UserHandle : public QWidget
 {
@@ -18,8 +20,9 @@ class UserHandle : public QWidget
     void disconnect();                      // Change la fenêtre (passe du tableau de bord au login)
 
     private:
-    LoginWindow *m_loginWidget;
-    Dashboard   *m_dashboard;
+    LoginWindow     *m_loginWidget;
+    Dashboard       *m_dashboard;
+    Entity::Session m_session;
 
 };
 

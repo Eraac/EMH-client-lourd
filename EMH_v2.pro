@@ -57,7 +57,8 @@ HEADERS += \
     GUI/chooseuser.hpp \
     GUI/editgroup.hpp \
     GUI/choosetag.hpp \
-    GUI/edittag.hpp
+    GUI/edittag.hpp \
+    Model/Entity/session.hpp
 
 SOURCES += \
     Model/Entity/Constraint.cpp \
@@ -98,7 +99,8 @@ SOURCES += \
     GUI/chooseuser.cpp \
     GUI/editgroup.cpp \
     GUI/choosetag.cpp \
-    GUI/edittag.cpp
+    GUI/edittag.cpp \
+    Model/Entity/session.cpp
 
 RESOURCES += \
     Resource/images.qrc

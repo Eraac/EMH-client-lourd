@@ -47,6 +47,9 @@ Entity::Entity::ErrorType Entity::User::loadUserByLogin(QString const& email, QS
     query.bindValue(1, hashed);
     query.exec();
 
+    qDebug() << email;
+    qDebug() << hashed;
+
     if (!query.first())
         return Entity::ErrorType::NOT_FOUND;
 
@@ -56,7 +59,7 @@ Entity::Entity::ErrorType Entity::User::loadUserByLogin(QString const& email, QS
     m_firstName = query.value("firstName").toString();
     m_password  = hashed;
     m_isAdmin   = query.value("isAdmin").toBool();
-    m_hasEncryptedPassword = true;
+    m_hasEncryptedPassword = true;    
 
     return Entity::ErrorType::NONE;
 }
