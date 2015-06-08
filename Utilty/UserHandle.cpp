@@ -5,6 +5,14 @@ UserHandle::UserHandle() : QWidget(), m_loginWidget(nullptr), m_dashboard(nullpt
 
 }
 
+UserHandle::~UserHandle()
+{
+    // On log la deconnexion de l'utilisateur
+    m_session.setLogout(QDateTime::currentDateTime());
+    Utility::PersisterManager pm{};
+        pm.persistOne(m_session);
+}
+
 void UserHandle::run()
 {
     // On initialise la fenêtre de connexion

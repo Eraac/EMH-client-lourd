@@ -12,6 +12,7 @@ class UserHandle : public QWidget
 
     public:
     UserHandle();                           // Constructeur
+    ~UserHandle();                          // Destructeur
 
     void run();                             // Point de démarrage de l'application
 
